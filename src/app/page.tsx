@@ -32,11 +32,8 @@ export default function Home() {
             className="text-gray-800 dark:text-gray-100 hover:text-sky-600"
             complement="tab=repositories"
           >
-            <span className="relative flex h-full w-13">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-30"></span>
-
-              <span>my github repositories</span>
-            </span>
+            {" "}
+            my github repositories
           </GithubLink>
         </h1>
       </section>
