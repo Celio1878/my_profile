@@ -17,14 +17,14 @@ export default function Home() {
         <p className="text-lg">
           I am a software engineer specializing in Cloud Computing.
         </p>
-        <h3>Currently, I'm Sofware Engineer at Itau Unibanco</h3>
+        <h3>Currently, I&apos;m Sofware Engineer at Itau Unibanco</h3>
         <h3>
           I have a full experience using programming languages such as
           JavaScript/TypeScript, Python, Golang (more know like GO).
         </h3>
         <h4>
-          I know little about C# and C++ as well, I've developed some features
-          using it
+          I know little about C# and C++ as well, I&apos;ve developed some
+          features using it
         </h4>
         <h1>
           check out
