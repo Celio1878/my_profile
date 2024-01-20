@@ -13,7 +13,7 @@ export const ToggleThemeButton: FC<Props> = ({ is_dark_theme, onClick }) => {
   return (
     <button
       id="toggle-theme-button"
-      className="p-1 rounded-full bg-slate-300 dark:bg-black"
+      className="p-1 rounded-full bg-slate-50 dark:bg-black"
       onClick={onClick}
     >
       {is_dark_theme ? <DarkThemeIcon /> : <LightThemeIcon />}
