@@ -1,48 +1,45 @@
-"use client";
-
-import { useState } from "react";
-import { Header } from "@/components/shell/header";
-import Link from "next/link";
-import { GithubIcon } from "@/components/icons/githubIcon";
-import { LinkedInIcon } from "@/components/icons/linkedInIcon";
-import { NpmIcon } from "@/components/icons/npmIcon";
+import { MainLayout } from "@/components/shell/mainLayout";
+import Image from "next/image";
+import { GithubLink } from "@/components/links/githubLink";
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(false);
-
   return (
-    <main className={darkMode ? "dark" : ""}>
-      <div className="flex min-h-screen flex-col items-center justify-between px-3 py-2 bg-gray-50 dark:bg-black transition duration-700 ease-in-out scroll-smooth">
-        <Header
-          {...{ darkMode, onToggleThemeClick: () => setDarkMode(!darkMode) }}
+    <MainLayout>
+      <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50">
+        <h1 className="text-4xl font-bold">Hello, my name is Célio!</h1>
+        <Image
+          src="https://avatars.githubusercontent.com/u/40040827?&v=4"
+          className="rounded-full"
+          alt="Célio"
+          width="150"
+          height="150"
         />
-        <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50">
-          <h1 className="text-4xl font-bold">Hello, my name is Celio!</h1>
-        </section>
-        <footer className="flex flex-col w-full h-28 justify-between items-center px-12 text-black dark:text-gray-50">
-          <div className="flex flex-row w-10/12 sm:w-1/4 justify-around items-center text-black dark:text-gray-50">
-            <Link href="https://www.npmjs.com/~celio1878">
-              <NpmIcon />
-            </Link>
-            <Link
-              href="https://github.com/Celio1878"
-              target={"_blank"}
-              id="github-page"
-            >
-              <GithubIcon />
-            </Link>
-            <Link
-              href="https://www.linkedin.com/in/c%C3%A9lio-vieira-6362a284"
-              target={"_blank"}
-            >
-              <LinkedInIcon />
-            </Link>
-          </div>
-          <Link className="hover:underline" href="https://vercel.com/about">
-            Powered by Vercel
-          </Link>
-        </footer>
-      </div>
-    </main>
+        <p className="text-lg">
+          I am a software engineer specializing in Cloud Computing.
+        </p>
+        <h3>Currently, I'm Sofware Engineer at Itau Unibanco</h3>
+        <h3>
+          I have a full experience using programming languages such as
+          JavaScript/TypeScript, Python, Golang (more know like GO).
+        </h3>
+        <h4>
+          I know little about C# and C++ as well, I've developed some features
+          using it
+        </h4>
+        <h1>
+          check out
+          <GithubLink
+            className="text-gray-800 dark:text-gray-100 hover:text-sky-600"
+            complement="tab=repositories"
+          >
+            <span className="relative flex h-full w-13">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-30"></span>
+
+              <span>my github repositories</span>
+            </span>
+          </GithubLink>
+        </h1>
+      </section>
+    </MainLayout>
   );
 }
