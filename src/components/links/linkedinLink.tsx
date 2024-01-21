@@ -10,7 +10,7 @@ interface Props {
 export const LinkedinLink: FC<Props> = ({
   children,
   className,
-  complement,
+  complement = "",
 }) => (
   <Link
     {...{

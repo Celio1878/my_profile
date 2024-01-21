@@ -10,7 +10,7 @@ interface Props {
 export const NpmPackagesLink: FC<Props> = ({
   children,
   className,
-  complement,
+  complement = "",
 }) => (
   <Link
     {...{

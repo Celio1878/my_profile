@@ -7,7 +7,11 @@ interface Props {
   complement?: string;
 }
 
-export const GithubLink: FC<Props> = ({ children, className, complement }) => (
+export const GithubLink: FC<Props> = ({
+  children,
+  className,
+  complement = "",
+}) => (
   <Link
     {...{
       className,
