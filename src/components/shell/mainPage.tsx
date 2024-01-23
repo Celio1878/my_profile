@@ -10,10 +10,90 @@ export const MainPage: FC = () => {
   const get_years_of_experience = () => {
     const init_career_year = 2020;
     const current_year = new Date().getFullYear();
-    const years_of_experience = current_year - init_career_year;
-    return years_of_experience;
+    return current_year - init_career_year;
   };
   const years_of_experience = get_years_of_experience();
+
+  const aws_services_logos = [
+    <Image
+      key="api-gateway"
+      src="/api-gateway.svg"
+      alt="API-GATEWAY"
+      width={30}
+      height={30}
+    />,
+
+    <Image
+      key="cloudformation"
+      src="/cloudformation.svg"
+      alt="Cloud Formation"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="cloudfront"
+      src="/cloudfront.svg"
+      alt="CloudFront"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="cloudwatch"
+      src="/cloudwatch.svg"
+      alt="CloudWatch"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="codedeploy"
+      src="/codedeploy.svg"
+      alt="Code Deploy"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="cognito"
+      src="/cognito.svg"
+      alt="Cognito"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="dynamodb"
+      src="/dynamodb.svg"
+      alt="DynamoDB"
+      width={30}
+      height={30}
+    />,
+    <Image key="ec2" src="/ec2.svg" alt="EC2" width={30} height={30} />,
+    <Image key="iam" src="/iam.svg" alt="IAM" width={30} height={30} />,
+    <Image
+      key="kinesis"
+      src="/kinesis.svg"
+      alt="Kinesis"
+      width={30}
+      height={30}
+    />,
+    <Image
+      key="lambda"
+      src="/lambda.svg"
+      alt="Lambda"
+      width={30}
+      height={30}
+    />,
+    <Image key="rds" src="/rds.svg" alt="RDS" width={30} height={30} />,
+    <Image
+      key="route53"
+      src="/route53.svg"
+      alt="Route 53"
+      width={30}
+      height={30}
+    />,
+    <Image key="s3" src="/s3.svg" alt="S3" width={30} height={30} />,
+    <Image key="sns" src="/sns.svg" alt="SNS" width={30} height={30} />,
+    <Image key="sqs" src="/sqs.svg" alt="SQS" width={30} height={30} />,
+    <Image key="vpc" src="/vpc.svg" alt="VPC" width={30} height={30} />,
+  ];
 
   return (
     <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50 text-center">
@@ -47,7 +127,7 @@ export const MainPage: FC = () => {
         </div>
       </h3>
       <h4 className="flex flex-row text-sm items-center">
-        I know a little about{" "}
+        and knowing a little about
         <Image
           className="mx-2"
           src="/csharp.svg"
@@ -77,106 +157,27 @@ export const MainPage: FC = () => {
           </HighlightedContent>
         </GithubLink>
       </h1>
-      <section>Some technologies I&apos;m using in my features</section>
-      <div className="flex flex-wrap w-2/5 justify-center items-center my-6">
+      <section>Some technologies I&apos;m using in my projects</section>
+      <div className="flex flex-wrap w-2/5 gap-8 justify-center items-center my-6">
+        <Image src="/aws.svg" alt="AWS" width={30} height={30} />
+        <Image src="/docker.svg" alt="Docker" width={30} height={30} />
+        <Image src="/git.svg" alt="JS" width={30} height={30} />
+        <Image src="/github-icon.svg" alt="GITHUB" width={30} height={30} />
+        <Image src="/kafka.svg" alt="KAFKA" width={30} height={30} />
         <Image
-          className="mx-4"
-          src="/aws.svg"
-          alt="AWS"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/docker.svg"
-          alt="Docker"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/git.svg"
-          alt="JS"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/github-icon.svg"
-          alt="GITHUB"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/kafka.svg"
-          alt="KAFKA"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
           src="/elasticsearch.svg"
           alt="ELASTICSEARCH"
           width={30}
           height={30}
         />
-        <Image
-          className="mx-4"
-          src="/terraform.svg"
-          alt="TERRAFORM"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/vercel.svg"
-          alt="VERCEL"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/sql-server.svg"
-          alt="SQL"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/firebase.svg"
-          alt="FIREBASE"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/nodejs.svg"
-          alt="NODEJS"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/fastapi.svg"
-          alt="FASTAPI"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/nextjs.svg"
-          alt="NEXTJS"
-          width={30}
-          height={30}
-        />
-        <Image
-          className="mx-4"
-          src="/react.svg"
-          alt="REACTJS"
-          width={30}
-          height={30}
-        />
+        <Image src="/terraform.svg" alt="TERRAFORM" width={30} height={30} />
+        <Image src="/vercel.svg" alt="VERCEL" width={30} height={30} />
+        <Image src="/sql-server.svg" alt="SQL" width={30} height={30} />
+        <Image src="/firebase.svg" alt="FIREBASE" width={30} height={30} />
+        <Image src="/nodejs.svg" alt="NODEJS" width={30} height={30} />
+        <Image src="/fastapi.svg" alt="FASTAPI" width={30} height={30} />
+        <Image src="/nextjs.svg" alt="NEXTJS" width={30} height={30} />
+        <Image src="/react.svg" alt="REACTJS" width={30} height={30} />
       </div>
 
       <div>
@@ -185,7 +186,7 @@ export const MainPage: FC = () => {
           possible to create packages (libs) that turn easy the creation of any
           other systems.
         </p>
-        <ul className="flex flex-row items-center justify-around">
+        <ul className="flex flex-col md:flex-row items-center justify-around">
           <li className="w-1/3 flex flex-col items-center justify-center text-center">
             <NpmPackagesLink
               className="border border-2 border-emerald-500 p-6 rounded-md hover:bg-emerald-500 hover:text-white transition delay-75"
@@ -219,9 +220,42 @@ export const MainPage: FC = () => {
             </p>
           </li>
         </ul>
+
+        <h1>
+          And I&apos;m using ones in a side hustle I&apos;m working called
+          <Link
+            className="text-lg font-semibold border border-slate-400 p-2 mx-2 rounded hover:bg-purple-600 hover:border-slate-50 hover:text-white transition delay-75"
+            href="https://beyourstories.com/"
+            key="bys"
+            id="bys"
+            target="_blank"
+          >
+            Be Your Stories
+          </Link>
+          completely serverless.
+        </h1>
+
+        <div className="w-full flex flex-col items-center justify-center">
+          <p>
+            Additionally, I have gotten some courses/certifications about great
+            technologies
+          </p>
+
+          <LinkedinLink
+            className="text-gray-800 dark:text-gray-100 hover:text-white"
+            complement="details/certifications/"
+          >
+            <HighlightedContent>
+              <span className="py-1 px-2 border border-sky-100 dark:border-sky-800 rounded-md hover:bg-sky-400 transition delay-75">
+                Check my Certifications!
+              </span>
+            </HighlightedContent>
+          </LinkedinLink>
+        </div>
+
         <div>
           <h3>
-            Currently, I&apos;m working as a Software Analyst at
+            Currently, I&apos;m working as a Software Engineer at
             <Link
               href="https://www.itau.com.br"
               className="underline mx-2 hover:text-orange-500 trasition delay-75"
@@ -233,134 +267,122 @@ export const MainPage: FC = () => {
           <h2>Using mainly the AWS services like</h2>
         </div>
       </div>
-      <div className="flex w-1/2 overflow-hidden space-x-16 group">
-        <div className="flex space-x-16 animate-loop-scroll group-hover:paused">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ee9f161-df19-4fa7-a2a6-edf9acf0e0d6?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 1"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/80480f8a-69ad-4c30-88ba-f4e7ee08fc51?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 2"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/140d376c-13f2-4823-b397-b3de733bf560?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 3"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ae217f1-b695-4661-bd3d-6440eebc2c5c?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 4"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/67017079-51e1-4245-9bf1-b5957eb66c74?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 5"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/515313ac-7ec9-4c6e-95db-80dac2f8b960?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 6"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c513fc32-3ab9-4cca-911e-0b2642ac7206?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 7"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5731a5a7-689f-49ae-abf1-6e6dc00c2043?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 8"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb51d286-530f-42be-9e91-9c850522f127?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 9"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/44ba8437-f6fd-4a51-bfd3-262d7528f7a4?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 10"
-          />
+      <div className="relative rounded-lg m-auto w-full md:w-9/12 overflow-hidden before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] after:content-['']">
+        <div className="animate-infinite-slider flex w-[calc(250px*10)]">
+          {aws_services_logos.map((logo) => (
+            <div
+              className="slide flex w-[125px] items-center justify-center"
+              key={logo.key}
+            >
+              {logo}
+            </div>
+          ))}
+          {aws_services_logos.map((logo) => (
+            <div
+              className="slide flex w-[125px] items-center justify-center"
+              key={logo.key}
+            >
+              {logo}
+            </div>
+          ))}
         </div>
-        <div
-          className="flex space-x-16 animate-loop-scroll group-hover:paused"
-          aria-hidden="true"
+      </div>
+      <h1>
+        But I&apos;ve already worked as Senior Software Developer at
+        <Link
+          className="mx-2 underline hover:opacity-85"
+          href="https://www.squadra.com.br/index.html"
         >
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ee9f161-df19-4fa7-a2a6-edf9acf0e0d6?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 1"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/80480f8a-69ad-4c30-88ba-f4e7ee08fc51?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 2"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/140d376c-13f2-4823-b397-b3de733bf560?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 3"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ae217f1-b695-4661-bd3d-6440eebc2c5c?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 4"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/67017079-51e1-4245-9bf1-b5957eb66c74?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 5"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/515313ac-7ec9-4c6e-95db-80dac2f8b960?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 6"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c513fc32-3ab9-4cca-911e-0b2642ac7206?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 7"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5731a5a7-689f-49ae-abf1-6e6dc00c2043?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 8"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb51d286-530f-42be-9e91-9c850522f127?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 9"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/44ba8437-f6fd-4a51-bfd3-262d7528f7a4?apiKey=7e8b177c7c374d8abaf3aebf27f1c17d&"
-            className="max-w-none"
-            alt="Image 10"
-          />
-        </div>
+          Squadra Digital
+        </Link>
+        and FullStack Developer at
+        <Link
+          className="mx-2 underline hover:opacity-85"
+          href="https://editoraforum.com.br/"
+        >
+          Editora Fórum
+        </Link>
+        using many services like
+      </h1>
+
+      <div className="flex flex-wrap w-2/5 gap-8 justify-center items-center my-6">
+        <Image src="/amplify.svg" alt="AMPLIFY" width={30} height={30} />
+        <Image src="/cdk.svg" alt="CDK" width={30} height={30} />
+        <Image src="/codebuild.svg" alt="CodeBuild" width={30} height={30} />
+        <Image
+          src="/codepipeline.svg"
+          alt="CodePipeline"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/costexplorer.svg"
+          alt="CostExplorer"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/elasticache.svg"
+          alt="ELASTICACHE"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/elasticcontainer.svg"
+          alt="Container"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/eventbridge.svg"
+          alt="Event Bridge"
+          width={30}
+          height={30}
+        />
+        <Image src="/kms.svg" alt="KMS" width={30} height={30} />
+        <Image src="/opensearch.svg" alt="OpenSearch" width={30} height={30} />
+        <Image
+          src="/secretsmanager.svg"
+          alt="Secrets Manager"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/stepfunctions.svg"
+          alt="Step Functions"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/systemsmanager.svg"
+          alt="Systems Manager"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/trustedadvisor.svg"
+          alt="Trusted Advisor"
+          width={30}
+          height={30}
+        />
+        <Image
+          src="/wellarchitectedtool.svg"
+          alt="Well Architected Tool"
+          width={30}
+          height={30}
+        />
+        <Image src="/kafka.svg" alt="KAFKA" width={30} height={30} />
+        <Image
+          src="/elasticsearch.svg"
+          alt="ELASTICSEARCH"
+          width={30}
+          height={30}
+        />
+        <Image src="/vercel.svg" alt="VERCEL" width={30} height={30} />
+        <Image src="/nodejs.svg" alt="NODEJS" width={30} height={30} />
+        <Image src="/fastapi.svg" alt="FASTAPI" width={30} height={30} />
+        <Image src="/nextjs.svg" alt="NEXTJS" width={30} height={30} />
+        <Image src="/react.svg" alt="REACTJS" width={30} height={30} />
       </div>
     </section>
   );
