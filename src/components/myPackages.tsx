@@ -3,7 +3,7 @@ import { NpmPackagesLink } from "@/components/links/npmPackagesLink";
 import Link from "next/link";
 
 export const MyPackages: FC = () => (
-  <ul className="flex flex-col w-full md:flex-row items-center justify-around">
+  <ul className="flex flex-col gap-y-4 w-full md:flex-row items-center justify-around">
     <PackageItem
       name="NodeJS App Builder"
       description="It's possible to create a NodeJS App with a Serverless handler, and with this, you can focus on routes, middlewares and business rules."
@@ -49,7 +49,7 @@ interface PackageItemProps {
 
 const PackageItem: FC<PackageItemProps> = ({ name, description }) => {
   return (
-    <li className="w-1/3 flex flex-col items-center justify-center text-center">
+    <li className="w-full sm:w-2/5 flex flex-col items-center justify-center text-center border border-slate-200 py-14 px-20 rounded-md">
       <NpmPackage {...{ name }} />
 
       <p className="text-center">{description}</p>
