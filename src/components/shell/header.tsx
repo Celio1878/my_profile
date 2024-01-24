@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Header: FC<Props> = ({ darkMode, onToggleThemeClick }) => (
-  <header className="flex flex-row w-full h-full items-center justify-between">
+  <header className="flex flex-row w-full h-full items-center justify-between mb-14 px-4">
     <ToggleThemeButton
       {...{
         is_dark_theme: darkMode,

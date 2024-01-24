@@ -13,7 +13,7 @@ export const MainLayout: FC<Props> = ({ children }) => {
 
   return (
     <main className={darkMode ? "dark" : ""}>
-      <div className="flex min-h-screen flex-col items-center justify-between px-3 py-2 bg-slate-50 dark:bg-black transition duration-700 ease-in-out scroll-smooth">
+      <div className="flex min-h-screen flex-col items-center justify-between bg-slate-50 dark:bg-black transition duration-700 ease-in-out scroll-smooth">
         <Header
           {...{ darkMode, onToggleThemeClick: () => setDarkMode(!darkMode) }}
         />
