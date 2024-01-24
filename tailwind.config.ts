@@ -21,7 +21,7 @@ const config: Config = {
         infiniteSlider: {
           "0%": { transform: "translateX(0)" },
           "100%": {
-            transform: "translateX(calc(-250px * 5))",
+            transform: "translateX(calc(-250px * 9))",
           },
         },
       },
