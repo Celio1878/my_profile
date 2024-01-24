@@ -5,7 +5,6 @@ import { LinkedinLink } from "@/components/links/linkedinLink";
 import Link from "next/link";
 import { IconLink } from "@/components/links/iconLink";
 import { AwsServiceSlider } from "@/components/awsServiceSlider";
-import { get_years_of_experience } from "@/utils/get_years_of_experience";
 import { ProjectTechnologies } from "@/components/projectTechnologies";
 import { languages_list } from "@/utils/iconsList";
 import { BYSLink } from "@/components/links/bysLink";
@@ -15,8 +14,6 @@ import { OldCompanies } from "@/components/oldCompanies";
 import { RestOfTechnologies } from "@/components/restOfTechnologies";
 
 export const MainPage: FC = () => {
-  const years_of_experience = get_years_of_experience();
-
   return (
     <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50 text-center gap-y-20">
       <div className="flex flex-col gap-y-4 text-4xl font-bold items-center justify-center">
@@ -24,13 +21,10 @@ export const MainPage: FC = () => {
       </div>
 
       <div className="flex flex-col text-center justify-center items-center gap-y-2">
-        <h1>
-          I am a software engineer that have worked for the last{" "}
-          {years_of_experience} years with it;
-        </h1>
-        <h2>Fluent in English and Portuguese;</h2>
-        <h2>Degree in computer science;</h2>
-        <h2>Specialized in Cloud Computing;</h2>
+        <h1>I am a Software Engineer;</h1>
+        <h2>Fluent in English and Portuguese languages;</h2>
+        <h2>Degree in Computer Science;</h2>
+        <h2>Postgraduate in Cloud Computing Projects and Architecture.</h2>
         <LinkedinLink className="text-gray-800 dark:text-gray-100 hover:text-white font-semibold">
           <HighlightedContent>
             <span className="py-2 px-3 border border-sky-100 dark:border-sky-800 rounded-md hover:bg-sky-400 transition delay-75">
