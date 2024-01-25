@@ -14,16 +14,16 @@ export default function NotFound() {
         }}
       />
 
-      <div className="w-3/4 flex flex-col gap-4">
-        <p className="text-4xl text-white underline"> Página Não Encontrada </p>
+      <div className="w-3/4 flex flex-col gap-4 items-center justify-center">
+        <p className="text-4xl text-white underline"> Page Not Found </p>
         <p className="text-zinc-500">
-          Desculpe por isso! A página que vocé procura não existe.
+          Sorry! The page that you are looking for doesn&apos;t exist.
         </p>
         <Link
-          className="bg-purple-800 py-2 rounded hover:opacity-80 duration-300"
+          className="w-1/2 bg-sky-800 py-2 rounded hover:opacity-80 duration-300"
           href="/"
         >
-          Voltar para a página inicial
+          Go Back
         </Link>
       </div>
     </div>

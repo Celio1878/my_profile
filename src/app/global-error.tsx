@@ -22,23 +22,20 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           priority: true,
         }}
       />
-      <div className="w-full flex flex-col gap-4">
-        <p className="text-4xl text-white underline">
-          {" "}
-          Aconteceu algo não planejado!{" "}
-        </p>
+      <div className="w-9/12 flex flex-col gap-4 items-center justify-center">
+        <p className="text-4xl text-white underline"> Troubles Happens! </p>
         <div className="w-full flex flex-row gap-4 justify-center">
           <Link
             className="bg-red-500 py-2 px-3 rounded hover:opacity-80 duration-300"
             href="/"
           >
-            Voltar
+            Go Back
           </Link>
           <button
             className="flex text-white border border-b-violet-600 border-t-violet-600 border-l-0 border-r-0 rounded-md py-2 px-8 hover:bg-violet-700 duration-300"
             onClick={reset}
           >
-            Tente de Novo
+            Try Again
           </button>
         </div>
       </div>
