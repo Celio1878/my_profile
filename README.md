@@ -60,7 +60,7 @@ $ npm run dev
 
 - [x] Create Themes
 - [x] Responsive
-- [x] Componentization
+- [x] Organize the Components
 - [x] Remove unused code
 - [x] Build
 
