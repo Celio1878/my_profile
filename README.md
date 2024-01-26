@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1>My Profile</h1>
 
-## Getting Started
+# Summary
 
-First, run the development server:
+- [Summary](#summary)
+- [Project](#project)
+    - [Prerequisites](#prerequisites)
+        - [🎲 Running the Project](#-running-the-project)
+- [Main Libs](#main-libs)
+- [Scripts](#scripts)
+- [TODO](#todo)
+- [Authors](#authors)
+
+---
+
+# Project
+
+A profile to expose your knowledge and experiences.
+
+## Prerequisites
+
+Before you start, install it on your machine:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
+Some code editor
+like [VSCode](https://code.visualstudio.com/), [WebStorm](https://www.jetbrains.com/webstorm/promo/?source=google&medium=cpc&campaign=AMER_en_BR_WebStorm_Branded&term=webstorm&content=604189299307&gclid=CjwKCAiAzc2tBhA6EiwArv-i6TcmyVjdP40H0Sw8h_gV0ytQRVcLEIMCwjOpwVNGRA3Qk6Zuq-eBXxoCsVIQAvD_BwE)...
+
+### 🎲 Running the Project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+$ git clone <https://github.com/Celio1878/my_profile>
+
+# Access the project in the terminal/cmd
+$ cd my_profile
+
+# Install the dependencies
+$ npm install
+
+# Exec the project
+$ npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Main Libs
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Tailwindcss](https://tailwindcss.com/)
 
-## Learn More
+# Scripts
 
-To learn more about Next.js, take a look at the following resources:
+`npm run dev`: Execute the project on your computer.
+<br>
+`npm run build`: Build the project.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# TODO
 
-## Deploy on Vercel
+- [x] Create Themes
+- [x] Responsive
+- [x] Componentization
+- [x] Remove unused code
+- [x] Build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Authors
+
+<table>
+<style>
+    .center {
+        text-align: center
+    }
+</style>
+  <tr>
+    <td class="center"><a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a></td>
+  </tr>
+</table>
