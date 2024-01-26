@@ -69,12 +69,7 @@ $ npm run dev
 # Authors
 
 <table>
-<style>
-    .center {
-        text-align: center
-    }
-</style>
   <tr>
-    <td class="center"><a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a></td>
+    <td align="center"><a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a></td>
   </tr>
 </table>
