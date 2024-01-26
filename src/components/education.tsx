@@ -18,7 +18,7 @@ export const Education: FC = () => (
     <LinkedinLink className="text-gray-800 dark:text-gray-100 hover:text-white font-semibold">
       <HighlightedContent>
         <span className="py-2 px-3 border border-sky-100 dark:border-sky-800 rounded-md hover:bg-sky-400 transition delay-75">
-          Check My Profile!
+          Check My Resume!
         </span>
       </HighlightedContent>
     </LinkedinLink>
