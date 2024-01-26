@@ -68,8 +68,6 @@ $ npm run dev
 
 # Authors
 
-<table>
-  <tr>
-    <td style="text-align: center;"><a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a></td>
-  </tr>
-</table>
+|                                                                                                                                                                                                                                                                            |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a> |                                                                                                                Cell 4                                                                                                                                   |
