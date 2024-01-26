@@ -17,10 +17,10 @@ export const metadata: Metadata = {
   publisher: "Vercel",
   generator: "Next.js",
   icons: {
-    icon: "./favicon.ico",
-    shortcut: "./favicon.ico",
-    apple: "./favicon.ico",
-    href: "./favicon.ico",
+    icon: "./icon.svg",
+    shortcut: "./icon.svg",
+    apple: "./icon.svg",
+    href: ".icon.svg",
   },
 };
 
