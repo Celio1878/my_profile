@@ -30,16 +30,6 @@ interface Props {
   params: { lang: string };
 }
 
-export async function generateStaticParams() {
-  return [
-    { lang: "en-US" },
-    { lang: "pt-BR" },
-    { lang: "de" },
-    { lang: "es-ES" },
-    { lang: "fr" },
-  ];
-}
-
 export default function RootLayout({ children, params }: Props) {
   return (
     <html lang={params.lang}>
