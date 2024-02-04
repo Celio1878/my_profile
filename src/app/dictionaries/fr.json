@@ -1,3 +1,74 @@
 {
-  "greeting": "Ola"
+  "greetings": {
+    "title": "Bonjour, je suis Célio"
+  },
+  "interests": {
+    "catchphrase": "Testez tout ce qui est important",
+    "the_most_design_pattern": "Pour moi, le TDD (développement piloté par les tests) est le modèle de conception le plus important, après tout, il confirme que ce que vous avez fait fonctionne. Cependant, tout logiciel doit livrer au moins une chose",
+    "customer_needs": "Répondre aux besoins des clients",
+    "something_i_like": "J'aime jouer avec le code, créer des projets/fonctionnalités/ressources, tester de nouvelles technologies et découvrir ce que nous pouvons en faire. Vérifier comment les systèmes/motifs de conception fonctionnent est amusant, ainsi que de trouver la meilleure façon de les implémenter",
+    "effect_text": "Mise à jour constante de mes connaissances"
+  },
+  "education": {
+    "title": "Éducation",
+    "job_title": "Je suis ingénieur logiciel avec",
+    "years_of_experience": "années d'expérience",
+    "languages_spoken": "Couramment en anglais et en portugais",
+    "major": "Licence en informatique",
+    "post_degree": "Post-diplôme en projets et architecture informatique dans le cloud",
+    "check_resume": "Vérifiez mon CV"
+  },
+  "certifications": {
+    "title": "J'ai suivi quelques cours/certifications",
+    "check_certifications": "Vérifiez mes certifications"
+  },
+  "programming_languages": {
+    "title": "J'ai une expérience complète en utilisant des langages de programmation tels que",
+    "description": "et j'ai de l'expérience en utilisant",
+    "and": "et",
+    "complement": "de plus, j'ai développé certaines fonctionnalités avec",
+    "check_repos": "Vérifiez mes dépôts GitHub"
+  },
+  "technologies": {
+    "title": "Certaines technologies que j'utilise dans mes projets"
+  },
+  "side_hustles": {
+    "title": "Projets parallèles",
+    "description": "En créant des logiciels, il est toujours possible de créer des packages (libs) qui simplifient la création d'autres",
+    "subtitle": "Et j'en utilise dans un projet parallèle sur lequel je travaille appelé",
+    "kind_of_packages": "complètement sans serveur"
+  },
+  "packages": {
+    "description1": "Il est possible de créer une application NodeJS avec un gestionnaire sans serveur, et ainsi vous pouvez vous concentrer sur les routes, les middlewares et les règles métier",
+    "description2_title": "CDK Factory peut être utilisé avec",
+    "description2_source": "AWS CDK",
+    "description2_doc": "et cela vous aide à créer de nouvelles instances pour votre Lambda, Api Gateway, DynamoDB et bien d'autres ressources"
+  },
+  "goals": {
+    "title": "Mes objectifs actuels sont",
+    "certifications": "Obtenir quelques CERTIFICATIONS AWS",
+    "improve_english": "Améliorer mon vocabulaire anglais",
+    "achieve_fluency": "Acquérir la maîtrise de l'allemand et de l'espagnol",
+    "finish_projects": "Améliorer et terminer certains projets parallèles",
+    "share_knowledge": "Créer des canaux pour partager des connaissances avec la communauté"
+  },
+  "job": {
+    "title": "Emploi actuel",
+    "description": "Actuellement, je travaille en tant que",
+    "as": "ingénieur logiciel",
+    "at": "chez",
+    "area": "dans les systèmes de paiement, en gérant et en développant de nouvelles fonctionnalités",
+    "services": "En utilisant principalement les services AWS comme"
+  },
+  "old_experiences": {
+    "title": "Anciennes expériences"
+  },
+  "old_companies": {
+    "description": "J'ai travaillé en tant que",
+    "squadra_job": "Développeur logiciel senior",
+    "at": "chez",
+    "and": "et",
+    "editora_job": "Développeur FullStack",
+    "services": "en utilisant de nombreux services comme"
+  }
 }

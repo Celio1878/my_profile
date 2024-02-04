@@ -40,7 +40,7 @@
   },
   "packages": {
     "description1": "It's possible to create a NodeJS App with a Serverless handler, and with this, you can focus on routes, middlewares and business rules",
-    "description2_title": "CDK Factory may be used with",
+    "description2_title": "CDK Factory must be used with",
     "description2_source": "AWS CDK",
     "description2_doc": "and it helps you to create new instances for your Lambda, Api Gateway, DynamoDB and many other resources"
   },

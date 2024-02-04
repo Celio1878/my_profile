@@ -1,3 +1,74 @@
 {
-  "greeting": "Ola"
+  "greetings": {
+    "title": "Olá, meu nome é Célio."
+  },
+  "interests": {
+    "catchphrase": "Teste tudo que é importante",
+    "the_most_design_pattern": "Para mim, o TDD (Desenvolvimento Orientado a Testes) é o padrão de design mais importante, afinal, ele confirma que o que você fez funciona. No entanto, todo software deve entregar pelo menos uma coisa",
+    "customer_needs": "Atender às necessidades do cliente",
+    "something_i_like": "Gosto de brincar com código, criando projetos/recursos/características, testando novas tecnologias e descobrindo o que podemos fazer com isso. Verificar como os sistemas/padrões de design funcionam é divertido, assim como encontrar a melhor maneira de implementá-los",
+    "effect_text": "Sempre atualizando meus conhecimentos"
+  },
+  "education": {
+    "title": "Educação",
+    "job_title": "Sou Engenheiro de Software com",
+    "years_of_experience": "anos de experiência",
+    "languages_spoken": "Fluente em inglês e português",
+    "major": "Bacharel em Ciência da Computação",
+    "post_degree": "Pós-graduado em Projetos e Arquitetura de Computação em Nuvem",
+    "check_resume": "Verifique meu currículo"
+  },
+  "certifications": {
+    "title": "Conquistei alguns cursos/certificações",
+    "check_certifications": "Verifique minhas certificações"
+  },
+  "programming_languages": {
+    "title": "Tenho plena experiência utilizando linguagens de programação como",
+    "description": "e tenho alguma experiência usando",
+    "and": "e",
+    "complement": "além disso, desenvolvi algumas funcionalidades usando-a",
+    "check_repos": "Verifique meus repositórios no GitHub"
+  },
+  "technologies": {
+    "title": "Algumas tecnologias que estou utilizando em meus projetos"
+  },
+  "side_hustles": {
+    "title": "Atividades Paralelas",
+    "description": "Ao criar software, sempre é possível criar pacotes (libs) que simplificam a criação de outros",
+    "subtitle": "E estou usando alguns em uma atividade paralela na qual estou trabalhando chamada",
+    "kind_of_packages": "completamente serverless"
+  },
+  "packages": {
+    "description1": "É possível criar um aplicativo NodeJS com um manipulador Serverless e, com isso, você pode focar em rotas, middlewares e regras de negócio",
+    "description2_title": "CDK Factory deve ser usada com",
+    "description2_source": "AWS CDK",
+    "description2_doc": "e ajuda você a criar novas instâncias para sua Lambda, Api Gateway, DynamoDB e muitos outros recursos"
+  },
+  "goals": {
+    "title": "Meus objetivos atuais são",
+    "certifications": "Obter algumas CERTIFICAÇÕES DA AWS",
+    "improve_english": "Melhorar meu vocabulário em inglês",
+    "achieve_fluency": "Alcançar fluência em alemão e espanhol",
+    "finish_projects": "Melhorar e concluir alguns projetos paralelos",
+    "share_knowledge": "Criar canais para compartilhar conhecimento com a comunidade"
+  },
+  "job": {
+    "title": "Trabalho Atual",
+    "description": "Atualmente, estou trabalhando como",
+    "as": "Engenheiro de Software",
+    "at": "em",
+    "area": "em sistemas de pagamento, gerenciando e desenvolvendo novas funcionalidades",
+    "services": "Usando principalmente os serviços da AWS como"
+  },
+  "old_experiences": {
+    "title": "Experiências Anteriores"
+  },
+  "old_companies": {
+    "description": "Trabalhei como",
+    "squadra_job": "Desenvolvedor de Software Sênior",
+    "at": "em",
+    "and": "e",
+    "editora_job": "Desenvolvedor FullStack",
+    "services": "utilizando muitos serviços como"
+  }
 }
