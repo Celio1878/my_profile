@@ -1,10 +1,16 @@
 import { MainLayout } from "@/components/shell/mainLayout";
 import { MainPage } from "@/components/shell/mainPage";
 
-export default function Home() {
+interface Props {
+  params: {
+    lang: string;
+  };
+}
+
+export default function Home({ params: { lang } }: Props) {
   return (
     <MainLayout>
-      <MainPage />
+      <MainPage {...{ lang }} />
     </MainLayout>
   );
 }

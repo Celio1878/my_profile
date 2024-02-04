@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   category: "blog",
   classification: "free",
   creator: "Celio Vieira",
-  authors: [{ name: "Celio Vieira", url: "celio-vieira.com" }],
+  authors: [{ name: "Celio Vieira", url: "celiovieira.com" }],
   publisher: "Vercel",
   generator: "Next.js",
   icons: {
@@ -27,11 +27,16 @@ export const metadata: Metadata = {
 
 interface Props {
   children: ReactNode;
+  params: { lang: string };
 }
 
-export default function RootLayout({ children }: Props) {
+export async function generateStaticParams() {
+  return [{ lang: "en-US" }, { lang: "de" }];
+}
+
+export default function RootLayout({ children, params }: Props) {
   return (
-    <html lang="en">
+    <html lang={params.lang}>
       <body className={inter.className}>
         {children}
         <Analytics />

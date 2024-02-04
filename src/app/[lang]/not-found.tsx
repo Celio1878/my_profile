@@ -21,7 +21,7 @@ export default function NotFound() {
         </p>
         <Link
           className="w-1/2 bg-sky-800 py-2 rounded hover:opacity-80 duration-300"
-          href="/"
+          href="/public"
         >
           Go Back
         </Link>

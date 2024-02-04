@@ -27,7 +27,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         <div className="w-full flex flex-row gap-4 justify-center">
           <Link
             className="bg-red-500 py-2 px-3 rounded hover:opacity-80 duration-300"
-            href="/"
+            href="/public"
           >
             Go Back
           </Link>
