@@ -1,5 +1,8 @@
 "use server";
 
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
 const dictionaries = {
   en: () => import("../dictionaries/en.json").then((module) => module.default),
   br: () => import("../dictionaries/br.json").then((module) => module.default),
@@ -8,5 +11,13 @@ const dictionaries = {
   fr: () => import("../dictionaries/fr.json").then((module) => module.default),
 };
 
-// @ts-ignore
-export const getDictionary = async (locale: string) => dictionaries[locale]();
+export const getDictionary = async (locale: string) => {
+  // @ts-ignore
+  if (!dictionaries[locale]) {
+    revalidatePath("/en");
+    redirect("/en");
+  }
+
+  // @ts-ignore
+  return dictionaries[locale]();
+};

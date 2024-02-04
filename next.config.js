@@ -10,6 +10,15 @@ const nextConfig = {
   experimental: {
     webVitalsAttribution: ["CLS", "LCP"],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/en",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
