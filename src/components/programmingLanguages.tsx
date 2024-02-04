@@ -4,18 +4,28 @@ import { IconLink } from "@/components/links/iconLink";
 import { GithubLink } from "@/components/links/githubLink";
 import { HighlightedContent } from "@/components/highlightedContent";
 
-export const ProgrammingLanguages: FC = () => (
+interface Props {
+  dict: {
+    programming_languages: {
+      title: string;
+      description: string;
+      and: string;
+      complement: string;
+      check_repos: string;
+    };
+  };
+}
+
+export const ProgrammingLanguages: FC<Props> = ({ dict }) => (
   <div className="flex flex-col gap-y-2 items-center justify-center">
-    <p className="text-lg font-semibold">
-      I have a full experience using programming languages such as
-    </p>
+    <p className="text-lg font-semibold">{dict.programming_languages.title}</p>
     <ul className="flex flex-row justify-around items-center gap-10 border border-slate-300 dark:border-slate-900 rounded-md py-8 px-10">
       {languages_list.map((language) => (
         <li key={language.key}>{language}</li>
       ))}
     </ul>
     <div className="flex flex-row text-sm items-center">
-      and I have some experience using
+      {dict.programming_languages.description}
       <IconLink
         className="mx-2"
         src="/csharp.svg"
@@ -25,7 +35,7 @@ export const ProgrammingLanguages: FC = () => (
         width={30}
         height={30}
       />
-      and
+      {dict.programming_languages.and}
       <IconLink
         className="mx-2"
         src="/c.svg"
@@ -35,7 +45,7 @@ export const ProgrammingLanguages: FC = () => (
         width={30}
         height={30}
       />
-      as well, I&apos;ve developed some features using it
+      {dict.programming_languages.complement}
     </div>
     <div className="mt-4">
       <GithubLink
@@ -44,7 +54,7 @@ export const ProgrammingLanguages: FC = () => (
       >
         <HighlightedContent>
           <span className="py-2 px-3 border border-sky-100 dark:border-sky-800 rounded-md hover:bg-sky-400 transition delay-75 font-semibold">
-            Check my github repositories
+            {dict.programming_languages.check_repos}
           </span>
         </HighlightedContent>
       </GithubLink>

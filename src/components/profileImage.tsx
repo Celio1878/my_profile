@@ -8,5 +8,6 @@ export const ProfileImage: FC = () => (
     alt="Célio"
     width="150"
     height="150"
+    priority={true}
   />
 );
