@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Goals: FC<Props> = ({ dict }) => (
-  <div className="w-full sm:w-1/2 flex flex-col items-center justify-center py-8 gap-y-1 border border-slate-300 dark:border-slate-900 rounded-md">
+  <div className="w-full sm:w-1/2 flex flex-col items-center justify-center py-8 gap-y-1 sm:border border-slate-300 dark:border-slate-900 rounded-md">
     <h1 className="text-xl font-bold underline mb-5">{dict.goals.title}:</h1>
     <div className="mb-6">
       <p className="mb-1 text-lg font-medium mb-2">
