@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AwsServiceSlider } from "@/components/awsServiceSlider";
+import { AwsServiceCurrentJob } from "@/components/awsServiceCurrentJob";
 import { Greetings } from "@/components/greetings";
 import { Interests } from "@/components/interests";
 import { Education } from "@/components/education";
@@ -11,6 +11,7 @@ import { Goals } from "@/components/goals";
 import { CurrentJob } from "@/components/currentJob";
 import { OldExperiences } from "@/components/oldExperiences";
 import { getDictionary } from "@/app/[lang]/dictionaries";
+import { ContactMe } from "@/components/contactMe";
 
 interface Props {
   lang: string;
@@ -21,6 +22,7 @@ export const MainPage: FC<Props> = async ({ lang }) => {
 
   return (
     <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50 text-center gap-y-20 pt-14 px-4">
+      <ContactMe {...{ dict }} />
       <Greetings {...{ dict }} />
       <Interests {...{ dict }} />
       <Education {...{ dict }} />
@@ -30,7 +32,7 @@ export const MainPage: FC<Props> = async ({ lang }) => {
       <SideHustles {...{ dict }} />
       <Goals {...{ dict }} />
       <CurrentJob {...{ dict }} />
-      <AwsServiceSlider />
+      <AwsServiceCurrentJob />
       <OldExperiences {...{ dict }} />
     </section>
   );
