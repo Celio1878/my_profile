@@ -9,9 +9,10 @@ interface Props {
 }
 
 export const MainLayout: FC<Props> = ({ children }) => {
-  const get_theme = localStorage.getItem("theme") || "light";
   const [theme, set_theme] = useState(() => {
-    return get_theme;
+    return typeof window !== "undefined"
+      ? localStorage.getItem("theme")
+      : "light";
   });
 
   function changing_theme() {
@@ -23,7 +24,7 @@ export const MainLayout: FC<Props> = ({ children }) => {
   }
 
   return (
-    <main className={theme}>
+    <main className={`${theme}`}>
       <div className="flex min-h-screen flex-col items-center justify-between bg-slate-50 dark:bg-black transition duration-700 ease-in-out scroll-smooth">
         <Header
           {...{
