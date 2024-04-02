@@ -3,22 +3,20 @@
 import { FC, ReactNode, useState } from "react";
 import { Header } from "@/components/shell/header";
 import { Footer } from "@/components/shell/footer";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Props {
   children: ReactNode;
 }
 
 export const MainLayout: FC<Props> = ({ children }) => {
-  const [theme, set_theme] = useState(() => {
-    return typeof window !== "undefined"
-      ? localStorage.getItem("theme")
-      : "light";
-  });
+  const { stored_value, set_value } = useLocalStorage("theme", "light");
+  const [theme, set_theme] = useState(stored_value);
 
   function changing_theme() {
     set_theme((prev_theme) => {
       const new_theme = prev_theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", new_theme);
+      set_value(new_theme);
       return new_theme;
     });
   }
