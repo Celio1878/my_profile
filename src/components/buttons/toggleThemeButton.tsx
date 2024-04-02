@@ -6,16 +6,16 @@ import { LightThemeIcon } from "@/components/icons/lightThemeIcon";
 
 interface Props {
   is_dark_theme: boolean;
-  onClick: VoidFunction;
+  onChange: VoidFunction;
 }
 
-export const ToggleThemeButton: FC<Props> = ({ is_dark_theme, onClick }) => {
+export const ToggleThemeButton: FC<Props> = ({ is_dark_theme, onChange }) => {
   return (
     <label className="inline-flex items-center cursor-pointer justify-center">
       <input
         type="checkbox"
         className="sr-only peer"
-        onChange={onClick}
+        onChange={onChange}
         checked={is_dark_theme}
       />
       <span className="relative left-3 w-7 h-7 bg-slate-100 dark:bg-black rounded-full z-10 transition-all duration-1000 peer-checked:translate-x-7">

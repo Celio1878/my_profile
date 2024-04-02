@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import ThemeProvider from "@/app/[lang]/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,11 +33,14 @@ interface Props {
 
 export default function RootLayout({ children, params }: Props) {
   return (
-    <html lang={params.lang}>
-      <body className={inter.className}>
-        {children}
-        <Analytics />
-      </body>
+    <html lang={params.lang} suppressHydrationWarning>
+      <head />
+      <ThemeProvider>
+        <body className={inter.className}>
+          {children}
+          <Analytics />
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

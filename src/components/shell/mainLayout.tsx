@@ -1,21 +1,26 @@
 "use client";
 
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useContext } from "react";
 import { Header } from "@/components/shell/header";
 import { Footer } from "@/components/shell/footer";
+import { ThemeContext } from "@/app/[lang]/theme-provider";
 
 interface Props {
   children: ReactNode;
 }
 
 export const MainLayout: FC<Props> = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  // @ts-ignore
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <main className={darkMode ? "dark" : ""}>
+    <main className={theme}>
       <div className="flex min-h-screen flex-col items-center justify-between bg-slate-50 dark:bg-black transition duration-700 ease-in-out scroll-smooth">
         <Header
-          {...{ darkMode, onToggleThemeClick: () => setDarkMode(!darkMode) }}
+          {...{
+            darkMode: theme === "light" ? false : true,
+            onToggleThemeClick: toggleTheme,
+          }}
         />
         {children}
         <Footer />

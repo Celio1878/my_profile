@@ -1,7 +1,7 @@
-import { FC } from "react";
 import { ToggleThemeButton } from "@/components/buttons/toggleThemeButton";
 import { useParams } from "next/navigation";
 import { SelectLanguages } from "@/components/selectLanguages";
+import { FC } from "react";
 
 interface Props {
   darkMode: boolean;
@@ -17,7 +17,7 @@ export const Header: FC<Props> = ({ darkMode, onToggleThemeClick }) => {
         <ToggleThemeButton
           {...{
             is_dark_theme: darkMode,
-            onClick: onToggleThemeClick,
+            onChange: onToggleThemeClick,
           }}
         />
       </header>
