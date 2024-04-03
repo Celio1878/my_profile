@@ -12,7 +12,8 @@ import { CurrentJob } from "@/components/currentJob";
 import { OldExperiences } from "@/components/oldExperiences";
 import { getDictionary } from "@/app/[lang]/dictionaries";
 import { ContactMe } from "@/components/contactMe";
-import Link from "next/link";
+import { KnowledgeList } from "@/components/knowledgeList";
+import { knowledge_list } from "@/utils/knowledge_list";
 
 interface Props {
   lang: string;
@@ -23,188 +24,14 @@ export const MainPage: FC<Props> = async ({ lang }) => {
 
   return (
     <div className="flex flex-row w-full content-between">
-      <section className="relative bg-zinc-200 w-1/6 h-full text-gray-700 rounded-r-xl pb-4">
-        <h2 className="text-xl font-medium w-full bg-zinc-300 p-4 rounded-tr-xl">
+      <section className="relative bg-zinc-100 w-1/6 h-full rounded-r-xl pb-6">
+        <h2 className="text-xl font-medium w-full bg-zinc-200 p-5 rounded-tr-xl text-zinc-400">
           Knowledge
         </h2>
-        <div className="space-y-4 mt-3 pl-4">
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Languages
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  JS/TS
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Python
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Golang
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Infrastructure
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Cloud
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Terraform
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Serverless Framework
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Git/Github
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Docker
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Kafka
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Backend
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  NodeJS
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  FastAPI
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Go Standard Library
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Frontend
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  ReactJS
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  NextJS
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Data
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  SQL
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  NoSQL
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Data Structure
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  ML
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  AI
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  LLM
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-1 font-light hover:font-medium hover:cursor-pointer">
-              Patterns
-            </h3>
-            <ul className="ml-3 space-y-1">
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  *DD
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  OOP/FP
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  SOLID
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  YAGNI
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Well Architected Framework
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Structural
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline text-sm font-medium" href="">
-                  Behavioral
-                </Link>
-              </li>
-            </ul>
-          </div>
+        <div className="space-y-8 mt-3 pl-5 text-black">
+          {knowledge_list.map((item, index) => (
+            <KnowledgeList key={index} {...item} />
+          ))}
         </div>
       </section>
       <section className="w-full h-full flex flex-col items-center justify-center text-black dark:text-gray-50 text-center gap-y-20 pt-14 px-4">
