@@ -1,10 +1,12 @@
 type knowledge_list = {
+  id: string;
   title: string;
   items: { name: string; link: string }[];
 };
 
 export const knowledge_list: knowledge_list[] = [
   {
+    id: "code",
     title: "Code",
     items: [
       { name: "JS/TS", link: "" },
@@ -13,6 +15,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
+    id: "infra",
     title: "Infra",
     items: [
       { name: "Cloud", link: "" },
@@ -24,6 +27,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
+    id: "back",
     title: "Backend",
     items: [
       { name: "NodeJS", link: "" },
@@ -32,6 +36,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
+    id: "front",
     title: "Frontend",
     items: [
       { name: "ReactJS", link: "" },
@@ -39,6 +44,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
+    id: "data",
     title: "Data",
     items: [
       { name: "NoSQL", link: "" },
@@ -50,6 +56,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
+    id: "patterns",
     title: "Patterns",
     items: [
       { name: "*DD", link: "" },
