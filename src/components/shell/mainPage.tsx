@@ -22,7 +22,7 @@ export const MainPage: FC<Props> = async ({ lang }) => {
   const dict = await getDictionary(lang);
 
   return (
-    <div className="flex flex-row w-full justify-center">
+    <div className="flex sm:flex-row flex-col w-full sm:justify-center items-center sm:items-baseline">
       <AsideMenu />
       <section className="w-10/12 h-full flex flex-col items-center justify-center text-black dark:text-gray-50 text-center gap-y-20 pt-14">
         <ContactMe {...{ dict }} />

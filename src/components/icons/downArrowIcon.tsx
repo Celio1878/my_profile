@@ -6,11 +6,12 @@ interface DownArrowIconProps {
 }
 
 export const DownArrowIcon: FC<DownArrowIconProps> = ({
-  width = 20,
-  height = 20,
+  width = 16,
+  height = 16,
 }) => {
   return (
     <svg
+      className="hidden sm:block"
       xmlns="http://www.w3.org/2000/svg"
       id="down-arrow"
       {...{ width, height, viewBox: "0 0 20 20" }}

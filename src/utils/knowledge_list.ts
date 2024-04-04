@@ -5,7 +5,7 @@ type knowledge_list = {
 
 export const knowledge_list: knowledge_list[] = [
   {
-    title: "Languages",
+    title: "Code",
     items: [
       { name: "JS/TS", link: "" },
       { name: "Python", link: "" },
@@ -13,7 +13,7 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
-    title: "Infrastructure",
+    title: "Infra",
     items: [
       { name: "Cloud", link: "" },
       { name: "Terraform", link: "" },
