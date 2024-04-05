@@ -1,72 +1,72 @@
 type knowledge_list = {
   id: string;
   title: string;
-  items: { name: string; link: string }[];
+  link: string;
+  items: { name: string }[];
 };
 
 export const knowledge_list: knowledge_list[] = [
   {
     id: "patterns",
     title: "Patterns",
+    link: "",
     items: [
-      { name: "*DD", link: "" },
-      { name: "OOP/FP", link: "" },
-      { name: "SOLID", link: "" },
-      { name: "YAGNI", link: "" },
-      { name: "DRY", link: "" },
-      { name: "Well Architected Framework", link: "" },
-      { name: "Structural", link: "" },
-      { name: "Behavioral", link: "" },
+      { name: "*DD" },
+      { name: "OOP/FP" },
+      { name: "SOLID" },
+      { name: "YAGNI" },
+      { name: "DRY" },
+      { name: "Well Architected Framework" },
+      { name: "Structural" },
+      { name: "Behavioral" },
     ],
   },
   {
     id: "code",
     title: "Code",
-    items: [
-      { name: "JS/TS", link: "" },
-      { name: "Python", link: "" },
-      { name: "Golang", link: "" },
-    ],
+    link: "",
+    items: [{ name: "JS/TS" }, { name: "Python" }, { name: "Golang" }],
   },
   {
     id: "infra",
     title: "Infra",
+    link: "",
     items: [
-      { name: "Cloud", link: "" },
-      { name: "Terraform", link: "" },
-      { name: "Serverless Framework", link: "" },
-      { name: "Git/Github", link: "" },
-      { name: "Docker", link: "" },
-      { name: "Kafka", link: "" },
+      { name: "Cloud" },
+      { name: "Terraform" },
+      { name: "Serverless Framework" },
+      { name: "Git/Github" },
+      { name: "Docker" },
+      { name: "Kafka" },
     ],
   },
   {
     id: "back",
     title: "Backend",
+    link: "",
     items: [
-      { name: "NodeJS", link: "" },
-      { name: "FastAPI", link: "" },
-      { name: "Go Standard Library", link: "" },
+      { name: "NodeJS" },
+      { name: "FastAPI" },
+      { name: "Go Standard Library" },
     ],
   },
   {
     id: "data",
     title: "Data",
+    link: "",
     items: [
-      { name: "NoSQL", link: "" },
-      { name: "SQL", link: "" },
-      { name: "Data Structure", link: "" },
-      { name: "ML", link: "" },
-      { name: "AI", link: "" },
-      { name: "LLM", link: "" },
+      { name: "NoSQL" },
+      { name: "SQL" },
+      { name: "Data Structure" },
+      { name: "ML" },
+      { name: "AI" },
+      { name: "LLM" },
     ],
   },
   {
     id: "front",
     title: "Frontend",
-    items: [
-      { name: "ReactJS", link: "" },
-      { name: "NextJS", link: "" },
-    ],
+    link: "",
+    items: [{ name: "ReactJS" }, { name: "NextJS" }],
   },
 ];

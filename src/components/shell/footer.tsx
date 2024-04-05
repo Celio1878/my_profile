@@ -5,7 +5,7 @@ import { LinkedInIcon } from "@/components/icons/linkedInIcon";
 import { GithubLink } from "@/components/links/githubLink";
 import { NpmPackagesLink } from "@/components/links/npmPackagesLink";
 import { LinkedinLink } from "@/components/links/linkedinLink";
-import { VercelLink } from "@/components/links/vercelLink";
+import { Copyright } from "@/components/links/copyright";
 import { YouTubeLink } from "@/components/links/YouTubeLink";
 
 export const Footer: FC = () => (
@@ -29,6 +29,6 @@ export const Footer: FC = () => (
 
       <YouTubeLink />
     </div>
-    <VercelLink />
+    <Copyright />
   </footer>
 );
