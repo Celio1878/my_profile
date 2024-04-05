@@ -1,32 +1,42 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import { RightArrowIcon } from "@/components/icons/rightArrowIcon";
 import Link from "next/link";
-import { DownArrowIcon } from "@/components/icons/downArrowIcon";
 
 interface Props {
-  id: string;
+  id: number;
   title: string;
   items: { name: string; link: string }[];
+  index_to_open: number;
+  set_item_to_show: (event: any, index: number) => void;
 }
 
-export const KnowledgeList: FC<Props> = ({ id, title, items }) => {
-  const [show_items, set_show_items] = useState("");
-
-  console.log(show_items);
-
+export const KnowledgeList: FC<Props> = ({
+  id,
+  title,
+  items,
+  index_to_open,
+  set_item_to_show,
+}) => {
   return (
     <div>
       <span
         className="flex flex-row mb-1 text-sm font-medium sm:font-light hover:font-medium hover:cursor-pointer transition-all duration-100 ease-in-out underline sm:no-underline"
-        onClick={() => set_show_items(id)}
+        onClick={(event) => set_item_to_show(event, id)}
       >
-        {title} {show_items === id ? <RightArrowIcon /> : <DownArrowIcon />}
+        {title}
+        {
+          <span
+            className={`transition-transform transform duration-300 ${index_to_open === id && "rotate-90"}`}
+          >
+            <RightArrowIcon />
+          </span>
+        }
       </span>
 
       <ul
-        className={`max-w-[8rem] sm:ml-3 sm:space-y-2 ${show_items === id ? "hidden" : "absolute sm:relative block bg-slate-800 text-white sm:text-black sm:bg-transparent p-2 rounded-md"}`}
+        className={`max-w-[12rem] sm:ml-3 sm:space-y-2 ${index_to_open !== id ? "hidden" : "absolute sm:relative block bg-slate-800 text-white sm:text-black sm:bg-transparent p-2 sm:p-0 rounded-md"}`}
       >
         {items.map((item, index) => (
           <li key={index}>

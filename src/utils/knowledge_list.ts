@@ -6,6 +6,20 @@ type knowledge_list = {
 
 export const knowledge_list: knowledge_list[] = [
   {
+    id: "patterns",
+    title: "Patterns",
+    items: [
+      { name: "*DD", link: "" },
+      { name: "OOP/FP", link: "" },
+      { name: "SOLID", link: "" },
+      { name: "YAGNI", link: "" },
+      { name: "DRY", link: "" },
+      { name: "Well Architected Framework", link: "" },
+      { name: "Structural", link: "" },
+      { name: "Behavioral", link: "" },
+    ],
+  },
+  {
     id: "code",
     title: "Code",
     items: [
@@ -36,14 +50,6 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
-    id: "front",
-    title: "Frontend",
-    items: [
-      { name: "ReactJS", link: "" },
-      { name: "NextJS", link: "" },
-    ],
-  },
-  {
     id: "data",
     title: "Data",
     items: [
@@ -56,17 +62,11 @@ export const knowledge_list: knowledge_list[] = [
     ],
   },
   {
-    id: "patterns",
-    title: "Patterns",
+    id: "front",
+    title: "Frontend",
     items: [
-      { name: "*DD", link: "" },
-      { name: "OOP/FP", link: "" },
-      { name: "SOLID", link: "" },
-      { name: "YAGNI", link: "" },
-      { name: "DRY", link: "" },
-      { name: "Well Architected Framework", link: "" },
-      { name: "Structural", link: "" },
-      { name: "Behavioral", link: "" },
+      { name: "ReactJS", link: "" },
+      { name: "NextJS", link: "" },
     ],
   },
 ];
