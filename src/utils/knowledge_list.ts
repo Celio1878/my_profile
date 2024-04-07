@@ -9,7 +9,7 @@ export const knowledge_list: knowledge_list[] = [
   {
     id: "patterns",
     title: "Patterns",
-    link: "",
+    link: "/knowledge/patterns",
     items: [
       { name: "*DD" },
       { name: "OOP/FP" },
@@ -24,13 +24,13 @@ export const knowledge_list: knowledge_list[] = [
   {
     id: "code",
     title: "Code",
-    link: "",
+    link: "/knowledge/programming-languages",
     items: [{ name: "JS/TS" }, { name: "Python" }, { name: "Golang" }],
   },
   {
     id: "infra",
     title: "Infra",
-    link: "",
+    link: "/knowledge/infrastructure",
     items: [
       { name: "Cloud" },
       { name: "Terraform" },
@@ -43,7 +43,7 @@ export const knowledge_list: knowledge_list[] = [
   {
     id: "back",
     title: "Backend",
-    link: "",
+    link: "/knowledge/backend",
     items: [
       { name: "NodeJS" },
       { name: "FastAPI" },
@@ -53,7 +53,7 @@ export const knowledge_list: knowledge_list[] = [
   {
     id: "data",
     title: "Data",
-    link: "",
+    link: "/knowledge/data",
     items: [
       { name: "NoSQL" },
       { name: "SQL" },
@@ -66,7 +66,7 @@ export const knowledge_list: knowledge_list[] = [
   {
     id: "front",
     title: "Frontend",
-    link: "",
+    link: "/knowledge/frontend",
     items: [{ name: "ReactJS" }, { name: "NextJS" }],
   },
 ];
