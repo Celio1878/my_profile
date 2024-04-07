@@ -12,7 +12,7 @@ interface Props {
 export const Greetings: FC<Props> = ({ dict }) => {
   return (
     <div className="flex flex-col gap-y-4 text-4xl font-bold items-center justify-center">
-      {dict.greetings.title} <ProfileImage />
+      <ProfileImage /> {dict.greetings.title}
     </div>
   );
 };

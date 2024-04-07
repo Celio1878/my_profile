@@ -1,75 +1,17 @@
 {
-  "contact_me": "contact me",
+  "contact_me": "Contact Me",
   "greetings": {
-    "title": "Hello, I'm Célio"
-  },
-  "interests": {
-    "catchphrase": "Test Everything that's important",
-    "the_most_design_pattern": "For me, TDD (Test-Driven Development) is the most important Design Pattern, after all, it confirm that what you did works. However, all software must deliver at least one thing",
-    "customer_needs": "Meet customer needs",
-    "something_i_like": "I like to play with code, creating projects/features/resources, testing new technologies and finding out what we can do with that. Verify how design systems/patterns works is funny, and how the better way to implements it",
-    "effect_text": "Always updating my knowledge"
+    "title": "Hey, I'm Célio"
   },
   "education": {
-    "title": "Education",
-    "job_title": "I am a Software Engineer with",
-    "years_of_experience": "years of experience",
-    "languages_spoken": "Fluent in English and Portuguese",
-    "major": "Bachelor's Degree in Computer Science",
-    "post_degree": "Postgraduate in Cloud Computing Projects and Architecture",
-    "check_resume": "Check My Resume"
-  },
-  "certifications": {
-    "title": "I have gotten some courses/certifications",
-    "check_certifications": "Check My Certifications"
-  },
-  "programming_languages": {
-    "title": "I have a full experience using programming languages such as",
-    "description": "and I have some experience using",
-    "and": "and",
-    "complement": "as well, I've developed some features using it",
-    "check_repos": "Check my github repositories"
-  },
-  "technologies": {
-    "title": "Some technologies I'm using in my projects"
+    "degree": "Postgraduate in Cloud Project Architecture"
   },
   "side_hustles": {
-    "title": "Side Hustles",
-    "description": "When creating software, always is possible to create packages (libs) that simplify the creation of others",
-    "subtitle": "And I'm using ones in a side hustle I'm working called",
-    "kind_of_packages": "completely serverless"
-  },
-  "packages": {
-    "description1": "It's possible to create a NodeJS App with a Serverless handler, and with this, you can focus on routes, middlewares and business rules",
-    "description2_title": "CDK Factory must be used with",
-    "description2_source": "AWS CDK",
-    "description2_doc": "and it helps you to create new instances for your Lambda, Api Gateway, DynamoDB and many other resources"
-  },
-  "goals": {
-    "title": "My current goals are",
-    "certifications": "Get some AWS CERTIFICATIONS",
-    "improve_english": "Improve my English vocabulary",
-    "achieve_fluency": "Achieve fluency in German and Spanish",
-    "finish_projects": "Improve and finish some side projects",
-    "share_knowledge": "Create channels to share knowledge with the community"
+    "description": "And I've created some libraries, check it out, I hope this helps you with your projects"
   },
   "job": {
-    "title": "Current Job",
+    "title": "I'm a Software Engineer with",
     "description": "Currently, I'm working as a",
-    "as": "Software Engineer",
-    "at": "at",
-    "area": "in Payment systems, managing and building new features",
-    "services": "Using mainly the AWS services like"
-  },
-  "old_experiences": {
-    "title": "Old Experiences"
-  },
-  "old_companies": {
-    "description": "I've worked as",
-    "squadra_job": "Senior Software Developer",
-    "at": "at",
-    "and": "and",
-    "editora_job": "FullStack Developer",
-    "services": "using many services like"
+    "experience": "years of experience"
   }
 }
