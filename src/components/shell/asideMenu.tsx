@@ -8,6 +8,8 @@ interface Props {
 }
 
 export const AsideMenu: FC<Props> = ({ dict, lang }) => {
+  console.log(dict);
+
   return (
     <aside className="absolute z-50 left-0 top-28 sm:top-40 sm:bg-zinc-100 w-full sm:w-1/5 lg:w-1/6 rounded-r-xl space-y-4">
       <h2 className="hidden sm:block text-lg sm:text-xl font-medium w-full bg-zinc-200 p-3 lg:p-5 rounded-tr-xl text-zinc-400">

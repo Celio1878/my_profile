@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useRouter } from "next/navigation";
 import { languages } from "@/utils/languages";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 interface Props {
   lang_route: string | string[] | undefined;
@@ -8,9 +8,17 @@ interface Props {
 
 export const SelectLanguages: FC<Props> = ({ lang_route }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { lang } = useParams();
+
+  function remove_lang_from_route(route: string) {
+    return route.replace(`/${lang}`, "");
+  }
+
+  const current_route = remove_lang_from_route(pathname);
 
   function change_language(lang: string) {
-    return router.push(`/${lang}`);
+    return router.push(`/${lang}${current_route}`);
   }
 
   return (

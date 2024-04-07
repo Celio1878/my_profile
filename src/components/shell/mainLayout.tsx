@@ -2,7 +2,6 @@
 
 import { FC, ReactNode, useState } from "react";
 import { Header } from "@/components/shell/header";
-import { Footer } from "@/components/shell/footer";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Props {
@@ -31,7 +30,6 @@ export const MainLayout: FC<Props> = ({ children }) => {
           }}
         />
         {children}
-        <Footer />
       </div>
     </main>
   );

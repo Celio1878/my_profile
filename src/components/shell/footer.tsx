@@ -5,8 +5,8 @@ import { LinkedInIcon } from "@/components/icons/linkedInIcon";
 import { GithubLink } from "@/components/links/githubLink";
 import { NpmPackagesLink } from "@/components/links/npmPackagesLink";
 import { LinkedinLink } from "@/components/links/linkedinLink";
-import { Copyright } from "@/components/links/copyright";
 import { YouTubeLink } from "@/components/links/YouTubeLink";
+import { Copyright } from "@/components/links/copyright";
 
 export const Footer: FC = () => (
   <footer className="flex flex-col w-full h-[12rem] justify-between items-center text-black dark:text-gray-50 pb-3">

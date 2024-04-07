@@ -21,7 +21,7 @@ export const Header: FC<Props> = ({ darkMode, onToggleThemeClick }) => {
           }}
         />
       </header>
-      <div className="flex flex-row w-11/12 items-end justify-end">
+      <div className="absolute top-[3.8rem] flex flex-row w-[95%] items-end justify-end">
         <SelectLanguages {...{ lang_route: params.lang }} />
       </div>
     </>
