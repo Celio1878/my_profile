@@ -6,8 +6,8 @@ export const Copyright: FC = () => {
   const year = date.getFullYear();
 
   return (
-    <p id="copyright" className="text-xs underline">
-      Copyright {year}
+    <p id="copyright" className="text-sm">
+      Copyright © {year} - Célio Vieira. All rights reserved.
     </p>
   );
 };
