@@ -1,75 +1,17 @@
 {
-  "contact_me": "Kontaktieren Sie mich",
+  "contact_me": "Kontaktiere mich",
   "greetings": {
-    "title": "Hallo, ich bin Célio"
-  },
-  "interests": {
-    "catchphrase": "Teste alles, was wichtig ist",
-    "the_most_design_pattern": "Für mich ist TDD (Testgetriebene Entwicklung) das wichtigste Designmuster, schließlich bestätigt es, dass das, was Sie getan haben, funktioniert. Allerdings muss jede Software mindestens eine Sache liefern",
-    "customer_needs": "Kundenerfordernisse erfüllen",
-    "something_i_like": "Ich spiele gerne mit Code, erstelle Projekte/Funktionen/Ressourcen, teste neue Technologien und finde heraus, was wir damit machen können. Zu sehen, wie Designsysteme/Muster funktionieren, macht Spaß, ebenso wie der beste Weg, sie zu implementieren",
-    "effect_text": "Aktualisiere immer mein Wissen"
+    "title": "Hey, ich bin Célio"
   },
   "education": {
-    "title": "Bildung",
-    "job_title": "Ich bin Softwareingenieur mit",
-    "years_of_experience": "Jahren Erfahrung",
-    "languages_spoken": "Fließend in Englisch und Portugiesisch",
-    "major": "Bachelor-Abschluss in Informatik",
-    "post_degree": "Postgraduiert in Cloud-Computing-Projekten und Architektur",
-    "check_resume": "Überprüfen Sie meinen Lebenslauf"
-  },
-  "certifications": {
-    "title": "Ich habe einige Kurse/Zertifizierungen erhalten",
-    "check_certifications": "Überprüfen Sie meine Zertifikate"
-  },
-  "programming_languages": {
-    "title": "Ich habe umfangreiche Erfahrung mit Programmiersprachen wie",
-    "description": "und ich habe einige Erfahrung mit",
-    "and": "und",
-    "complement": "Außerdem habe ich einige Funktionen damit entwickelt",
-    "check_repos": "Überprüfen Sie meine GitHub-Repositories"
-  },
-  "technologies": {
-    "title": "Einige Technologien, die ich in meinen Projekten verwende"
+    "degree": "Postgraduiert in Cloud-Projektarchitektur"
   },
   "side_hustles": {
-    "title": "Nebentätigkeiten",
-    "description": "Bei der Erstellung von Software ist es immer möglich, Pakete (Bibliotheken) zu erstellen, die die Erstellung anderer vereinfachen",
-    "subtitle": "Und ich benutze einige in einem Nebenjob, an dem ich arbeite, genannt",
-    "kind_of_packages": "vollständig serverlos"
-  },
-  "packages": {
-    "description1": "Es ist möglich, eine NodeJS-App mit einem serverlosen Handler zu erstellen, und damit können Sie sich auf Routen, Middleware und Geschäftsregeln konzentrieren",
-    "description2_title": "CDK Factory kann mit verwendet werden",
-    "description2_source": "AWS CDK",
-    "description2_doc": "und es hilft Ihnen, neue Instanzen für Ihre Lambda, Api Gateway, DynamoDB und viele andere Ressourcen zu erstellen"
-  },
-  "goals": {
-    "title": "Meine aktuellen Ziele sind",
-    "certifications": "Einige AWS-ZERTIFIZIERUNGEN erhalten",
-    "improve_english": "Meinen englischen Wortschatz verbessern",
-    "achieve_fluency": "Fließend in Deutsch und Spanisch werden",
-    "finish_projects": "Einige Nebenprojekte verbessern und abschließen",
-    "share_knowledge": "Kanäle erstellen, um Wissen mit der Gemeinschaft zu teilen"
+    "description": "Und ich habe einige Bibliotheken erstellt, schau sie dir an, ich hoffe, sie helfen dir bei deinen Projekten"
   },
   "job": {
-    "title": "Aktueller Job",
+    "title": "Ich bin ein Senior Software Engineer",
     "description": "Derzeit arbeite ich als",
-    "as": "Softwareingenieur",
-    "at": "bei",
-    "area": "im Bereich Zahlungssysteme, Verwaltung und Entwicklung neuer Funktionen",
-    "services": "Hauptsächlich die AWS-Dienste wie"
-  },
-  "old_experiences": {
-    "title": "Alte Erfahrungen"
-  },
-  "old_companies": {
-    "description": "Ich habe gearbeitet als",
-    "squadra_job": "Senior-Softwareentwickler",
-    "at": "bei",
-    "and": "und",
-    "editora_job": "FullStack-Entwickler",
-    "services": "unter Verwendung vieler Dienste wie"
+    "experience": "Jahre Erfahrung"
   }
 }
