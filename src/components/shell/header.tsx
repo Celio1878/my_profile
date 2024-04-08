@@ -32,7 +32,7 @@ export const Header: FC<Props> = ({
         <ContactMe {...{ dict }} />
       </header>
       <div
-        className={`absolute top-[3.8rem] flex flex-row w-full ${should_go_back ? "items-center justify-between" : "items-end justify-end"}  px-8`}
+        className={`absolute top-[3.8rem] flex flex-row w-full ${should_go_back ? "items-center justify-between" : "items-end justify-end"} px-4 sm:px-8`}
       >
         {should_go_back && <GoBackButton />}
         <SelectLanguages {...{ lang_route: params.lang }} />

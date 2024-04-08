@@ -8,7 +8,7 @@ interface NpmPackageProps {
 const NpmPackage: FC<NpmPackageProps> = ({ name }) => {
   return (
     <NpmPackagesLink
-      className="border border-2 border-emerald-500 dark:border-emerald-700 p-6 rounded-md hover:bg-emerald-500 hover:text-white transition delay-75 mb-4"
+      className="border-2 border-emerald-500 dark:border-emerald-700 p-6 rounded-md hover:bg-emerald-500 hover:text-white transition delay-75 mb-4 text-sm"
       complement="package/nodejs-appbuilder"
     >
       {name}
@@ -22,7 +22,7 @@ interface PackageItemProps {
 
 export const PackageItem: FC<PackageItemProps> = ({ name }) => {
   return (
-    <li className="w-full flex flex-col items-center justify-center text-center rounded-md">
+    <li className="flex flex-col text-center rounded-md">
       <NpmPackage {...{ name }} />
     </li>
   );

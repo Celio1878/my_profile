@@ -16,7 +16,7 @@ export const MyPackages: FC<Props> = ({ dict }) => {
   console.log(dict);
 
   return (
-    <ul className="w-full flex flex-row items-center">
+    <ul className="w-full flex flex-row items-center justify-around">
       <PackageItem name="NodeJS App Builder" />
       <PackageItem name="CDK Factory" />
     </ul>
