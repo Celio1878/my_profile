@@ -9,12 +9,14 @@ import { YouTubeLink } from "@/components/links/YouTubeLink";
 import { Copyright } from "@/components/links/copyright";
 
 interface Props {
-  dict: {};
+  dict: {
+    footer: {
+      copyright: string;
+    };
+  };
 }
 
 export const Footer: FC<Props> = ({ dict }) => {
-  console.log(dict);
-
   return (
     <footer className="flex flex-col w-full h-[12rem] justify-between items-center text-black dark:text-gray-50 pb-3">
       <span></span>
@@ -36,7 +38,7 @@ export const Footer: FC<Props> = ({ dict }) => {
 
         <YouTubeLink />
       </div>
-      <Copyright />
+      <Copyright {...{ dict }} />
     </footer>
   );
 };

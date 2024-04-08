@@ -1,13 +1,19 @@
 import { FC } from "react";
 
-export const Copyright: FC = () => {
-  // Get year updated
-  const date = new Date();
-  const year = date.getFullYear();
+interface CopyrightProps {
+  dict: {
+    footer: {
+      copyright: string;
+    };
+  };
+}
+
+export const Copyright: FC<CopyrightProps> = ({ dict }) => {
+  const year = new Date().getFullYear();
 
   return (
-    <p id="copyright" className="text-sm">
-      Copyright © {year} - Célio Vieira. All rights reserved.
+    <p id="copyright" className="text-sm text-center">
+      Copyright © {year} - Célio Vieira. {dict.footer.copyright}.
     </p>
   );
 };

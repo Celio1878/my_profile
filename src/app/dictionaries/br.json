@@ -13,5 +13,19 @@
     "title": "Sou um Engenheiro de Software Senior",
     "description": "Atualmente, trabalho como um",
     "experience": "anos de experiência"
+  },
+  "aside": {
+    "knowledge": "Conhecimentos",
+    "title": {
+      "patters": "Padrões",
+      "infrastructure": "Infra",
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "data": "Dados",
+      "coding": "Código"
+    }
+  },
+  "footer": {
+    "copyright": "Todos os direitos reservados"
   }
 }
