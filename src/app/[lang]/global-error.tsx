@@ -9,7 +9,7 @@ interface GlobalErrorProps {
 }
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
-  console.log(error, "ERROR");
+  console.error(error, "ERROR");
 
   return (
     <div className="flex flex-col items-center justify-center text-center">
