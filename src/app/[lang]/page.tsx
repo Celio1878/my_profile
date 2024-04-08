@@ -1,5 +1,6 @@
 import { MainLayout } from "@/components/shell/mainLayout";
 import { MainPage } from "@/components/shell/mainPage";
+import { getDictionary } from "@/app/[lang]/dictionaries";
 
 interface Props {
   params: {
@@ -7,10 +8,12 @@ interface Props {
   };
 }
 
-export default function Home({ params: { lang } }: Props) {
+export default async function Home({ params: { lang } }: Props) {
+  const dict = await getDictionary(lang);
+
   return (
-    <MainLayout>
-      <MainPage {...{ lang }} />
+    <MainLayout {...{ dict, lang, should_go_back: false }}>
+      <MainPage {...{ dict }} />
     </MainLayout>
   );
 }

@@ -8,27 +8,35 @@ import { LinkedinLink } from "@/components/links/linkedinLink";
 import { YouTubeLink } from "@/components/links/YouTubeLink";
 import { Copyright } from "@/components/links/copyright";
 
-export const Footer: FC = () => (
-  <footer className="flex flex-col w-full h-[12rem] justify-between items-center text-black dark:text-gray-50 pb-3">
-    <span></span>
-    <div className="flex flex-row justify-center items-center text-black dark:text-gray-50 gap-x-12">
-      <NpmPackagesLink
-        className="hover:opacity-60 transition delay-100"
-        complement="settings/celio1878/packages"
-      >
-        <NpmIcon />
-      </NpmPackagesLink>
+interface Props {
+  dict: {};
+}
 
-      <GithubLink className="hover:opacity-60 transition delay-100">
-        <GithubIcon />
-      </GithubLink>
+export const Footer: FC<Props> = ({ dict }) => {
+  console.log(dict);
 
-      <LinkedinLink className="hover:opacity-60 transition delay-100">
-        <LinkedInIcon />
-      </LinkedinLink>
+  return (
+    <footer className="flex flex-col w-full h-[12rem] justify-between items-center text-black dark:text-gray-50 pb-3">
+      <span></span>
+      <div className="flex flex-row justify-center items-center text-black dark:text-gray-50 gap-x-12">
+        <NpmPackagesLink
+          className="hover:opacity-60 transition delay-100"
+          complement="settings/celio1878/packages"
+        >
+          <NpmIcon />
+        </NpmPackagesLink>
 
-      <YouTubeLink />
-    </div>
-    <Copyright />
-  </footer>
-);
+        <GithubLink className="hover:opacity-60 transition delay-100">
+          <GithubIcon />
+        </GithubLink>
+
+        <LinkedinLink className="hover:opacity-60 transition delay-100">
+          <LinkedInIcon />
+        </LinkedinLink>
+
+        <YouTubeLink />
+      </div>
+      <Copyright />
+    </footer>
+  );
+};

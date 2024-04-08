@@ -3,12 +3,22 @@
 import { FC, ReactNode, useState } from "react";
 import { Header } from "@/components/shell/header";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { Footer } from "@/components/shell/footer";
+import { AsideMenu } from "@/components/shell/asideMenu";
 
 interface Props {
   children: ReactNode;
+  dict: any;
+  lang: string;
+  should_go_back: boolean;
 }
 
-export const MainLayout: FC<Props> = ({ children }) => {
+export const MainLayout: FC<Props> = ({
+  children,
+  dict,
+  lang,
+  should_go_back,
+}) => {
   const { stored_value, set_value } = useLocalStorage("theme", "light");
   const [theme, set_theme] = useState(stored_value);
 
@@ -27,9 +37,14 @@ export const MainLayout: FC<Props> = ({ children }) => {
           {...{
             darkMode: theme !== "light",
             onToggleThemeClick: changing_theme,
+            dict,
+            should_go_back,
           }}
         />
+
+        <AsideMenu {...{ lang, dict }} />
         {children}
+        <Footer {...{ dict }} />
       </div>
     </main>
   );
