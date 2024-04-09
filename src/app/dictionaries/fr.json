@@ -17,12 +17,12 @@
   "aside": {
     "knowledge": "Connaissance",
     "title": {
-      "patters": "Patrones",
+      "patterns": "Motifs",
       "infrastructure": "Infra",
-      "backend": "Backend",
-      "frontend": "Frontend",
-      "data": "Datos",
-      "coding": "Código"
+      "backend": "Back",
+      "frontend": "Front",
+      "data": "Données",
+      "coding": "Codes"
     }
   },
   "footer": {

@@ -3,11 +3,30 @@ type knowledge_list = {
   link: string;
 };
 
-export const knowledge_list: knowledge_list[] = [
-  { title: "Patterns", link: "/knowledge/patterns" },
-  { title: "Code", link: "/knowledge/programming-languages" },
-  { title: "Infra", link: "/knowledge/infrastructure" },
-  { title: "Backend", link: "/knowledge/backend" },
-  { title: "Data", link: "/knowledge/data" },
-  { title: "Frontend", link: "/knowledge/frontend" },
-];
+export function create_knowledge_list(dict: {
+  aside: {
+    title: {
+      patterns: string;
+      infrastructure: string;
+      backend: string;
+      frontend: string;
+      data: string;
+      coding: string;
+    };
+  };
+}) {
+  return [
+    { title: dict.aside.title.patterns, link: "/knowledge/patterns" },
+    {
+      title: dict.aside.title.coding,
+      link: "/knowledge/programming-languages",
+    },
+    {
+      title: dict.aside.title.infrastructure,
+      link: "/knowledge/infrastructure",
+    },
+    { title: dict.aside.title.backend, link: "/knowledge/backend" },
+    { title: dict.aside.title.data, link: "/knowledge/data" },
+    { title: dict.aside.title.frontend, link: "/knowledge/frontend" },
+  ];
+}

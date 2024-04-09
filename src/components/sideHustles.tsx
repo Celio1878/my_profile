@@ -7,7 +7,7 @@ interface Props {
 
 export const SideHustles: FC<Props> = ({ dict }) => (
   <div className="flex flex-col items-center justify-center gap-y-6">
-    <p>{dict.side_hustles.description}.</p>
+    <p className="w-9/12">{dict.side_hustles.description}.</p>
     <MyPackages />
   </div>
 );

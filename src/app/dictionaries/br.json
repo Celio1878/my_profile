@@ -17,7 +17,7 @@
   "aside": {
     "knowledge": "Conhecimentos",
     "title": {
-      "patters": "Padrões",
+      "patterns": "Padrões",
       "infrastructure": "Infra",
       "backend": "Backend",
       "frontend": "Frontend",
