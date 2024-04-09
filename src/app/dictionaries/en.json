@@ -10,9 +10,12 @@
     "description": "And I've created some libraries, check it out, I hope this helps you with your projects"
   },
   "job": {
-    "title": "I'm a Senior Software Engineer",
-    "description": "Currently, I'm working as a",
-    "experience": "years of experience"
+    "title": "I'm a Software Engineer",
+    "description": "Work within all environments as FullStack",
+    "frontend": "Users Interface (Frontend)",
+    "backend": "API/Services (Backend)",
+    "data": "Data Architecture/Structure",
+    "cloud": "Cloud Architect (DevOps)"
   },
   "aside": {
     "knowledge": "Knowledge",
@@ -23,6 +26,16 @@
       "frontend": "Frontend",
       "data": "Data",
       "coding": "Code"
+    },
+    "pattern": {
+      "dd": "*DD",
+      "oop_fp": "OOP/FP",
+      "solid": "SOLID",
+      "yagni": "YAGNI",
+      "dry": "DRY",
+      "well_architected_framework": "Well Architected Framework",
+      "structural": "Structural",
+      "behavioral": "Behavioral"
     }
   },
   "footer": {

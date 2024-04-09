@@ -12,7 +12,15 @@ export default async function Home({ params: { lang } }: Props) {
   const dict = await getDictionary(lang);
 
   return (
-    <MainLayout {...{ dict, lang, should_go_back: false }}>
+    <MainLayout
+      {...{
+        dict,
+        lang,
+        should_go_back: false,
+        aside_menu: "default",
+        show_menu_on_top: true,
+      }}
+    >
       <MainPage {...{ dict }} />
     </MainLayout>
   );

@@ -10,9 +10,12 @@
     "description": "Y he creado algunas bibliotecas, échales un vistazo, espero que te ayuden con tus proyectos"
   },
   "job": {
-    "title": "Soy un Ingeniero de Software Senior",
-    "description": "Actualmente, trabajo como",
-    "experience": "años de experiencia"
+    "title": "Soy un Ingeniero de Software",
+    "description": "Trabajo en todos los entornos como FullStack",
+    "frontend": "Interfaz de Usuario (Frontend)",
+    "backend": "API/Servicios (Backend)",
+    "data": "Arquitectura/Estructura de Datos",
+    "cloud": "Arquitecto Cloud (DevOps)"
   },
   "aside": {
     "knowledge": "Conocimiento",

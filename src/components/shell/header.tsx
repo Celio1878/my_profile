@@ -3,21 +3,15 @@ import { useParams } from "next/navigation";
 import { SelectLanguages } from "@/components/selectLanguages";
 import { FC } from "react";
 import { ContactMe } from "@/components/contactMe";
-import { GoBackButton } from "@/components/buttons/goBackButton";
 
 interface Props {
   darkMode: boolean;
   onToggleThemeClick: VoidFunction;
-  dict: any;
+  dict: { contact_me: string };
   should_go_back: boolean;
 }
 
-export const Header: FC<Props> = ({
-  darkMode,
-  onToggleThemeClick,
-  dict,
-  should_go_back = false,
-}) => {
+export const Header: FC<Props> = ({ darkMode, onToggleThemeClick, dict }) => {
   const params = useParams();
 
   return (
@@ -31,10 +25,7 @@ export const Header: FC<Props> = ({
         />
         <ContactMe {...{ dict }} />
       </header>
-      <div
-        className={`absolute top-[3.8rem] flex flex-row w-full ${should_go_back ? "items-center justify-between" : "items-end justify-end"} px-4 sm:px-8`}
-      >
-        {should_go_back && <GoBackButton />}
+      <div className="absolute top-[3.8rem] flex flex-row w-full items-end justify-end px-4 sm:px-8">
         <SelectLanguages {...{ lang_route: params.lang }} />
       </div>
     </>
