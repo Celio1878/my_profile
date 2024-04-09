@@ -1,8 +1,3 @@
-type knowledge_list = {
-  title: string;
-  link: string;
-};
-
 export function create_knowledge_list(dict: {
   aside: {
     title: {
