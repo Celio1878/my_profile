@@ -1,4 +1,4 @@
-import type { Language } from "~/libs/language-context";
+import type { Language } from "~/lib/language-context";
 
 type TranslationKey =
   | "heroTitle"

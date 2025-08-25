@@ -12,7 +12,6 @@ export const Nav: FC = () => {
       "education",
       "certifications",
       "skills",
-      "hobbies",
       "projects",
       "resume",
       "contact",
@@ -57,16 +56,15 @@ export const Nav: FC = () => {
     <nav
       role="navigation"
       aria-label="Primary"
-      className="fixed top-0 left-0 right-0 backdrop-blur bg-white/70 dark:bg-gray-950/70 border-b border-gray-200 dark:border-gray-800 z-50"
+      className="fixed top-0 left-0 right-0 backdrop-blur bg-slate-100/50 dark:bg-black border-b border-gray-200 dark:border-gray-800 z-50"
     >
       <div className="container mx-auto flex items-center justify-between p-3">
-        <div className="flex items-center gap-4 text-sm font-medium">
+        <div className="flex items-center gap-6 text-sm font-medium">
           {link("about", dict.nav.about)}
           {link("experience", dict.nav.experience)}
           {link("education", dict.nav.education)}
           {link("certifications", dict.nav.certifications)}
           {link("skills", dict.nav.skills)}
-          {link("hobbies", dict.nav.hobbies)}
           {link("projects", dict.nav.projects)}
           {link("resume", dict.nav.resume)}
           {link("contact", dict.nav.contact)}

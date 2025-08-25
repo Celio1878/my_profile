@@ -6,7 +6,7 @@ import {
   ScrollRestoration,
   useFetcher,
   useLoaderData,
-  useNavigation
+  useNavigation,
 } from "react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -16,7 +16,7 @@ import { useTheme } from "react-router-theme";
 import { type ReactNode } from "react";
 import { Loader } from "~/components/loader";
 import { ErrorBoundaryPage } from "~/error-boundary-page";
-import { ThemeContext } from "./libs/theme-context";
+import { ThemeContext } from "./lib/theme-context";
 import { I18nProvider } from "~/i18n";
 
 export { loader, action } from "react-router-theme";

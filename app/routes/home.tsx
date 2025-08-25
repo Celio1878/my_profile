@@ -4,8 +4,15 @@ import { Nav } from "~/components/nav";
 import type { ReactNode } from "react";
 import { Reveal } from "~/components/reveal";
 import { Badge } from "~/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -48,6 +55,9 @@ function Section({
 }
 
 function Content() {
+  const year = new Date().getFullYear();
+  const copyright = `© ${year} Celio Vieira. All rights reserved.`;
+
   const { dict } = useI18n();
   return (
     <main id="main" role="main" aria-label="Main content">
@@ -65,7 +75,7 @@ function Content() {
               {dict.hero.subtitle}
             </p>
           </div>
-          <div className="mt-6">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <a
               href="https://www.linkedin.com/in/celio-vieira"
               target="_blank"
@@ -73,21 +83,28 @@ function Content() {
               className="inline-flex items-center gap-2 rounded-full border border-blue-600 text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 px-4 py-2 transition-colors"
             >
               {dict.hero.ctaLinkedIn}
+              <SquareArrowOutUpRight size={16} />
+            </a>
+            <a
+              href="https://www.youtube.com/@celio_vieira"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="YouTube channel"
+              className="inline-flex items-center gap-2 rounded-full border border-red-600 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 px-4 py-2 transition-colors"
+            >
+              Youtube
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="stroke-current"
+                width="24"
+                height="24"
+                viewBox="0 0 22 22"
+                aria-hidden="true"
+                focusable="false"
+                className="inline-block"
+                fill="currentColor"
               >
-                <path
-                  d="M7 17L17 7M17 7H9M17 7V15"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M21.8 8.001a3.3 3.3 0 0 0-2.324-2.334C17.64 5.333 12 5.333 12 5.333s-5.64 0-7.476.334A3.3 3.3 0 0 0 2.2 8c-.334 1.84-.334 4 0 5.84.301 1.145 1.18 2.024 2.324 2.334C6.36 16.5 12 16.5 12 16.5s5.64 0 7.476-.334A3.3 3.3 0 0 0 21.8 13.84c.334-1.84.334-4 0-5.84zM10.5 13.75v-4.5l4 2.25-4 2.25z" />
               </svg>
+              <span className="sr-only">YouTube</span>
             </a>
           </div>
         </div>
@@ -95,37 +112,118 @@ function Content() {
 
       <Section id="about" title={dict.about.heading}>
         <Reveal>
-          <p>{dict.about.body}</p>
+          {dict.about.body.split(/\n\s*\n/).map((para, i) => (
+            <p key={i} className={i > 0 ? "mt-4" : undefined}>
+              {para}
+            </p>
+          ))}
         </Reveal>
       </Section>
 
       <Section id="experience" title={dict.experience.heading}>
-        <ul className="space-y-6">
-          {dict.experience.items.map((item, i) => (
-            <Reveal as="li" key={i} delay={i * 80}>
-              <Card>
-                <CardHeader>
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <CardTitle className="text-base">{item.role}</CardTitle>
-                    <CardDescription className="!mt-0">
-                      {item.company}
-                    </CardDescription>
-                    <CardDescription className="!mt-0">
-                      {item.period}
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="list-disc pl-6 space-y-1">
-                    {item.bullets.map((b, j) => (
-                      <li key={j}>{b}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </Reveal>
-          ))}
-        </ul>
+        {(() => {
+          type ExpItem = (typeof dict.experience.items)[number];
+          const normalizeCompany = (c: string) => {
+            const noAccents = c
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
+            const noParen = noAccents.replace(/\(.*?\)/g, "");
+            return noParen
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/gi, " ")
+              .trim();
+          };
+          const roleScore = (role: string) => {
+            const r = role.toLowerCase();
+            let score = 0;
+            if (/(principal|staff)/.test(r)) score += 4;
+            if (/(senior|sênior|sénior)/.test(r)) score += 3;
+            if (/(lead|líder|lider)/.test(r)) score += 2;
+            if (/(mid|pleno)/.test(r)) score += 1;
+            if (/(junior|jr)/.test(r)) score -= 1;
+            return score;
+          };
+
+          const groups = new Map<
+            string,
+            { companyLabel: string; items: ExpItem[] }
+          >();
+
+          dict.experience.items.forEach((it) => {
+            const key = normalizeCompany(it.company);
+            const existing = groups.get(key);
+            if (existing) {
+              existing.items.push(it);
+              // Prefer the shortest clean label to avoid parentheticals; otherwise keep the first
+              const currentLabel = existing.companyLabel;
+              const candidate = it.company;
+              const clean = (s: string) => s.replace(/\(.*?\)/g, "").trim();
+              const cleanedCurrent = clean(currentLabel);
+              const cleanedCandidate = clean(candidate);
+              if (cleanedCandidate.length < cleanedCurrent.length) {
+                existing.companyLabel = cleanedCandidate;
+              }
+            } else {
+              // Initialize label cleaned of parentheticals for nicer display
+              const label =
+                it.company.replace(/\(.*?\)/g, "").trim() || it.company;
+              groups.set(key, { companyLabel: label, items: [it] });
+            }
+          });
+
+          const grouped = Array.from(groups.values()).map((g) => {
+            // Choose role with highest score; tie-break by original order (assumed newest first in dict)
+            let best = g.items[0];
+            let bestScore = roleScore(best.role);
+            for (let i = 1; i < g.items.length; i++) {
+              const it = g.items[i];
+              const sc = roleScore(it.role);
+              if (sc > bestScore) {
+                best = it;
+                bestScore = sc;
+              }
+            }
+            // Merge bullets and dedupe while preserving order
+            const seen = new Set<string>();
+            const bullets: string[] = [];
+            g.items.forEach((it) => {
+              it.bullets.forEach((b) => {
+                const key = b.trim();
+                if (!seen.has(key)) {
+                  seen.add(key);
+                  bullets.push(b);
+                }
+              });
+            });
+            return { company: g.companyLabel, role: best.role, bullets };
+          });
+
+          return (
+            <ul className="space-y-6">
+              {grouped.map((item, i) => (
+                <Reveal as="li" key={i} delay={i * 80}>
+                  <Card>
+                    <CardHeader>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <CardTitle className="text-base">{item.role}</CardTitle>
+                        <CardDescription className="!mt-0">
+                          {item.company}
+                        </CardDescription>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="list-disc pl-6 space-y-1">
+                        {item.bullets.map((b, j) => (
+                          <li key={j}>{b}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </Reveal>
+              ))}
+            </ul>
+          );
+        })()}
       </Section>
 
       <Section id="education" title={dict.education.heading}>
@@ -136,7 +234,6 @@ function Content() {
                 <CardHeader>
                   <CardTitle className="text-base">{edu.degree}</CardTitle>
                   <CardDescription>{edu.institution}</CardDescription>
-                  <CardDescription>{edu.period}</CardDescription>
                 </CardHeader>
               </Card>
             </Reveal>
@@ -154,9 +251,6 @@ function Content() {
                     <CardTitle className="text-base">{cert.title}</CardTitle>
                     <CardDescription className="!mt-0">
                       {cert.issuer}
-                    </CardDescription>
-                    <CardDescription className="!mt-0">
-                      {cert.issued}
                     </CardDescription>
                   </div>
                   {cert.credentialId ? (
@@ -192,16 +286,6 @@ function Content() {
           {dict.skills.list.map((s, i) => (
             <Reveal key={i}>
               <Badge className="text-sm">{s}</Badge>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section id="hobbies" title={dict.hobbies.heading}>
-        <div className="flex flex-wrap gap-2">
-          {dict.hobbies.list.map((h, i) => (
-            <Reveal key={i}>
-              <Badge className="text-sm">{h}</Badge>
             </Reveal>
           ))}
         </div>
@@ -288,43 +372,38 @@ function Content() {
         </div>
       </Section>
 
-      <Section id="contact" title={dict.contact.heading}>
-        <Reveal>
-          <p className="mb-2">{dict.contact.email}</p>
-        </Reveal>
-        <p className="mb-2">
-          <a
-            href="mailto:contato@celiovieira.com"
-            className="text-blue-700 dark:text-blue-400 hover:underline"
-          >
-            contato@celiovieira.com
-          </a>
-        </p>
-        <Reveal>
-          <a
-            href="https://www.linkedin.com/in/celio-vieira"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-700 dark:text-blue-400 hover:underline"
-          >
-            https://www.linkedin.com/in/celio-vieira
-          </a>
-        </Reveal>
-        <p className="mt-2 text-sm text-gray-500">{dict.contact.note}</p>
-      </Section>
-
-      <footer className="container mx-auto px-4 py-10 text-center text-xs text-gray-500">
-        <p>
-          Data curated from the public LinkedIn profile:{" "}
-          <a
-            className="underline"
-            href="https://www.linkedin.com/in/celio-vieira"
-            target="_blank"
-            rel="noreferrer"
-          >
-            celio-vieira
-          </a>
-        </p>
+      <footer className="flex flex-col w-full pb-4 text-center justify-between border-t border-gray-200 dark:border-gray-800">
+        <Section id="contact" title={dict.contact.heading}>
+          <Reveal>
+            <a
+              href="mailto:contato@celiovieira.com"
+              className="text-blue-700 dark:text-blue-400 hover:underline"
+            >
+              contato@celiovieira.com
+            </a>
+          </Reveal>
+          <Reveal>
+            <a
+              href="https://www.linkedin.com/in/celio-vieira"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-700 dark:text-blue-400 hover:underline"
+            >
+              https://www.linkedin.com/in/celio-vieira
+            </a>
+          </Reveal>
+          <Reveal>
+            <a
+              href="https://www.youtube.com/@celio_vieira"
+              target="_blank"
+              rel="noreferrer"
+              className="text-red-700 dark:text-red-400 hover:underline"
+            >
+              https://www.youtube.com/@celio_vieira
+            </a>
+          </Reveal>
+        </Section>
+        <p className="text-xs text-gray-500">{copyright}</p>
       </footer>
     </main>
   );

@@ -1,16 +1,10 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export type SupportedLocale = "en" | "de" | "pt-BR" | "es";
 
 export function detectLocale(): SupportedLocale {
   if (typeof navigator === "undefined") return "en";
-  const nav = navigator.language || (navigator as any).userLanguage || "en";
+  const nav = navigator.language || "en";
   const lower = nav.toLowerCase();
   if (lower.startsWith("pt-br")) return "pt-BR";
   if (lower.startsWith("de")) return "de";
@@ -97,18 +91,18 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     hero: {
       title: "Celio Vieira",
       subtitle: "Software Engineer • Cloud & Web",
-      ctaLinkedIn: "View on LinkedIn",
+      ctaLinkedIn: "LinkedIn",
     },
     about: {
       heading: "About Me",
-      body: "Data Engineer at Itaú Unibanco with a software engineering background. I build and operate scalable data platforms on AWS using Glue, EMR, Apache Spark, Databricks, and event streaming (Kinesis/Kafka). I focus on data quality, automated testing, and cost/performance optimization to deliver analytics-ready datasets for Athena, Redshift, and QuickSight. Passionate about TDD and SOLID principles, I bridge data and backend engineering to create reliable, high‑performance systems. Postgraduate specialization in Cloud Computing Process and Architecture (Pitágoras College).",
+      body: "I am a passionate Data Engineer with a strong foundation in software engineering. My expertise lies in designing and building robust, scalable data platforms on AWS, leveraging a diverse tech stack that includes PySpark, Databricks, Kafka, and SQL. I am deeply committed to ensuring data quality, implementing automated testing, and focusing on observability to make complex data ecosystems simpler and more reliable for users. My goal is to optimize both cost and performance without sacrificing reliability.\n\nWith a postgraduate specialization in Cloud Computing Process and Architecture, I bring a unique blend of cloud expertise and software development best practices (like TDD and SOLID principles) to my work. This background enables me to bridge the gap between software and data engineering, allowing me to build high-performance architectures that power analytics, machine learning, and business intelligence. My skills also extend to full-stack development with Python, Go, and Node.js, and modern front-end frameworks like React and Next.js.\n\nBeyond my professional life, I am an avid learner and a firm believer in the value of teaching, mentoring, and knowledge sharing. To relax and unwind, I enjoy a range of hobbies, from playing video games and practicing guitar to working out at the gym. My family, including our pets, is very important to me, and I cherish our walks and time spent together. I also love movies, series, animes, and superhero comics.",
     },
     experience: {
       heading: "Experience",
       items: [
         {
           role: "Data Engineer",
-          company: "Banco Itaú (Itaú Unibanco)",
+          company: "Banco Itaú Unibanco",
           period: "Jan 2025 – Present (8 months)",
           bullets: [
             "Design and optimize real-time and batch data pipelines using AWS Glue, EMR, Apache Spark, Databricks",
@@ -120,7 +114,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         },
         {
           role: "Software Engineer",
-          company: "Banco Itaú",
+          company: "Banco Itaú Unibanco",
           period: "Jul 2022 – Present (3 years 2 months) — Brazil",
           bullets: [
             "Develop and maintain banking software services (payments and receipts)",
@@ -245,7 +239,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
             "API Gateways",
             "Stripe",
           ],
-          link: "https://beyourstories.example.com",
+          link: "https://beyourstories.com",
         },
         {
           name: "NodeJS APP Builder",
@@ -255,7 +249,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
             "Create NodeJS applications with a Serverless handler, easily add routes.",
           skillsLabel: "Skills",
           skills: ["JavaScript", "Node.js", "TypeScript"],
-          repo: "https://github.com/celio1878/nodejs-appbuilder",
+          repo: "https://www.npmjs.com/package/nodejs-appbuilder",
         },
         {
           name: "cdk-factory",
@@ -263,7 +257,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
           description: "AWS cdk factory to build serverless infrastructure.",
           skillsLabel: "Skills",
           skills: ["JavaScript", "AWS", "TypeScript"],
-          repo: "https://github.com/celio1878/cdk-factory",
+          repo: "https://www.npmjs.com/package/cdk-factory",
         },
       ],
     },
@@ -273,7 +267,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "SQL",
         "PySpark",
         "Databricks",
-        "PyTorch",
+        "DataMesh",
         "Go",
         "Node.js",
         "Python",
@@ -308,11 +302,6 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
           degree: "Bachelor — Computer Engineering",
           institution: "Centro Universitário Una",
           period: "Aug 2013 – Jun 2019",
-        },
-        {
-          degree: "Electrical Installation Process Operations",
-          institution: "SENAI BH CECOTEG",
-          period: "Jun 2018 – Dec 2018",
         },
       ],
     },
@@ -379,13 +368,6 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
           skillsLabel: "Skills",
           skills: [],
         },
-        {
-          title: "CertiProf Continuous Learner",
-          issuer: "CertiProf",
-          issued: "Aug 2020 – Aug 2022",
-          skillsLabel: "Skills",
-          skills: [],
-        },
       ],
     },
     contact: {
@@ -416,11 +398,11 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     hero: {
       title: "Célio Vieira",
       subtitle: "Softwareentwickler • Cloud & Web",
-      ctaLinkedIn: "Auf LinkedIn ansehen",
+      ctaLinkedIn: "LinkedIn",
     },
     about: {
       heading: "Über mich",
-      body: "Data Engineer bei Itaú Unibanco mit Hintergrund in der Softwareentwicklung. Ich baue und betreibe skalierbare Datenplattformen in AWS mit Glue, EMR, Apache Spark, Databricks sowie Event‑Streaming (Kinesis/Kafka). Fokus auf Datenqualität, automatisierte Tests und Kosten/Performance‑Optimierung; liefere analysefertige Datensätze für Athena, Redshift und QuickSight. Leidenschaft für TDD und SOLID – ich überbrücke Data‑ und Backend‑Engineering. Postgraduale Spezialisierung in Cloud Computing Process and Architecture (Faculdade Pitágoras).",
+      body: "Ich bin Data Engineer mit solidem Hintergrund in der Softwareentwicklung. Ich entwerfe Echtzeit‑ und Batch‑Datenplattformen auf AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka) mit Fokus auf Datenqualität, automatisierte Tests, Observability sowie Kosten/Performance. Mir ist wichtig, komplexe Datenlandschaften für Menschen verständlicher und verlässlicher zu machen. Abseits der Arbeit spiele ich gern Videospiele, spiele Gitarre (und lerne Luthier‑Fertigkeiten), trainiere (das Fitnessstudio entspannt mich), gehe spazieren und spiele mit meiner Familie und unseren Haustieren (Hunde, Katzen, usw.) und schaue Filme, Serien, Anime und Superhelden‑Comics. Wissen zu teilen, zu mentorieren und kontinuierlich zu lernen ist mir wichtig. Postgraduale Spezialisierung in Cloud Computing Process and Architecture (Faculdade Pitágoras).",
     },
     experience: {
       heading: "Erfahrung",
@@ -519,7 +501,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "SQL",
         "PySpark",
         "Databricks",
-        "PyTorch",
+        "DataMesh",
         "Go",
         "Node.js",
         "Python",
@@ -665,11 +647,11 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     hero: {
       title: "Célio Vieira",
       subtitle: "Engenheiro de Software • Cloud & Web",
-      ctaLinkedIn: "Ver no LinkedIn",
+      ctaLinkedIn: "LinkedIn",
     },
     about: {
       heading: "Sobre mim",
-      body: "Engenheiro de Dados no Itaú Unibanco com formação em engenharia de software. Construo e opero plataformas de dados escaláveis na AWS usando Glue, EMR, Apache Spark, Databricks e streaming de eventos (Kinesis/Kafka). Foco em qualidade de dados, testes automatizados e otimização de custo/performance para entregar datasets prontos para análise (Athena, Redshift, QuickSight). Apaixonado por TDD e princípios SOLID, faço a ponte entre data e backend. Pós‑graduação em Processos e Arquitetura de Computação em Nuvem (Faculdade Pitágoras).",
+      body: "Sou Engenheiro de Dados com sólida base em engenharia de software. Desenho plataformas de dados em tempo real e em batch na AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka), com foco em qualidade de dados, testes automatizados, observabilidade e custo/performance. Gosto de tornar ecossistemas de dados complexos mais simples e confiáveis para quem usa. Fora do trabalho, gosto de jogar videogame, tocar violão/guitarra (e aprender luteria), treinar (a academia me relaxa), caminhar e brincar com minha família e nossos pets (cães, gatos, etc.) e assistir a filmes, séries, animes e quadrinhos de super‑heróis. Valorizo ensinar, mentorar, compartilhar conhecimento e o aprendizado contínuo. Pós‑graduação em Processos e Arquitetura de Computação em Nuvem (Faculdade Pitágoras).",
     },
     experience: {
       heading: "Experiência",
@@ -838,7 +820,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "SQL",
         "PySpark",
         "Databricks",
-        "PyTorch",
+        "DataMesh",
         "Go",
         "Node.js",
         "Python",
@@ -983,11 +965,11 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     hero: {
       title: "Célio Vieira",
       subtitle: "Ingeniero de Software • Cloud y Web",
-      ctaLinkedIn: "Ver en LinkedIn",
+      ctaLinkedIn: "LinkedIn",
     },
     about: {
       heading: "Acerca de mí",
-      body: "Ingeniero de Datos en Itaú Unibanco con formación en ingeniería de software. Construyo y opero plataformas de datos escalables en AWS con Glue, EMR, Apache Spark, Databricks y streaming de eventos (Kinesis/Kafka). Enfoque en calidad de datos, pruebas automatizadas y optimización de costo/rendimiento para entregar datasets listos para analítica (Athena, Redshift, QuickSight). Apasionado por TDD y principios SOLID, conecto los mundos de datos y backend. Posgrado en Cloud Computing Process and Architecture (Faculdade Pitágoras).",
+      body: "Soy Ingeniero de Datos con base sólida en ingeniería de software. Diseño plataformas de datos en tiempo real y por lotes en AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka), con foco en calidad de datos, pruebas automatizadas, observabilidad y costo/rendimiento. Disfruto simplificar ecosistemas de datos complejos y hacerlos más confiables para las personas que los usan. Fuera del trabajo, me gusta jugar videojuegos, tocar guitarra (y aprender luthería), entrenar (el gimnasio me relaja), caminar y jugar con mi familia y nuestras mascotas (perros, gatos, etc.) y ver películas, series, anime y cómics de superhéroes. Valoro enseñar, mentorear, compartir conocimiento y el aprendizaje continuo. Posgrado en Cloud Computing Process and Architecture (Faculdade Pitágoras).",
     },
     experience: {
       heading: "Experiencia",
@@ -1156,7 +1138,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "SQL",
         "PySpark",
         "Databricks",
-        "PyTorch",
+        "DataMesh",
         "Go",
         "Node.js",
         "Python",
@@ -1315,6 +1297,12 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
 export function useI18n() {
   const ctx = useContext(LocaleContext);
-  if (!ctx) throw new Error("useI18n must be used within I18nProvider");
-  return ctx;
+  if (ctx) return ctx;
+  // Fallback to a safe default if the provider isn't mounted yet
+  const locale = detectLocale();
+  return {
+    locale,
+    setLocale: () => {},
+    dict: dictionaries[locale] ?? dictionaries.en,
+  };
 }
