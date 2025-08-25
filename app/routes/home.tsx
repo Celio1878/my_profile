@@ -4,13 +4,7 @@ import { Nav } from "~/components/nav";
 import type { ReactNode } from "react";
 import { Reveal } from "~/components/reveal";
 import { Badge } from "~/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 
 export function meta({}: Route.MetaArgs) {
@@ -19,7 +13,6 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "About myself and my experiences" },
     { keywords: ["celio", "vieira", "profile", "about", "me"] },
     { category: "blog" },
-    { applicationName: "My Profile" },
     { author: "Celio Vieira", url: "celiovieira.com" },
     { publisher: "Vercel" },
   ];
