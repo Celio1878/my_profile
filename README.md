@@ -1,73 +1,169 @@
-<h1>My Profile</h1>
+# Celio Vieira — About Me SPA
 
-# Summary
+A single‑page application that showcases Celio Vieira’s professional profile. It is built with React Router 7 in SPA
+mode, features automatic browser language detection (English, German, Brazilian Portuguese, Spanish), a11y‑friendly
+animations, light/dark theme toggle, and a consistent UI using shadcn/ui‑style primitives.
 
-- [Summary](#summary)
-- [Project](#project)
-    - [Prerequisites](#prerequisites)
-        - [🎲 Running the Project](#-running-the-project)
-- [Main Libs](#main-libs)
-- [Scripts](#scripts)
-- [TODO](#todo)
-- [Authors](#authors)
+## Objectives
 
----
+- Present a clear, multilingual “About Me” site for Celio Vieira.
+- Share work Experience, Education, Certifications, Skills, Hobbies, Projects, and Contact info.
+- Embed the resume (PDF) for inline viewing and download.
+- Provide a fast, accessible, smooth single‑page navigation experience with theme support.
 
-# Project
+## Features
 
-A profile to expose your knowledge and experiences.
+- 🧭 React Router 7 SPA (SSR disabled)
+- 🌍 Automatic language detection (en, de, pt‑BR, es) with English fallback
+- 🎨 Tailwind CSS v4 styling with light/dark theme toggle
+- 🧩 shadcn/ui‑style primitives (Button, Card, Badge, Separator) for consistent UI
+- ✨ Smooth section transitions with a Reveal component; active in‑view nav highlighting
+- ♿ Accessible by default: skip‑to‑content link, landmarks, aria‑current on active nav, reduced‑motion friendly
+- 📄 Embedded Resume (public/resume.pdf) with view/download actions
+- 🔗 LinkedIn profile link‑outs
 
-## Prerequisites
+## Architecture Overview
 
-Before you start, install it on your machine:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
-Some code editor
-like [VSCode](https://code.visualstudio.com/), [WebStorm](https://www.jetbrains.com/webstorm/promo/?source=google&medium=cpc&campaign=AMER_en_BR_WebStorm_Branded&term=webstorm&content=604189299307&gclid=CjwKCAiAzc2tBhA6EiwArv-i6TcmyVjdP40H0Sw8h_gV0ytQRVcLEIMCwjOpwVNGRA3Qk6Zuq-eBXxoCsVIQAvD_BwE)...
+- React Router v7 app running in SPA mode (no SSR). See react-router.config.ts.
+- Single main route at app/routes/home.tsx renders all sections:
+    - About, Experience, Education, Certifications, Skills, Hobbies, Projects, Resume, Contact
+- Internationalization: app/i18n.tsx
+    - Detects browser language each visit (en, de, pt‑BR, es), sets <html lang> accordingly
+    - English is the default fallback for unsupported locales
+    - All content strings live in locale dictionaries
+- Theming: react-router-theme + ThemeContext, toggled via app/components/theme-toggle.tsx
+- UI primitives (shadcn/ui‑style): app/components/ui/* (Button, Card, Badge, Separator)
+- Animations: app/components/reveal.tsx (scroll‑into‑view fade/slide), respecting prefers‑reduced‑motion
+- Accessibility: skip link in app/root.tsx, main/section landmarks, aria‑labelledby headings, nav aria‑current
 
-### 🎲 Running the Project
+## Content Sources
+
+- Resume: public/resume.pdf (embedded and downloadable)
+- Experience/Education/Certifications/Projects/Skills/Hobbies/About: app/i18n.tsx dictionaries (localized)
+- Contact: LinkedIn link and professional email (contato@celiovieira.com) rendered in the Contact section
+
+## Tech Stack
+
+- React 19 + React Router 7
+- TypeScript
+- Tailwind CSS v4, tw-animate-css, tailwind-merge (cn helper)
+- lucide-react (icons)
+- react-intersection-observer (Reveal + active nav)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm (or pnpm/bun)
+
+### Installation
 
 ```bash
-# Clone the repository
-$ git clone <https://github.com/Celio1878/my_profile>
-
-# Access the project in the terminal/cmd
-$ cd my_profile
-
-# Install the dependencies
-$ npm install
-
-# Exec the project
-$ npm run dev
+npm install
 ```
 
----
+### Development
 
-# Main Libs
+Start the dev server with HMR:
 
-- [Next.js](https://nextjs.org/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Tailwindcss](https://tailwindcss.com/)
+```bash
+npm run dev
+```
 
-# Scripts
+Open http://localhost:5173
 
-`npm run dev`: Execute the project on your computer.
-<br>
-`npm run build`: Build the project.
+Language is auto‑detected from your browser on each visit (English fallback). There is no language selector.
 
----
+### Type checking & linting
 
-# TODO
+```bash
+npm run typecheck
+npm run lint
+```
 
-- [x] Create Themes
-- [x] Responsive
-- [x] Organize the Components
-- [x] Remove unused code
-- [x] Build
+## Building for Production
 
----
+Create a production build:
 
-# Authors
+```bash
+npm run build
+```
 
-|                                                                                                                                                                                                                                                                            |
-|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| <a href="https://github.com/celio1878"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/40040827?&v=4" width="100px;" alt="Link to my profile in Github" height="100px" title="Github Profile Link"/><br /><sub><b>Célio Vieira</b></sub></a> |                                                                                                                Cell 4                                                                                                                                   |
+Artifacts are emitted to build/client and build/server.
+
+## Deployment
+
+### Docker
+
+Build and run with Docker:
+
+```bash
+docker build -t my-profile .
+docker run -p 3000:3000 my-profile
+```
+
+Deploy the container to any platform supporting Docker (ECS, Cloud Run, Azure Container Apps, DigitalOcean, Fly.io,
+Railway, etc.).
+
+### DIY / Node host
+
+Use the built‑in app server. Deploy the output of `npm run build` along with package.json and lockfile.
+
+```
+├── package.json
+├── package-lock.json (or pnpm-lock.yaml, bun.lockb)
+├── build/
+│   ├── client/    # Static assets
+│   └── server/    # Server bundle
+```
+
+## Project Structure (high level)
+
+```
+app/
+  components/
+    nav.tsx                 # Navbar with active section highlighting and ThemeToggle
+    theme-toggle.tsx        # Light/dark toggle (shadcn Button + lucide icons)
+    reveal.tsx              # In‑view animation component
+    ui/                     # shadcn/ui‑style primitives (Button, Card, Badge, Separator)
+  i18n.tsx                  # Locale detection + dictionaries (en, de, pt‑BR, es)
+  root.tsx                  # App shell, skip link, theme/i18n providers
+  routes/
+    home.tsx                # Main page rendering all sections
+public/
+  resume.pdf                # Embedded resume
+react-router.config.ts      # SPA mode configuration (ssr: false)
+```
+
+## Configuration & Customization
+
+- Update resume: replace public/resume.pdf with your latest CV.
+- Edit text content: app/i18n.tsx per locale. Keys exist for all sections; English is the fallback.
+- Add/remove skills/projects/certifications: modify the respective arrays in app/i18n.tsx.
+- Theme default: defaultTheme is set in app/root.tsx via react-router-theme loader; ThemeToggle switches at runtime.
+- SEO/meta: update meta() in app/routes/home.tsx.
+
+## Accessibility & UX Notes
+
+- Keyboard users get a visible “Skip to content” focusable link.
+- Active section is reflected with aria-current="page" on the corresponding nav link while scrolling.
+- Animations are disabled automatically under prefers‑reduced‑motion.
+- The html lang attribute is synced with the detected locale for screen readers.
+
+## FAQ
+
+- Why no language selector? The requirement is to follow the browser language automatically; unsupported ones fall back
+  to English.
+- Can I add more locales? Yes—extend SupportedLocale and add a new dictionary in app/i18n.tsx.
+- PDF not rendering inline? Some browsers block inline PDFs—users can use the provided View/Download links.
+
+## License
+
+This project is provided under the MIT License. See LICENSE for details.
+
+## Author & Contact
+
+- Author: Celio Vieira
+- Website: https://celiovieira.com
+- LinkedIn: https://www.linkedin.com/in/celio-vieira
+- Email: contato@celiovieira.com
