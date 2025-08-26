@@ -24,8 +24,29 @@ export type Dictionary = {
     language: string;
     resume: string;
     projects: string;
+    bys: string;
+    appBuilder: string;
+    cdkFactory: string;
   };
-  hero: { title: string; subtitle: string; ctaLinkedIn: string };
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaLinkedIn: string;
+    ctaYouTube: string;
+    ariaYouTube: string;
+  };
+  ui: {
+    skipToMain: string;
+    menu: string;
+    openMenu: string;
+    closeMenu: string;
+    theme: {
+      titleLight: string;
+      titleDark: string;
+      srLightMode: string;
+      srDarkMode: string;
+    };
+  };
   about: { heading: string; body: string };
   experience: {
     heading: string;
@@ -87,11 +108,28 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
       language: "Language",
       resume: "Resume",
       projects: "Projects",
+      bys: "BYS",
+      appBuilder: "App Builder",
+      cdkFactory: "CDK Factory",
     },
     hero: {
       title: "Celio Vieira",
-      subtitle: "Software Engineer • Cloud & Web",
+      subtitle: "FullStack Engineer • Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",
+      ctaYouTube: "YouTube",
+      ariaYouTube: "YouTube channel",
+    },
+    ui: {
+      skipToMain: "Skip to main content",
+      menu: "Menu",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
+      theme: {
+        titleLight: "Switch to light theme",
+        titleDark: "Switch to dark theme",
+        srLightMode: "Light mode",
+        srDarkMode: "Dark mode",
+      },
     },
     about: {
       heading: "About Me",
@@ -102,7 +140,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
       items: [
         {
           role: "Data Engineer",
-          company: "Banco Itaú Unibanco",
+          company: "Itaú Unibanco",
           period: "Jan 2025 – Present (8 months)",
           bullets: [
             "Design and optimize real-time and batch data pipelines using AWS Glue, EMR, Apache Spark, Databricks",
@@ -114,7 +152,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         },
         {
           role: "Software Engineer",
-          company: "Banco Itaú Unibanco",
+          company: "Itaú Unibanco",
           period: "Jul 2022 – Present (3 years 2 months) — Brazil",
           bullets: [
             "Develop and maintain banking software services (payments and receipts)",
@@ -213,7 +251,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
           tagline:
             "A platform where readers can read books created by other people.",
           description:
-            "BYS is a platform that people can read book created by other people.",
+            "Publish your books to the world and share them with your friends, read new books and get recommendations from other readers, help writers to grow and be a part of the community, and more.",
           skillsLabel: "Skills",
           skills: [
             "JavaScript",
@@ -244,9 +282,9 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           name: "NodeJS APP Builder",
           tagline:
-            "Create NodeJS applications with a Serverless handler, easily add routes.",
+            "Create NodeJS applications with a Serverless handler, handle routes easily.",
           description:
-            "Create NodeJS applications with a Serverless handler, easily add routes.",
+            "Library to help you to handle NodeJS Serverless applications, handle routes, security, tests, and more.",
           skillsLabel: "Skills",
           skills: ["JavaScript", "Node.js", "TypeScript"],
           repo: "https://www.npmjs.com/package/nodejs-appbuilder",
@@ -254,7 +292,8 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           name: "cdk-factory",
           tagline: "AWS CDK factory to build serverless infrastructure.",
-          description: "AWS cdk factory to build serverless infrastructure.",
+          description:
+            "Library to help you to build serverless infrastructure with AWS CDK, reusable modules, and more.",
           skillsLabel: "Skills",
           skills: ["JavaScript", "AWS", "TypeScript"],
           repo: "https://www.npmjs.com/package/cdk-factory",
@@ -272,6 +311,7 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "Node.js",
         "Python",
         "AWS",
+        "Apache",
         "Railway",
         "Supabase",
         "Firebase",
@@ -394,11 +434,28 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
       language: "Sprache",
       resume: "Lebenslauf",
       projects: "Projekte",
+      bys: "BYS",
+      appBuilder: "App Builder",
+      cdkFactory: "CDK Factory",
     },
     hero: {
       title: "Célio Vieira",
       subtitle: "Softwareentwickler • Cloud & Web",
       ctaLinkedIn: "LinkedIn",
+      ctaYouTube: "YouTube",
+      ariaYouTube: "YouTube-Kanal",
+    },
+    ui: {
+      skipToMain: "Zum Hauptinhalt springen",
+      menu: "Speisekarte",
+      openMenu: "Menü öffnen",
+      closeMenu: "Menü schließen",
+      theme: {
+        titleLight: "Zum hellen Theme wechseln",
+        titleDark: "Zum dunklen Theme wechseln",
+        srLightMode: "Heller Modus",
+        srDarkMode: "Dunkler Modus",
+      },
     },
     about: {
       heading: "Über mich",
@@ -643,11 +700,28 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
       language: "Idioma",
       resume: "Currículo",
       projects: "Projetos",
+      bys: "BYS",
+      appBuilder: "App Builder",
+      cdkFactory: "CDK Factory",
     },
     hero: {
       title: "Célio Vieira",
       subtitle: "Engenheiro de Software • Cloud & Web",
       ctaLinkedIn: "LinkedIn",
+      ctaYouTube: "YouTube",
+      ariaYouTube: "Canal do YouTube",
+    },
+    ui: {
+      skipToMain: "Ir para o conteúdo principal",
+      menu: "Menu",
+      openMenu: "Abrir menu",
+      closeMenu: "Fechar menu",
+      theme: {
+        titleLight: "Mudar para tema claro",
+        titleDark: "Mudar para tema escuro",
+        srLightMode: "Modo claro",
+        srDarkMode: "Modo escuro",
+      },
     },
     about: {
       heading: "Sobre mim",
@@ -961,11 +1035,28 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
       language: "Idioma",
       resume: "Currículum",
       projects: "Proyectos",
+      bys: "BYS",
+      appBuilder: "App Builder",
+      cdkFactory: "CDK Factory",
     },
     hero: {
       title: "Célio Vieira",
       subtitle: "Ingeniero de Software • Cloud y Web",
       ctaLinkedIn: "LinkedIn",
+      ctaYouTube: "YouTube",
+      ariaYouTube: "Canal de YouTube",
+    },
+    ui: {
+      skipToMain: "Saltar al contenido principal",
+      menu: "Menu",
+      openMenu: "Abrir menú",
+      closeMenu: "Cerrar menú",
+      theme: {
+        titleLight: "Cambiar al tema claro",
+        titleDark: "Cambiar al tema oscuro",
+        srLightMode: "Modo claro",
+        srDarkMode: "Modo oscuro",
+      },
     },
     about: {
       heading: "Acerca de mí",

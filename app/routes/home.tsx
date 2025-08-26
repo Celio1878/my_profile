@@ -29,6 +29,19 @@ export default function Home() {
   return <Content />;
 }
 
+const BysMobileImages = [
+  { src: "/bys-home-mobile.png", cap: "Mobile - Home" },
+  {
+    src: "/book-bys-search-mobile.png",
+    cap: "Mobile - Search results",
+  },
+];
+
+const BysTableImages = [
+  { src: "/bys-ipad-search.png", cap: "iPad - Search feed" },
+  { src: "/bys-ipad-user.png", cap: "iPad - User profile" },
+];
+
 function Section({
   id,
   title,
@@ -89,10 +102,10 @@ function Content() {
               href="https://www.youtube.com/@celio_vieira"
               target="_blank"
               rel="noreferrer"
-              aria-label="YouTube channel"
+              aria-label={dict.hero.ariaYouTube}
               className="inline-flex items-center gap-2 rounded-full border border-red-600 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 px-4 py-2 transition-colors"
             >
-              Youtube
+              {dict.hero.ctaYouTube}
               <svg
                 width="24"
                 height="24"
@@ -346,6 +359,125 @@ function Content() {
             </Reveal>
           ))}
         </ul>
+      </Section>
+
+      <Section id="bys-showcase" title="Be Your Stories — Screenshots">
+        <div className="space-y-6">
+          <Reveal>
+            <figure className="w-full">
+              <img
+                src="/bys-banner.png"
+                alt="Be Your Stories banner with logo between two open books"
+                className="w-full rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
+                loading="lazy"
+              />
+              <figcaption className="mt-2 text-sm text-muted-foreground">
+                BYS banner
+              </figcaption>
+            </figure>
+          </Reveal>
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+            <div className="grid grid-cols-2 gap-2">
+              {BysMobileImages.map((img, i) => (
+                <Reveal key={i} delay={i * 60}>
+                  <figure className="w-full">
+                    <img
+                      src={img.src}
+                      alt={`BYS screenshot — ${img.cap}`}
+                      className="max-w-[220px] sm:max-w-[260px] w-full mx-auto rounded-lg object-contain border border-gray-200 dark:border-gray-800 shadow-sm"
+                      loading="lazy"
+                    />
+                    <figcaption className="mt-1 text-xs text-muted-foreground text-center">
+                      {img.cap}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+            {BysTableImages.map((img, i) => (
+              <Reveal key={i} delay={i * 60}>
+                <figure className="w-full">
+                  <img
+                    src={img.src}
+                    alt={`BYS screenshot — ${img.cap}`}
+                    className="max-w-[520px] w-full mx-auto rounded-lg object-contain border border-gray-200 dark:border-gray-800 shadow-sm"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-1 text-xs text-muted-foreground text-center">
+                    {img.cap}
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+          <div className="pt-2">
+            <a
+              href="https://beyourstories.com"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-blue-600 text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 px-4 py-2 transition-colors"
+            >
+              Visit Be Your Stories
+              <SquareArrowOutUpRight size={16} />
+            </a>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="nodejs-appbuilder" title="NodeJS App Builder — Screenshots">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { src: "/express-app-builder-tests.png", cap: "Tests overview" },
+              {
+                src: "/express-app-builder-pkgs.png",
+                cap: "Packages and scripts",
+              },
+            ].map((img, i) => (
+              <Reveal key={i} delay={i * 60}>
+                <figure className="w-full">
+                  <img
+                    src={img.src}
+                    alt={`NodeJS App Builder screenshot — ${img.cap}`}
+                    className={
+                      "w-full mx-auto rounded-lg object-contain border border-gray-200 dark:border-gray-800 shadow-sm"
+                    }
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-1 text-xs text-muted-foreground text-center">
+                    {img.cap}
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="cdk-factory" title="CDK Factory — Screenshots">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[{ src: "/cdk-factory-items.png", cap: "Library files" }].map(
+              (img, i) => (
+                <Reveal key={i} delay={i * 60}>
+                  <figure className="w-full">
+                    <img
+                      src={img.src}
+                      alt={`CDK Factory screenshot — ${img.cap}`}
+                      className={
+                        "w-full mx-auto rounded-lg object-contain border border-gray-200 dark:border-gray-800 shadow-sm"
+                      }
+                      loading="lazy"
+                    />
+                    <figcaption className="mt-1 text-xs text-muted-foreground text-center">
+                      {img.cap}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ),
+            )}
+          </div>
+        </div>
       </Section>
 
       <Section id="resume" title={dict.resume.heading}>
