@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { useI18n } from "~/i18n";
 import { Nav } from "~/components/nav";
-import type { ReactNode } from "react";
+import { type ReactNode, useMemo } from "react";
 import { Reveal } from "~/components/reveal";
 import { Badge } from "~/components/ui/badge";
 import {
@@ -134,7 +134,11 @@ function Content() {
       </Section>
 
       <Section id="experience" title={dict.experience.heading}>
-        {(() => {
+        {useMemo(() => {
+          // This logic normalizes, groups, and sorts the experience data.
+          // It's wrapped in useMemo to prevent re-running this expensive
+          // computation on every render. It only recalculates when
+          // dict.experience.items changes.
           type ExpItem = (typeof dict.experience.items)[number];
           const normalizeCompany = (c: string) => {
             const noAccents = c
@@ -236,7 +240,7 @@ function Content() {
               ))}
             </ul>
           );
-        })()}
+        }, [dict.experience.items])}
       </Section>
 
       <Section id="education" title={dict.education.heading}>
