@@ -1,10 +1,10 @@
-# Celio Vieira — Professional Profile SPA
+# Célio Vieira — Professional Profile SPA
 
-A single-page application showcasing Celio Vieira's professional profile as a FullStack, Data & AI Engineer. Built with React Router 7, featuring automatic browser language detection (English, German, Brazilian Portuguese, Spanish), system-based dark/light theme, smooth animations, and a consistent UI using shadcn/ui-style primitives.
+A single-page application showcasing Célio Vieira's professional profile as a FullStack, Data & AI Engineer. Built with React Router 7, featuring automatic browser language detection (English, German, Brazilian Portuguese, Spanish), system-based dark/light theme, smooth animations, and a consistent UI using shadcn/ui-style primitives.
 
 ## Objectives
 
-- Present a clear, multilingual "About Me" site for Celio Vieira.
+- Present a clear, multilingual "About Me" site for Célio Vieira.
 - Share work Experience, Education, Certifications, Skills, Hobbies, Projects, and Contact info.
 - Embed the resume (PDF) for inline viewing and download.
 - Provide a fast, accessible, smooth single-page navigation experience.
@@ -158,7 +158,7 @@ MIT License. See [LICENSE](./LICENSE) for details.
 
 ## Author & Contact
 
-- **Author:** Celio Vieira
+- **Author:** Célio Vieira
 - **Website:** https://celiovieira.com
 - **LinkedIn:** https://www.linkedin.com/in/celio-vieira
 - **Email:** contato@celiovieira.com

@@ -2,7 +2,7 @@
 
 ## What I Learned About This Project
 
-### About Celio Vieira
+### About Célio Vieira
 - FullStack, Data & AI Engineer with 5+ years of experience, based in Minas Gerais, Brazil
 - Currently Data Engineer & Tech Lead at Itaú Unibanco (Banco Itaú) since Jan 2025
 - Deep expertise in AWS data stack: Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg, Apache Spark/PySpark
@@ -105,11 +105,20 @@
 - [x] Updated `README.md` and `CONTEXT.md` to reflect the lean project structure.
 - [x] Build verified: `bun run build` passes with a smaller, cleaner codebase.
 
-### Session 9 (Current) — Bug Fix: Module Resolution
+### Session 9 (Previous) — Bug Fix: Module Resolution
 - [x] Fixed "Cannot find module '~/components/loader'" error by enabling native `resolve.tsconfigPaths: true` in `vite.config.ts`.
 - [x] Converted critical imports in `app/root.tsx`, `app/routes/home.tsx`, and `app/components/sections/hero.tsx` to relative paths for increased robustness.
 - [x] Verified `react-router.config.ts` must have `ssr: true` for the server bundle build to succeed with Bun/React 19.
 - [x] Build verified: `bun run build` passes with zero errors.
+
+### Session 10 (Current) — SEO Improvements
+- [x] Created `public/robots.txt` and `public/sitemap.xml` for better search engine crawling.
+- [x] Created `public/manifest.json` and linked it in `root.tsx` for PWA support and better mobile presence.
+- [x] Enhanced meta tags in `home.tsx` with full Open Graph and Twitter Card support (OG:image, OG:url, OG:site_name, Twitter:card).
+- [x] Added JSON-LD (Schema.org) structured data to `home.tsx` for `Person` entity to improve rich results.
+- [x] Added `canonical` link and `robots` meta tags.
+- [x] Improved semantic HTML and fixed a broken contact link in the footer.
+- [x] Build verified: `bun run build` passes with no errors.
 
 ---
 

@@ -5,7 +5,7 @@ import { currentYear } from "~/utils/dates";
 
 export function Footer() {
   const { dict } = useI18n();
-  const copyright = `© ${currentYear} Celio Vieira. All rights reserved.`;
+  const copyright = `© ${currentYear} Célio Vieira. All rights reserved.`;
 
   return (
     <footer

@@ -1,5 +1,4 @@
 import type { Route } from "./+types/home";
-import { useI18n } from "~/i18n";
 import { Nav } from "~/components/nav";
 import { Hero } from "~/components/sections/hero";
 import { About } from "~/components/sections/about";
@@ -14,46 +13,76 @@ import { Footer } from "~/components/sections/footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Celio Vieira — FullStack · Data · AI Engineer" },
+    { title: "Célio Vieira — FullStack · Data · AI Engineer" },
     {
       name: "description",
       content:
-        "Celio Vieira — FullStack, Data & AI Engineer. Tech Lead at Banco Itaú. Cloud, Web, Mobile, LLMs, RAG, PySpark, AWS.",
+        "Célio Vieira — FullStack, Data & AI Engineer. Tech Lead at Banco Itaú. Cloud, Web, Mobile, LLMs, RAG, PySpark, AWS.",
     },
     {
       name: "keywords",
       content:
-        "celio vieira, fullstack engineer, data engineer, ai engineer, aws, react, node.js, python, go, pyspark, databricks, llm, rag",
+        "Célio Vieira, fullstack engineer, data engineer, ai engineer, aws, react, node.js, python, go, pyspark, databricks, llm, rag",
     },
-    { name: "author", content: "Celio Vieira" },
+    { name: "author", content: "Célio Vieira" },
     {
       property: "og:title",
-      content: "Celio Vieira — FullStack · Data · AI Engineer",
+      content: "Célio Vieira — FullStack · Data · AI Engineer",
     },
     {
       property: "og:description",
       content:
         "Tech Lead at Banco Itaú. Building scalable cloud, data & AI systems.",
     },
+    { property: "og:url", content: "https://celiovieira.com/" },
+    { property: "og:type", content: "profile" },
+    { property: "og:image", content: "https://celiovieira.com/me.jpeg" },
+    { property: "og:site_name", content: "Célio Vieira Portfolio" },
+    { name: "twitter:card", content: "summary_large_image" },
+    {
+      name: "twitter:title",
+      content: "Célio Vieira — FullStack · Data · AI Engineer",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Tech Lead at Banco Itaú. Building scalable cloud, data & AI systems.",
+    },
+    { name: "twitter:image", content: "https://celiovieira.com/me.jpeg" },
   ];
 }
 
+export const links: Route.LinksFunction = () => [
+  { rel: "canonical", href: "https://celiovieira.com/" },
+];
+
 export default function Home() {
-  return <Content />;
-}
-
-function Content() {
-  const { dict } = useI18n();
-
   return (
     <main id="main" role="main" aria-label="Main content">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md"
-      >
-        {dict.ui.skipToMain}
-      </a>
-
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Célio Vieira",
+            url: "https://celiovieira.com/",
+            image: "https://celiovieira.com/me.jpeg",
+            jobTitle: "FullStack, Data & AI Engineer",
+            worksFor: {
+              "@type": "Organization",
+              name: "Itaú Unibanco",
+            },
+            sameAs: [
+              "https://www.linkedin.com/in/celio-vieira",
+              "https://github.com/Celio1878",
+              "https://www.youtube.com/@celio_vieira",
+            ],
+            description:
+              "Célio Vieira is a FullStack, Data & AI Engineer and Tech Lead at Banco Itaú, specializing in Cloud, Web, Mobile, LLMs, and RAG.",
+          }),
+        }}
+      />
       <Nav />
       <Hero />
       <About />

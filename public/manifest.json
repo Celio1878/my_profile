@@ -1,0 +1,16 @@
+{
+  "name": "Célio Vieira — FullStack · Data · AI Engineer",
+  "short_name": "Célio Vieira",
+  "description": "Professional profile of Célio Vieira, FullStack, Data & AI Engineer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#400d7a",
+  "icons": [
+    {
+      "src": "/me.jpeg",
+      "sizes": "400x400",
+      "type": "image/jpeg"
+    }
+  ]
+}

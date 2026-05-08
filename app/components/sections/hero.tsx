@@ -21,7 +21,7 @@ export function Hero() {
           <div className="relative">
             <img
               src="/me.jpeg"
-              alt="Celio Vieira"
+              alt="Célio Vieira"
               className="w-24 h-24 rounded-full object-cover ring-4 ring-primary/20 shadow-xl"
             />
             <span

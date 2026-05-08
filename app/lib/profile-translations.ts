@@ -103,7 +103,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       cdkFactory: "CDK Factory",
     },
     hero: {
-      title: "Celio Vieira",
+      title: "Célio Vieira",
       subtitle:
         "FullStack Engineer • Data Engineer • AI Engineer | Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",

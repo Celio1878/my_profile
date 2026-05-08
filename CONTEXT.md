@@ -1,10 +1,10 @@
 # CONTEXT.md — Project Context
 
 ## What This Project Is
-A single-page application (SPA) serving as Celio Vieira's professional profile/portfolio website. It is publicly accessible and intended to showcase professional experience, skills, projects, certifications, education, and contact information to recruiters, collaborators, and the tech community.
+A single-page application (SPA) serving as Célio Vieira's professional profile/portfolio website. It is publicly accessible and intended to showcase professional experience, skills, projects, certifications, education, and contact information to recruiters, collaborators, and the tech community.
 
 ## Owner
-- **Name:** Celio Vieira
+- **Name:** Célio Vieira
 - **Location:** Minas Gerais, Brazil
 - **Current Role:** Data Engineer & Tech Lead at Itaú Unibanco (Banco Itaú)
 - **LinkedIn:** https://www.linkedin.com/in/celio-vieira
