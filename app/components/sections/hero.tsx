@@ -1,14 +1,6 @@
 import { useI18n } from "~/i18n";
 import { HighlightChip } from "../highlight-chip";
-import {
-  Brain,
-  Cloud,
-  Code2,
-  FileText,
-  Layers,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { Brain, Cloud, Code2, FileText, Layers, Sparkles } from "lucide-react";
 
 export function Hero() {
   const { dict } = useI18n();
@@ -52,12 +44,6 @@ export function Hero() {
           <p className="text-lg text-muted-foreground font-medium">
             {dict.hero.subtitle}
           </p>
-        </div>
-
-        {/* Location */}
-        <div className="animate-fade-in-up delay-200 mt-2 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
-          <MapPin size={14} aria-hidden="true" />
-          <span>MG, Brazil</span>
         </div>
 
         {/* Highlight chips */}

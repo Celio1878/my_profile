@@ -1,6 +1,6 @@
 import { useI18n } from "~/i18n";
 import { Reveal } from "~/components/reveal";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 import { currentYear } from "~/utils/dates";
 
 export function Footer() {
@@ -124,14 +124,6 @@ export function Footer() {
               <Mail size={14} aria-hidden="true" />
               contato@celiovieira.com
             </a>
-            <span className="inline-flex items-center gap-2 text-muted-foreground">
-              <MapPin size={14} aria-hidden="true" />
-              MG · Brazil
-            </span>
-            <span className="inline-flex items-center gap-2 text-muted-foreground">
-              <Phone size={14} aria-hidden="true" />
-              celiovieira.com
-            </span>
           </div>
         </Reveal>
       </div>
