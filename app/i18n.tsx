@@ -1,14 +1,74 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export type SupportedLocale = "en" | "de" | "pt-BR" | "es";
 
+const SUPPORTED_LOCALES: SupportedLocale[] = ["en", "de", "pt-BR", "es"];
+const LOCALE_STORAGE_KEY = "preferred-locale";
+
+/**
+ * Map a single BCP-47 language tag (e.g. "pt-PT", "es-MX", "de-AT") to one of
+ * our supported locales. Returns null when there is no reasonable match so the
+ * caller can keep scanning the `navigator.languages` priority list.
+ */
+function matchLocale(tag: string): SupportedLocale | null {
+  if (!tag) return null;
+  const lower = tag.toLowerCase().replace("_", "-");
+  const primary = lower.split("-")[0];
+
+  // Portuguese — all variants map to pt-BR (the only Portuguese dictionary we ship)
+  if (primary === "pt") return "pt-BR";
+  // German — de, de-AT, de-CH, de-DE, ...
+  if (primary === "de") return "de";
+  // Spanish — es, es-ES, es-MX, es-AR, ca (close cultural fit), gl
+  if (primary === "es") return "es";
+  // English — en, en-US, en-GB, ...
+  if (primary === "en") return "en";
+
+  return null;
+}
+
+/**
+ * Detects the best matching locale based on (in order):
+ *   1. Explicit user preference saved in localStorage
+ *   2. `navigator.languages` (full priority list set by the browser/OS)
+ *   3. `navigator.language` (single fallback)
+ *   4. `"en"` as the ultimate default
+ *
+ * Safe to call during SSR — returns `"en"` when `navigator` is unavailable.
+ */
 export function detectLocale(): SupportedLocale {
   if (typeof navigator === "undefined") return "en";
-  const nav = navigator.language || "en";
-  const lower = nav.toLowerCase();
-  if (lower.startsWith("pt-br")) return "pt-BR";
-  if (lower.startsWith("de")) return "de";
-  if (lower.startsWith("es")) return "es";
+
+  // 1. Stored user preference wins over auto-detection
+  if (typeof localStorage !== "undefined") {
+    try {
+      const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
+      if (stored && (SUPPORTED_LOCALES as string[]).includes(stored)) {
+        return stored as SupportedLocale;
+      }
+    } catch {
+      /* ignore — privacy mode, disabled storage, etc. */
+    }
+  }
+
+  // 2. & 3. Walk the browser's full language priority list
+  const candidates: string[] = [];
+  if (Array.isArray(navigator.languages)) {
+    candidates.push(...navigator.languages);
+  }
+  if (navigator.language) candidates.push(navigator.language);
+
+  for (const tag of candidates) {
+    const match = matchLocale(tag);
+    if (match) return match;
+  }
+
   return "en";
 }
 
@@ -114,7 +174,8 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     hero: {
       title: "Celio Vieira",
-      subtitle: "FullStack Engineer • Cloud | Web | Mobile",
+      subtitle:
+        "FullStack Engineer • Data Engineer • AI Engineer | Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",
       ctaYouTube: "YouTube",
       ariaYouTube: "YouTube channel",
@@ -133,27 +194,29 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     about: {
       heading: "About Me",
-      body: "I am a passionate Data Engineer with a strong foundation in software engineering. My expertise lies in designing and building robust, scalable data platforms on AWS, leveraging a diverse tech stack that includes PySpark, Databricks, Kafka, and SQL. I am deeply committed to ensuring data quality, implementing automated testing, and focusing on observability to make complex data ecosystems simpler and more reliable for users. My goal is to optimize both cost and performance without sacrificing reliability.\n\nWith a postgraduate specialization in Cloud Computing Process and Architecture, I bring a unique blend of cloud expertise and software development best practices (like TDD and SOLID principles) to my work. This background enables me to bridge the gap between software and data engineering, allowing me to build high-performance architectures that power analytics, machine learning, and business intelligence. My skills also extend to full-stack development with Python, Go, and Node.js, and modern front-end frameworks like React and Next.js.\n\nBeyond my professional life, I am an avid learner and a firm believer in the value of teaching, mentoring, and knowledge sharing. To relax and unwind, I enjoy a range of hobbies, from playing video games and practicing guitar to working out at the gym. My family, including our pets, is very important to me, and I cherish our walks and time spent together. I also love movies, series, animes, and superhero comics.",
+      body: "I'm a FullStack, Data, and AI Engineer based in Minas Gerais, Brazil, with over 5 years of professional experience building scalable systems across cloud, web, mobile, and data platforms. Currently acting as Tech Lead at Banco Itaú, I design and optimize real-time and batch data pipelines using AWS (Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg) and Apache Spark/PySpark, while leading and mentoring my team from requirements gathering to delivery.\n\nI'm deeply passionate about AI engineering — building solutions with LLMs, fine-tuning models using Ollama, ComfyUI, and HuggingFace on local servers, and implementing Retrieval-Augmented Generation (RAG) pipelines. I hold certifications in Prompt Engineering, AI Practitioner, and Responsible AI Practices.\n\nWith a postgraduate specialization in Cloud Computing Process and Architecture, I bridge software and data engineering to build high-performance architectures that power analytics, machine learning, and business intelligence. I apply TDD, SOLID, DDD, and event-driven design across Node.js, Python, Go, and TypeScript stacks.\n\nBeyond work, I'm an avid learner who loves teaching and mentoring. I unwind by playing guitar, working out, gaming, and spending time with my family and pets. I'm also a fan of movies, anime, and superhero comics.",
     },
     experience: {
       heading: "Experience",
       items: [
         {
-          role: "Data Engineer",
+          role: "Data Engineer & Tech Lead",
           company: "Itaú Unibanco",
-          period: "Jan 2025 – Present (8 months)",
+          period: "Jan 2025 – Present",
           bullets: [
-            "Design and optimize real-time and batch data pipelines using AWS Glue, EMR, Apache Spark, Databricks",
-            "Integrations with Kinesis/Kafka; data lake architectures and lakehouse practices",
-            "Ensure data quality with automated tests, schema validation, and observability",
+            "Acting as Tech Lead: managing and mentoring colleagues, leading from requirements gathering to delivery and client feedback",
+            "Design and optimize real-time and batch data pipelines using AWS Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg, Hadoop, and Apache Spark",
+            "Integrations with Kinesis/Kafka; data lake and lakehouse architectures",
+            "Ensure data quality through rigorous testing, schema validation, and observability",
             "Deliver analytics-ready datasets for Athena/Redshift and dashboards in QuickSight",
             "Performance and cost optimization across storage/compute workloads",
+            "Languages: Python, JavaScript/TypeScript, Go, Terraform",
           ],
         },
         {
           role: "Software Engineer",
           company: "Itaú Unibanco",
-          period: "Jul 2022 – Present (3 years 2 months) — Brazil",
+          period: "Jul 2022 – Present — Brazil",
           bullets: [
             "Develop and maintain banking software services (payments and receipts)",
             "Work with cross-functional teams on requirements, design, implementation, and delivery",
@@ -307,15 +370,25 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "PySpark",
         "Databricks",
         "DataMesh",
+        "Apache Spark",
+        "Apache Airflow",
+        "Apache Iceberg",
+        "Kafka",
         "Go",
         "Node.js",
         "Python",
+        "TypeScript",
+        "Terraform",
         "AWS",
-        "Apache",
+        "AWS Glue",
+        "AWS EMR",
+        "AWS Athena",
+        "AWS Redshift",
+        "AWS Lambda",
+        "AWS Kinesis",
         "Railway",
         "Supabase",
         "Firebase",
-        "Kafka",
         "React",
         "Next.js",
         "React Router",
@@ -323,6 +396,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "React Native",
         "Expo",
         "EAS",
+        "Ollama",
+        "HuggingFace",
+        "RAG",
+        "LLM Fine-tuning",
+        "ComfyUI",
+        "Docker",
+        "TDD",
+        "SOLID",
+        "DDD",
       ],
     },
     education: {
@@ -343,11 +425,37 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
           institution: "Centro Universitário Una",
           period: "Aug 2013 – Jun 2019",
         },
+        {
+          degree: "Electrical Installation Process Operations",
+          institution: "SENAI BH CECOTEG",
+          period: "Jun 2018 – Dec 2018",
+        },
       ],
     },
     certifications: {
       heading: "Certifications",
       items: [
+        {
+          title: "Essentials of Prompt Engineering",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Skills",
+          skills: ["Prompt Engineering", "LLM", "AI", "AWS"],
+        },
+        {
+          title: "Artificial Intelligence Practitioner",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Skills",
+          skills: ["AI", "Machine Learning", "AWS", "Cloud AI"],
+        },
+        {
+          title: "Responsible Artificial Intelligence Practices",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Skills",
+          skills: ["AI Ethics", "Responsible AI", "AWS"],
+        },
         {
           title: "AWS Knowledge: Serverless",
           issuer: "Amazon Web Services (AWS)",
@@ -440,7 +548,8 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     hero: {
       title: "Célio Vieira",
-      subtitle: "Softwareentwickler • Cloud & Web",
+      subtitle:
+        "FullStack Engineer • Data Engineer • AI Engineer | Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",
       ctaYouTube: "YouTube",
       ariaYouTube: "YouTube-Kanal",
@@ -459,32 +568,108 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     about: {
       heading: "Über mich",
-      body: "Ich bin Data Engineer mit solidem Hintergrund in der Softwareentwicklung. Ich entwerfe Echtzeit‑ und Batch‑Datenplattformen auf AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka) mit Fokus auf Datenqualität, automatisierte Tests, Observability sowie Kosten/Performance. Mir ist wichtig, komplexe Datenlandschaften für Menschen verständlicher und verlässlicher zu machen. Abseits der Arbeit spiele ich gern Videospiele, spiele Gitarre (und lerne Luthier‑Fertigkeiten), trainiere (das Fitnessstudio entspannt mich), gehe spazieren und spiele mit meiner Familie und unseren Haustieren (Hunde, Katzen, usw.) und schaue Filme, Serien, Anime und Superhelden‑Comics. Wissen zu teilen, zu mentorieren und kontinuierlich zu lernen ist mir wichtig. Postgraduale Spezialisierung in Cloud Computing Process and Architecture (Faculdade Pitágoras).",
+      body: "Ich bin FullStack-, Data- und AI-Engineer aus Minas Gerais, Brasilien, mit über 5 Jahren Berufserfahrung. Derzeit Tech Lead bei Banco Itaú, wo ich Echtzeit- und Batch-Datenpipelines mit AWS (Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg) und Apache Spark/PySpark entwerfe und optimiere, während ich mein Team von der Anforderungsaufnahme bis zur Lieferung führe und mentore.\n\nIch bin leidenschaftlich an KI-Engineering interessiert — ich entwickle Lösungen mit LLMs, fine-tune Modelle mit Ollama, ComfyUI und HuggingFace auf lokalen Servern und implementiere RAG-Pipelines. Ich halte Zertifizierungen in Prompt Engineering, AI Practitioner und Responsible AI.\n\nMit einem Postgraduiertenstudium in Cloud Computing verbinde ich Software- und Data-Engineering, um hochperformante Architekturen zu bauen. Ich wende TDD, SOLID, DDD und ereignisgetriebenes Design in Node.js-, Python-, Go- und TypeScript-Stacks an.\n\nAbseits der Arbeit spiele ich Videospiele, Gitarre, trainiere, gehe spazieren mit meiner Familie und Haustieren und schaue Filme, Serien, Anime und Superhelden-Comics.",
     },
     experience: {
       heading: "Erfahrung",
       items: [
         {
-          role: "Data Engineer",
+          role: "Data Engineer & Tech Lead",
           company: "Itaú Unibanco",
-          period: "—",
+          period: "Jan 2025 – Gegenwart",
           bullets: [
-            "Entwurf und Betrieb großskaliger ETL/ELT‑Pipelines auf AWS mit Glue, EMR, Apache Spark und Databricks",
-            "Aufbau von Streaming‑ und Batch‑Integrationen mit Kinesis, Kafka und ereignisgetriebenen Architekturen",
-            "Verbesserung von Datenqualität und Zuverlässigkeit durch automatisierte Tests, Schema‑Validierungen und CI/CD",
-            "Bereitstellung analysefertiger Datensätze für Athena/Redshift und BI mit QuickSight",
-            "Optimierung von Performance und Kosten über Speicher‑ und Rechenlasten hinweg",
+            "Tech Lead: Kollegen führen und mentoren, von der Anforderungsaufnahme bis zur Lieferung",
+            "Echtzeit- und Batch-Datenpipelines mit AWS Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg und Apache Spark entwerfen und optimieren",
+            "Integrationen mit Kinesis/Kafka; Data-Lake- und Lakehouse-Architekturen",
+            "Datenqualität durch Tests, Schema-Validierung und Observability sicherstellen",
+            "Analysefertige Datasets für Athena/Redshift und QuickSight-Dashboards liefern",
+            "Performance- und Kostenoptimierung über Storage/Compute-Workloads",
+            "Sprachen: Python, JavaScript/TypeScript, Go, Terraform",
           ],
         },
         {
-          role: "Software/Backend‑Entwickler",
+          role: "Software Engineer",
+          company: "Itaú Unibanco",
+          period: "Jul 2022 – Gegenwart — Brasilien",
+          bullets: [
+            "Banking-Softwareservices entwickeln und warten (Zahlungen und Belege)",
+            "Mit funktionsübergreifenden Teams an Anforderungen, Design, Implementierung und Lieferung arbeiten",
+            "TDD/BDD, SOLID, YAGNI, DRY; Systemdesign und Best Practices",
+            "AWS-Stack: Lambda, API Gateway, SQS, EventBridge, DynamoDB",
+            "Sprachen: Node.js, Python; Infrastruktur und Cloud mit AWS",
+          ],
+        },
+        {
+          role: "Senior Software Developer",
+          company: "Squadra Digital",
+          period:
+            "Apr 2022 – Jul 2022 (4 Monate) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "Entwicklung und Implementierung von Chatbot-Lösungen geleitet",
+            "Zusammenarbeit in Frontend, Backend und DevOps; Planung und Projektmanagement",
+            "Technologien: Node.js, Next.js, AWS (Amplify, API Gateway, DynamoDB, S3)",
+          ],
+        },
+        {
+          role: "Software Developer",
+          company: "Editora Fórum",
+          period:
+            "Jan 2022 – Apr 2022 (4 Monate) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "Verwaltungssystem und Buchhandel-Benutzerfluss betreut",
+            "Ereignisgetriebene hexagonale Architektur in Node.js mit AWS Serverless",
+            "Elastic Stack (Elasticsearch/Kibana) für Indexierung, Suche und Dashboards",
+          ],
+        },
+        {
+          role: "Junior Software Developer",
+          company: "Editora Fórum",
+          period:
+            "Jan 2021 – Jan 2022 (1 Jahr 1 Monat) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "Ereignisgetriebene hexagonale Architektur in Node.js auf AWS Serverless",
+            "Frontend mit React/Next.js (Ant Design, MSW, React Hook Form/Formik, Tailwind, AG-Grid)",
+            "TDD, SOLID, Strategy; Jira/Trello/GitHub für Projektmanagement",
+          ],
+        },
+        {
+          role: "Full Stack Developer",
+          company: "Editora Fórum",
+          period:
+            "Jan 2020 – Jan 2021 (1 Jahr 1 Monat) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "Full-Stack-Entwicklung von Web-Systemen innerhalb der Organisation",
+          ],
+        },
+        {
+          role: "Software Developer",
+          company: "CIT SENAI",
+          period:
+            "Mai 2019 – Jan 2020 (9 Monate) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "IoT/Industrie 4.0/Automatisierungsprojekte mit Arduino, SPS",
+            "Web-Systeme mit JavaScript, MongoDB, MySQL entwickelt",
+          ],
+        },
+        {
+          role: "Computer-Instructor",
+          company: "Feed Idiomas",
+          period:
+            "Nov 2018 – Apr 2019 (6 Monate) — Belo Horizonte, MG, Brasilien",
+          bullets: [
+            "Schüler betreut: AutoCAD, Dreamweaver, Corel Draw, Office-Paket Fortgeschritten",
+            "Technischer Support und Unterstützung",
+          ],
+        },
+        {
+          role: "Software/Backend-Entwickler",
           company: "Side Projects (BYS, NodeJS App Builder, cdk-factory)",
           period: "—",
           bullets: [
-            "End‑to‑End‑Entwicklung über Web, Mobile und Serverless‑Plattformen",
-            "Aufbau von APIs und ereignisgetriebenen Services mit Node.js/Go/Python auf AWS (Lambda, API Gateway)",
-            "Bereitstellung serverloser Infrastruktur mit AWS CDK; wiederverwendbare Infra‑Module (cdk-factory)",
-            "Implementierung von Produktfeatures in React/Next.js sowie React Native/Expo mit CI/CD",
+            "End-to-End-Entwicklung über Web, Mobile und Serverless-Plattformen",
+            "APIs und ereignisgetriebene Services mit Node.js/Go/Python auf AWS",
+            "Serverlose Infrastruktur mit AWS CDK; wiederverwendbare Module (cdk-factory)",
+            "React/Next.js und React Native/Expo mit CI/CD",
           ],
         },
       ],
@@ -559,14 +744,25 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "PySpark",
         "Databricks",
         "DataMesh",
+        "Apache Spark",
+        "Apache Airflow",
+        "Apache Iceberg",
+        "Kafka",
         "Go",
         "Node.js",
         "Python",
+        "TypeScript",
+        "Terraform",
         "AWS",
+        "AWS Glue",
+        "AWS EMR",
+        "AWS Athena",
+        "AWS Redshift",
+        "AWS Lambda",
+        "AWS Kinesis",
         "Railway",
         "Supabase",
         "Firebase",
-        "Kafka",
         "React",
         "Next.js",
         "React Router",
@@ -574,6 +770,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "React Native",
         "Expo",
         "EAS",
+        "Ollama",
+        "HuggingFace",
+        "RAG",
+        "LLM Fine-tuning",
+        "ComfyUI",
+        "Docker",
+        "TDD",
+        "SOLID",
+        "DDD",
       ],
     },
     education: {
@@ -605,6 +810,27 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     certifications: {
       heading: "Zertifizierungen",
       items: [
+        {
+          title: "Grundlagen des Prompt Engineering",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Kompetenzen",
+          skills: ["Prompt Engineering", "LLM", "KI", "AWS"],
+        },
+        {
+          title: "Artificial Intelligence Practitioner",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Kompetenzen",
+          skills: ["KI", "Machine Learning", "AWS", "Cloud AI"],
+        },
+        {
+          title: "Verantwortungsvolle KI-Praktiken",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Kompetenzen",
+          skills: ["KI-Ethik", "Responsible AI", "AWS"],
+        },
         {
           title: "AWS Knowledge: Serverless",
           issuer: "Amazon Web Services (AWS)",
@@ -706,7 +932,8 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     hero: {
       title: "Célio Vieira",
-      subtitle: "Engenheiro de Software • Cloud & Web",
+      subtitle:
+        "Engenheiro FullStack • Engenheiro de Dados • Engenheiro de IA | Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",
       ctaYouTube: "YouTube",
       ariaYouTube: "Canal do YouTube",
@@ -725,15 +952,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     about: {
       heading: "Sobre mim",
-      body: "Sou Engenheiro de Dados com sólida base em engenharia de software. Desenho plataformas de dados em tempo real e em batch na AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka), com foco em qualidade de dados, testes automatizados, observabilidade e custo/performance. Gosto de tornar ecossistemas de dados complexos mais simples e confiáveis para quem usa. Fora do trabalho, gosto de jogar videogame, tocar violão/guitarra (e aprender luteria), treinar (a academia me relaxa), caminhar e brincar com minha família e nossos pets (cães, gatos, etc.) e assistir a filmes, séries, animes e quadrinhos de super‑heróis. Valorizo ensinar, mentorar, compartilhar conhecimento e o aprendizado contínuo. Pós‑graduação em Processos e Arquitetura de Computação em Nuvem (Faculdade Pitágoras).",
+      body: "Sou Engenheiro FullStack, de Dados e de IA baseado em Minas Gerais, Brasil, com mais de 5 anos de experiência profissional. Atualmente atuando como Tech Lead no Banco Itaú, projeto e otimizo pipelines de dados em tempo real e batch usando AWS (Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg) e Apache Spark/PySpark, enquanto lidero e mentoro meu time desde o levantamento de requisitos até a entrega.\n\nSou apaixonado por engenharia de IA — construindo soluções com LLMs, fine-tuning de modelos com Ollama, ComfyUI e HuggingFace em servidores locais, e implementando pipelines de RAG. Possuo certificações em Prompt Engineering, AI Practitioner e Responsible AI.\n\nCom pós-graduação em Cloud Computing, conecto engenharia de software e dados para construir arquiteturas de alta performance. Aplico TDD, SOLID, DDD e design orientado a eventos em stacks Node.js, Python, Go e TypeScript.\n\nFora do trabalho, gosto de jogar videogame, tocar guitarra, treinar, caminhar com minha família e pets, e assistir filmes, séries, animes e quadrinhos de super-heróis.",
     },
     experience: {
       heading: "Experiência",
       items: [
         {
-          role: "Engenheiro de Dados",
+          role: "Engenheiro de Dados & Tech Lead",
           company: "Banco Itaú (Itaú Unibanco)",
-          period: "jan 2025 – Presente (8 meses)",
+          period: "jan 2025 – Presente",
           bullets: [
             "Desenhar e otimizar pipelines de dados em tempo real e batch (Glue, EMR, Spark, Databricks)",
             "Integrações com Kinesis/Kafka; arquitetura de data lake e lakehouse",
@@ -895,14 +1122,25 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "PySpark",
         "Databricks",
         "DataMesh",
+        "Apache Spark",
+        "Apache Airflow",
+        "Apache Iceberg",
+        "Kafka",
         "Go",
         "Node.js",
         "Python",
+        "TypeScript",
+        "Terraform",
         "AWS",
+        "AWS Glue",
+        "AWS EMR",
+        "AWS Athena",
+        "AWS Redshift",
+        "AWS Lambda",
+        "AWS Kinesis",
         "Railway",
         "Supabase",
         "Firebase",
-        "Kafka",
         "React",
         "Next.js",
         "React Router",
@@ -910,6 +1148,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "React Native",
         "Expo",
         "EAS",
+        "Ollama",
+        "HuggingFace",
+        "RAG",
+        "LLM Fine-tuning",
+        "ComfyUI",
+        "Docker",
+        "TDD",
+        "SOLID",
+        "DDD",
       ],
     },
     education: {
@@ -941,6 +1188,27 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     certifications: {
       heading: "Certificações",
       items: [
+        {
+          title: "Fundamentos de Engenharia de Prompt",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competências",
+          skills: ["Engenharia de Prompt", "LLM", "IA", "AWS"],
+        },
+        {
+          title: "Artificial Intelligence Practitioner",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competências",
+          skills: ["IA", "Machine Learning", "AWS", "Cloud AI"],
+        },
+        {
+          title: "Práticas de IA Responsável",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competências",
+          skills: ["Ética em IA", "IA Responsável", "AWS"],
+        },
         {
           title: "AWS Knowledge: Serverless",
           issuer: "Amazon Web Services (AWS)",
@@ -1041,7 +1309,8 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     hero: {
       title: "Célio Vieira",
-      subtitle: "Ingeniero de Software • Cloud y Web",
+      subtitle:
+        "Ingeniero FullStack • Ingeniero de Datos • Ingeniero de IA | Cloud | Web | Mobile",
       ctaLinkedIn: "LinkedIn",
       ctaYouTube: "YouTube",
       ariaYouTube: "Canal de YouTube",
@@ -1060,15 +1329,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     },
     about: {
       heading: "Acerca de mí",
-      body: "Soy Ingeniero de Datos con base sólida en ingeniería de software. Diseño plataformas de datos en tiempo real y por lotes en AWS (Glue, EMR, Spark, Databricks; Kinesis/Kafka), con foco en calidad de datos, pruebas automatizadas, observabilidad y costo/rendimiento. Disfruto simplificar ecosistemas de datos complejos y hacerlos más confiables para las personas que los usan. Fuera del trabajo, me gusta jugar videojuegos, tocar guitarra (y aprender luthería), entrenar (el gimnasio me relaja), caminar y jugar con mi familia y nuestras mascotas (perros, gatos, etc.) y ver películas, series, anime y cómics de superhéroes. Valoro enseñar, mentorear, compartir conocimiento y el aprendizaje continuo. Posgrado en Cloud Computing Process and Architecture (Faculdade Pitágoras).",
+      body: "Soy Ingeniero FullStack, de Datos e IA con base en Minas Gerais, Brasil, con más de 5 años de experiencia profesional. Actualmente como Tech Lead en Banco Itaú, diseño y optimizo pipelines de datos en tiempo real y batch usando AWS (Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg) y Apache Spark/PySpark, mientras lidero y mentoreo a mi equipo desde la toma de requisitos hasta la entrega.\n\nSoy apasionado por la ingeniería de IA — construyendo soluciones con LLMs, fine-tuning de modelos con Ollama, ComfyUI y HuggingFace en servidores locales, e implementando pipelines de RAG. Tengo certificaciones en Prompt Engineering, AI Practitioner y Responsible AI.\n\nCon un posgrado en Cloud Computing, conecto ingeniería de software y datos para construir arquitecturas de alto rendimiento. Aplico TDD, SOLID, DDD y diseño orientado a eventos en stacks Node.js, Python, Go y TypeScript.\n\nFuera del trabajo, disfruto videojuegos, guitarra, entrenar, caminar con mi familia y mascotas, y ver películas, series, anime y cómics de superhéroes.",
     },
     experience: {
       heading: "Experiencia",
       items: [
         {
-          role: "Ingeniero de Datos",
+          role: "Ingeniero de Datos & Tech Lead",
           company: "Banco Itaú (Itaú Unibanco)",
-          period: "ene 2025 – Presente (8 meses)",
+          period: "ene 2025 – Presente",
           bullets: [
             "Diseñar y optimizar pipelines de datos en tiempo real y batch (Glue, EMR, Spark, Databricks)",
             "Integraciones con Kinesis/Kafka; arquitecturas de data lake y lakehouse",
@@ -1230,14 +1499,25 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "PySpark",
         "Databricks",
         "DataMesh",
+        "Apache Spark",
+        "Apache Airflow",
+        "Apache Iceberg",
+        "Kafka",
         "Go",
         "Node.js",
         "Python",
+        "TypeScript",
+        "Terraform",
         "AWS",
+        "AWS Glue",
+        "AWS EMR",
+        "AWS Athena",
+        "AWS Redshift",
+        "AWS Lambda",
+        "AWS Kinesis",
         "Railway",
         "Supabase",
         "Firebase",
-        "Kafka",
         "React",
         "Next.js",
         "React Router",
@@ -1245,6 +1525,15 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
         "React Native",
         "Expo",
         "EAS",
+        "Ollama",
+        "HuggingFace",
+        "RAG",
+        "LLM Fine-tuning",
+        "ComfyUI",
+        "Docker",
+        "TDD",
+        "SOLID",
+        "DDD",
       ],
     },
     education: {
@@ -1275,6 +1564,27 @@ const dictionaries: Record<SupportedLocale, Dictionary> = {
     certifications: {
       heading: "Certificaciones",
       items: [
+        {
+          title: "Fundamentos de Ingeniería de Prompts",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competencias",
+          skills: ["Ingeniería de Prompts", "LLM", "IA", "AWS"],
+        },
+        {
+          title: "Artificial Intelligence Practitioner",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competencias",
+          skills: ["IA", "Machine Learning", "AWS", "Cloud AI"],
+        },
+        {
+          title: "Prácticas de IA Responsable",
+          issuer: "Amazon Web Services (AWS)",
+          issued: "2025",
+          skillsLabel: "Competencias",
+          skills: ["Ética en IA", "IA Responsable", "AWS"],
+        },
         {
           title: "AWS Knowledge: Serverless",
           issuer: "Amazon Web Services (AWS)",
@@ -1366,17 +1676,38 @@ const LocaleContext = createContext<{
 } | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<SupportedLocale>(() => detectLocale());
+  // Initialize with "en" on both server and first client render to avoid
+  // hydration mismatches; the real browser-based locale is applied right after
+  // mount in the effect below.
+  const [locale, setLocaleState] = useState<SupportedLocale>("en");
 
+  // Detect & apply the browser/stored locale once on the client
+  useEffect(() => {
+    const detected = detectLocale();
+    if (detected !== locale) setLocaleState(detected);
+    // Intentionally run only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Reflect the active language on <html lang> for accessibility & SEO,
+  // and persist explicit user choices.
   useEffect(() => {
     try {
-      // Reflect the active language on the <html> element for accessibility
       document.documentElement.setAttribute(
         "lang",
         locale.startsWith("pt") ? "pt-BR" : locale,
       );
     } catch {}
   }, [locale]);
+
+  const setLocale = (l: SupportedLocale) => {
+    setLocaleState(l);
+    try {
+      localStorage.setItem(LOCALE_STORAGE_KEY, l);
+    } catch {
+      /* storage unavailable — silently keep in-memory value */
+    }
+  };
 
   const dict = useMemo(() => dictionaries[locale] ?? dictionaries.en, [locale]);
 
@@ -1390,7 +1721,7 @@ export function useI18n() {
   const ctx = useContext(LocaleContext);
   if (ctx) return ctx;
   // Fallback to a safe default if the provider isn't mounted yet
-  const locale = detectLocale();
+  const locale: SupportedLocale = "en";
   return {
     locale,
     setLocale: () => {},
