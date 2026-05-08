@@ -1,7 +1,6 @@
 import { useI18n } from "~/i18n";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ThemeToggle } from "~/components/theme-toggle";
 import { Menu as MenuIcon, X as CloseIcon } from "lucide-react";
 
 export const Nav: FC = () => {
@@ -25,7 +24,23 @@ export const Nav: FC = () => {
   );
   const [active, setActive] = useState<string>(ids[0]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
   const mobilePanelRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll progress bar + scrolled-state shadow
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight || 1;
+      const p = Math.min(1, Math.max(0, h.scrollTop / max));
+      setProgress(p);
+      setScrolled(h.scrollTop > 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -65,7 +80,14 @@ export const Nav: FC = () => {
   const link = (href: string, label: string) => (
     <a
       href={`#${href}`}
-      className={"hover:underline data-[active=true]:underline"}
+      className={
+        "relative px-1 py-1 transition-colors text-gray-700 dark:text-gray-300 " +
+        "hover:text-primary data-[active=true]:text-primary " +
+        "after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-1 " +
+        "after:h-[2px] after:rounded-full after:bg-gradient-to-r after:from-primary after:to-blue-500 " +
+        "after:scale-x-0 after:origin-left after:transition-transform after:duration-300 " +
+        "hover:after:scale-x-100 data-[active=true]:after:scale-x-100"
+      }
       aria-current={active === href ? "page" : undefined}
       data-active={active === href}
       onClick={() => setMenuOpen(false)}
@@ -78,8 +100,20 @@ export const Nav: FC = () => {
     <nav
       role="navigation"
       aria-label="Primary"
-      className="fixed top-0 left-0 right-0 backdrop-blur bg-slate-100/50 dark:bg-black border-b border-gray-200 dark:border-gray-800 z-50"
+      className={
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 " +
+        "backdrop-blur-xl border-b " +
+        (scrolled
+          ? "bg-white/70 dark:bg-black/70 border-gray-200/80 dark:border-gray-800/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+          : "bg-white/40 dark:bg-black/40 border-transparent")
+      }
     >
+      {/* Scroll progress bar */}
+      <div
+        aria-hidden="true"
+        className="absolute left-0 top-0 h-[2px] bg-gradient-to-r from-primary via-blue-500 to-purple-500 transition-[width] duration-150 ease-out"
+        style={{ width: `${progress * 100}%` }}
+      />
       <div className="container mx-auto p-3 relative">
         <div className="flex items-center justify-between">
           {/* Desktop nav */}
@@ -99,8 +133,6 @@ export const Nav: FC = () => {
 
           {/* Right controls */}
           <div className="flex items-center gap-2 ml-auto">
-            {/* Theme toggle always visible */}
-            <ThemeToggle />
             {/* Hamburger for mobile */}
             <button
               type="button"
