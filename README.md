@@ -14,7 +14,7 @@ A single-page application showcasing Celio Vieira's professional profile as a Fu
 - 🧭 React Router 7 SPA (SSR disabled)
 - 🌍 Automatic language detection (en, de, pt-BR, es) with English fallback
 - 🎨 Tailwind CSS v4 — system-based dark/light theme via `prefers-color-scheme`
-- 🧩 shadcn/ui-style primitives (Button, Card, Badge, Separator)
+- 🧩 shadcn/ui-style primitives (Card, Badge, Separator)
 - ✨ Smooth animations: fade-in-up, slide-in-left, scale-in, card hover lift, skill badge hover
 - 🔍 Active section highlighting in nav via IntersectionObserver
 - ♿ Accessible: skip-to-content link, landmarks, aria-current on active nav, reduced-motion friendly
@@ -32,7 +32,7 @@ A single-page application showcasing Celio Vieira's professional profile as a Fu
   - English is the default fallback for unsupported locales
   - All content strings live in locale dictionaries
 - Theming: CSS `@media (prefers-color-scheme: dark)` — no manual toggle, no cookies
-- UI primitives (shadcn/ui-style): `app/components/ui/*` (Button, Card, Badge, Separator)
+- UI primitives (shadcn/ui-style): `app/components/ui/*` (Card, Badge, Separator)
 - Animations: `app/components/reveal.tsx` (scroll-into-view fade/slide), respecting `prefers-reduced-motion`
 - Accessibility: skip link in `app/root.tsx`, main/section landmarks, aria-labelledby headings, nav aria-current
 
@@ -42,7 +42,7 @@ A single-page application showcasing Celio Vieira's professional profile as a Fu
 |---|---|
 | Framework | React 19 + React Router 7 |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4 + tw-animate-css |
+| Styling | Tailwind CSS v4 |
 | UI Primitives | shadcn/ui-style components |
 | Icons | lucide-react |
 | i18n | Custom context (`app/i18n.tsx`) |
@@ -59,7 +59,7 @@ app/
     nav.tsx              # Sticky navbar with active section highlighting
     reveal.tsx           # Scroll-into-view animation wrapper
     loader.tsx           # Navigation loading indicator
-    ui/                  # shadcn/ui-style primitives (Button, Card, Badge, Separator)
+    ui/                  # shadcn/ui-style primitives (Card, Badge, Separator)
   lib/
     utils.ts             # cn() helper
   i18n.tsx               # Locale detection + dictionaries (en, de, pt-BR, es)

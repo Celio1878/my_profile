@@ -11,10 +11,10 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { type ReactNode } from "react";
-import { Loader } from "~/components/loader";
-import { ErrorBoundaryPage } from "~/error-boundary-page";
-import { I18nProvider } from "~/i18n";
-import { InteractiveBackground } from "~/components/interactive-background";
+import { Loader } from "./components/loader";
+import { ErrorBoundaryPage } from "./error-boundary-page";
+import { InteractiveBackground } from "./components/interactive-background";
+import { I18nProvider } from "./i18n";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", type: "image/jpeg", href: "/me.jpeg" },

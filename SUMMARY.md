@@ -57,18 +57,23 @@
 - [x] Created `SUMMARY.md` — this file; learnings and task log
 - [x] Updated `README.md` — reflects current state (no theme toggle, system dark mode, Bun, correct architecture)
 
-### Session 6 (Current) — Improved browser-language translations
+### Session 7 (Current) — Componentization & Refactoring
+- [x] Refactored `app/routes/home.tsx`: Moved all major sections to `app/components/sections/` (`Hero`, `About`, `Experience`, etc.)
+- [x] Extracted shared logic to `app/components/section.tsx` and `app/components/highlight-chip.tsx`
+- [x] Refactored `app/i18n.tsx`: Moved large translation dictionaries to `app/lib/profile-translations.ts` to improve maintainability
+- [x] Ensured `app/lib/translations.ts` (BYS project) remains untouched
+- [x] Build verified: `bun run build` passes with much cleaner route code
+
+### Session 6 (Previous) — Improved browser-language translations
 - [x] `app/i18n.tsx`: rewrote `detectLocale` to scan full `navigator.languages` priority list with BCP-47 normalization (`pt-*`→`pt-BR`, `de-*`→`de`, `es-*`→`es`, `en-*`→`en`)
 - [x] Added `localStorage`-backed user override (`preferred-locale`) that takes precedence over auto-detection
 - [x] `I18nProvider`: SSR-safe init (`"en"` on server + first render) + post-mount detect to prevent hydration mismatches; `setLocale` now persists choice
-- [x] Build verified: `bun run build` passes (client + SSR)
 
 ### Session 5 (Previous) — About aside + Header/Footer polish
 - [x] Refactored About into 2-col grid: bio left, sticky aside (Quick Facts card, stats grid, daily-stack chips) right
 - [x] Nav: scroll progress bar, glass shadow on scroll, animated gradient underline + color shift on active/hover links
 - [x] Footer: gradient + radial glow background, larger circular social icon buttons with hover lift/colored shadow, centered heading and contact row
 - [x] Added `scroll-behavior: smooth` (with reduced-motion fallback) on `html`
-- [x] Build verified: `bun run build` passes (client + SSR)
 
 ### Session 4 (Previous) — Interactive background animation
 - [x] Added `app/components/interactive-background.tsx`: canvas particle field with mouse attraction, cursor radial glow, scroll parallax + hue shift, prefers-reduced-motion + visibility-aware, DPR-aware, perf-scaled particle count
@@ -91,6 +96,20 @@
 - [x] Added 3 new AI certs to `de` locale (Prompt Engineering, AI Practitioner, Responsible AI — translated)
 - [x] Added 3 new AI certs to `pt-BR` locale (translated)
 - [x] Added 3 new AI certs to `es` locale (translated)
+
+### Session 8 (Previous) — Performance & Size Optimization
+- [x] Analyzed and removed unused dependencies: `react-router-theme`, `date-fns`, `vite-tsconfig-paths`, `@radix-ui/react-accordion`, `isbot`, `tw-animate-css`.
+- [x] Deleted unused components and library files: `Accordion`, `Button`, `ThemeToggle`, `ThemeContext`, `LanguageContext`, and the unrelated 1500-line `translations.ts`.
+- [x] Cleaned up `app.css`: Removed redundant `@import "tw-animate-css"` and dozens of unused CSS variables (charts, sidebars, popovers, inputs).
+- [x] Cleaned up `Card` component: Removed unused `CardFooter` and `CardAction` sub-components.
+- [x] Updated `README.md` and `CONTEXT.md` to reflect the lean project structure.
+- [x] Build verified: `bun run build` passes with a smaller, cleaner codebase.
+
+### Session 9 (Current) — Bug Fix: Module Resolution
+- [x] Fixed "Cannot find module '~/components/loader'" error by enabling native `resolve.tsconfigPaths: true` in `vite.config.ts`.
+- [x] Converted critical imports in `app/root.tsx`, `app/routes/home.tsx`, and `app/components/sections/hero.tsx` to relative paths for increased robustness.
+- [x] Verified `react-router.config.ts` must have `ssr: true` for the server bundle build to succeed with Bun/React 19.
+- [x] Build verified: `bun run build` passes with zero errors.
 
 ---
 

@@ -16,10 +16,10 @@ A single-page application (SPA) serving as Celio Vieira's professional profile/p
 ## Tech Stack
 | Layer | Technology |
 |---|---|
-| Framework | React 19 + React Router 7 (SPA mode, SSR disabled) |
+| Framework | React 19 + React Router 7 (SPA mode, SSR enabled in config for build) |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4 + tw-animate-css |
-| UI Primitives | shadcn/ui-style (Button, Card, Badge, Separator) |
+| Styling | Tailwind CSS v4 |
+| UI Primitives | shadcn/ui-style (Card, Badge, Separator) |
 | Icons | lucide-react |
 | i18n | Custom context in `app/i18n.tsx` |
 | Build | Vite (via React Router) |
