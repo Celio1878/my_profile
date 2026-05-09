@@ -37,7 +37,7 @@ A single-page application (SPA) serving as Célio Vieira's professional profile/
 | `app/components/nav.tsx` | Sticky nav with active section highlighting |
 | `app/components/reveal.tsx` | Scroll-into-view animation wrapper |
 | `public/resume.pdf` | Celio's CV — embedded and downloadable |
-| `public/me.jpeg` | Profile photo |
+| `public/working.JPEG` | Profile photo |
 | `public/*.png` | Project screenshots (BYS, App Builder, CDK Factory) |
 
 ## Sections on the Page

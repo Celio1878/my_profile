@@ -36,7 +36,7 @@ export function meta({}: Route.MetaArgs) {
     },
     { property: "og:url", content: "https://celiovieira.com/" },
     { property: "og:type", content: "profile" },
-    { property: "og:image", content: "https://celiovieira.com/me.jpeg" },
+    { property: "og:image", content: "https://celiovieira.com/working.JPEG" },
     { property: "og:site_name", content: "Célio Vieira Portfolio" },
     { name: "twitter:card", content: "summary_large_image" },
     {
@@ -48,7 +48,7 @@ export function meta({}: Route.MetaArgs) {
       content:
         "Tech Lead at Banco Itaú. Building scalable cloud, data & AI systems.",
     },
-    { name: "twitter:image", content: "https://celiovieira.com/me.jpeg" },
+    { name: "twitter:image", content: "https://celiovieira.com/working.JPEG" },
   ];
 }
 
@@ -67,7 +67,7 @@ export default function Home() {
             "@type": "Person",
             name: "Célio Vieira",
             url: "https://celiovieira.com/",
-            image: "https://celiovieira.com/me.jpeg",
+            image: "https://celiovieira.com/working.JPEG",
             jobTitle: "FullStack, Data & AI Engineer",
             worksFor: {
               "@type": "Organization",

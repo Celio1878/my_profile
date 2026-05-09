@@ -68,7 +68,7 @@ app/
     home.tsx             # Main page — all sections
 public/
   resume.pdf             # Embedded resume (view + download)
-  me.jpeg                # Profile photo
+  working.JPEG                # Profile photo
   bys-banner.png         # Be Your Stories banner
   bys-*.png              # BYS mobile/tablet screenshots
   express-app-builder-*.png  # NodeJS App Builder screenshots
@@ -133,7 +133,7 @@ Deploy to any Docker-compatible platform (ECS, Cloud Run, Railway, Fly.io, etc.)
 
 - **Resume:** Replace `public/resume.pdf` with your latest CV.
 - **Content:** Edit `app/i18n.tsx` per locale. All sections (experience, skills, certs, etc.) are defined there.
-- **Profile photo:** Replace `public/me.jpeg`.
+- **Profile photo:** Replace `public/working.JPEG`.
 - **Project screenshots:** Replace/add images in `public/` and update references in `app/routes/home.tsx`.
 - **SEO/meta:** Update `meta()` in `app/routes/home.tsx`.
 - **Theme:** Automatically follows the user's OS preference — no configuration needed.

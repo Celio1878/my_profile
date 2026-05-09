@@ -17,7 +17,7 @@ import { InteractiveBackground } from "./components/interactive-background";
 import { I18nProvider } from "./i18n";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "icon", type: "image/jpeg", href: "/me.jpeg" },
+  { rel: "icon", type: "image/png", href: "/favicon.png" },
   { rel: "manifest", href: "/manifest.json" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {

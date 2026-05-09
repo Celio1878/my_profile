@@ -23,7 +23,7 @@
 - CV data is in `public/resume.pdf`.
 
 ## Images
-- All images are in `/public/`: `me.jpeg`, `bys-banner.png`, `bys-home-mobile.png`, `book-bys-search-mobile.png`, `bys-ipad-search.png`, `bys-ipad-user.png`, `cdk-factory-items.png`, `express-app-builder-pkgs.png`, `express-app-builder-tests.png`.
+- All images are in `/public/`: `working.JPEG`, `bys-banner.png`, `bys-home-mobile.png`, `book-bys-search-mobile.png`, `bys-ipad-search.png`, `bys-ipad-user.png`, `cdk-factory-items.png`, `express-app-builder-pkgs.png`, `express-app-builder-tests.png`.
 - Images are already referenced in `home.tsx` showcase sections.
 
 ## i18n Locales

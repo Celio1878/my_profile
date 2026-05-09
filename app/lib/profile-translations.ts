@@ -158,7 +158,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Senior Software Developer",
           company: "Squadra Digital",
-          period: "Apr 2022 – Jul 2022 (4 months) — Belo Horizonte, MG, Brazil",
+          period: "Apr 2022 – Jul 2022 (4 months) — MG, Brazil",
           bullets: [
             "Led development and implementation of chatbot solutions",
             "Collaborated on frontend, backend, and DevOps; planning and project management",
@@ -168,8 +168,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2020 – Apr 2022 (2 yr 4 months) — Belo Horizonte, MG, Brazil",
+          period: "Jan 2020 – Apr 2022 (2 yr 4 months) — MG, Brazil",
           bullets: [
             "Maintained management system and bookstore user flow",
             "Event-driven hexagonal architecture in Node.js with AWS Serverless",
@@ -179,8 +178,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Junior Software Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2020 – Apr 2022 (2 yr 4 months) — Belo Horizonte, MG, Brazil",
+          period: "Jan 2020 – Apr 2022 (2 yr 4 months) — MG, Brazil",
           bullets: [
             "Event-driven hexagonal architecture in Node.js on AWS Serverless",
             "Frontend with React/Next.js (Ant Design, MSW, React Hook Form/Formik, Tailwind, AG-Grid)",
@@ -190,8 +188,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Full Stack Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2020 – Apr 2022 (2 yr 4 months) — Belo Horizonte, MG, Brazil",
+          period: "Jan 2020 – Apr 2022 (2 yr 4 months) — MG, Brazil",
           bullets: [
             "Full-stack development of web systems within the organization",
           ],
@@ -199,7 +196,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "CIT SENAI",
-          period: "May 2019 – Jan 2020 (9 months) — Belo Horizonte, MG, Brazil",
+          period: "May 2019 – Jan 2020 (9 months) — MG, Brazil",
           bullets: [
             "IoT/Industry 4.0/Automation projects using Arduino, PLC",
             "Web systems developed with JavaScript, MongoDB, MySQL",
@@ -208,7 +205,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Computer Instructor",
           company: "Feed Idiomas",
-          period: "Nov 2018 – Apr 2019 (6 months) — Belo Horizonte, MG, Brazil",
+          period: "Nov 2018 – Apr 2019 (6 months) — MG, Brazil",
           bullets: [
             "Assisted students: AutoCAD, Dreamweaver, Corel Draw, Office Package Advanced",
             "Technical support and assistance",
@@ -533,8 +530,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Senior Software Developer",
           company: "Squadra Digital",
-          period:
-            "Apr 2022 – Jul 2022 (4 Monate) — Belo Horizonte, MG, Brasilien",
+          period: "Apr 2022 – Jul 2022 (4 Monate) — MG, Brasilien",
           bullets: [
             "Entwicklung und Implementierung von Chatbot-Lösungen geleitet",
             "Zusammenarbeit in Frontend, Backend und DevOps; Planung und Projektmanagement",
@@ -544,8 +540,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2022 – Apr 2022 (4 Monate) — Belo Horizonte, MG, Brasilien",
+          period: "Jan 2022 – Apr 2022 (4 Monate) — MG, Brasilien",
           bullets: [
             "Verwaltungssystem und Buchhandel-Benutzerfluss betreut",
             "Ereignisgetriebene hexagonale Architektur in Node.js mit AWS Serverless",
@@ -555,8 +550,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Junior Software Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2021 – Jan 2022 (1 Jahr 1 Monat) — Belo Horizonte, MG, Brasilien",
+          period: "Jan 2021 – Jan 2022 (1 Jahr 1 Monat) — MG, Brasilien",
           bullets: [
             "Ereignisgetriebene hexagonale Architektur in Node.js auf AWS Serverless",
             "Frontend with React/Next.js (Ant Design, MSW, React Hook Form/Formik, Tailwind, AG-Grid)",
@@ -566,8 +560,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Full Stack Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2020 – Jan 2021 (1 Jahr 1 Monat) — Belo Horizonte, MG, Brasilien",
+          period: "Jan 2020 – Jan 2021 (1 Jahr 1 Monat) — MG, Brasilien",
           bullets: [
             "Full-stack development of web systems within the organization",
           ],
@@ -575,8 +568,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "CIT SENAI",
-          period:
-            "Mai 2019 – Jan 2020 (9 Monate) — Belo Horizonte, MG, Brasilien",
+          period: "Mai 2019 – Jan 2020 (9 Monate) — MG, Brasilien",
           bullets: [
             "IoT/Industrie 4.0/Automatisierungsprojekte mit Arduino, SPS",
             "Web-Systeme mit JavaScript, MongoDB, MySQL entwickelt",
@@ -585,8 +577,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Computer-Instructor",
           company: "Feed Idiomas",
-          period:
-            "Nov 2018 – Apr 2019 (6 Monate) — Belo Horizonte, MG, Brasilien",
+          period: "Nov 2018 – Apr 2019 (6 Monate) — MG, Brasilien",
           bullets: [
             "Schüler betreut: AutoCAD, Dreamweaver, Corel Draw, Office-Paket Fortgeschritten",
             "Technischer Support und Unterstützung",
@@ -916,7 +907,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Senior Software Developer",
           company: "Squadra Digital",
-          period: "Abr 2022 – Jul 2022 (4 meses) — Belo Horizonte, MG, Brasil",
+          period: "Abr 2022 – Jul 2022 (4 meses) — MG, Brasil",
           bullets: [
             "Liderou o desenvolvimento e a implementação de soluções de chatbot",
             "Colaborou no frontend, backend e DevOps; planejamento e gerenciamento de projetos",
@@ -926,7 +917,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "Editora Fórum",
-          period: "Jan 2022 – Abr 2022 (4 meses) — Belo Horizonte, MG, Brasil",
+          period: "Jan 2022 – Abr 2022 (4 meses) — MG, Brasil",
           bullets: [
             "Manteve o sistema de gerenciamento e o fluxo de usuários da livraria",
             "Arquitetura hexagonal orientada a eventos em Node.js com AWS Serverless",
@@ -936,8 +927,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Junior Software Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2021 – Jan 2022 (1 ano e 1 mês) — Belo Horizonte, MG, Brasil",
+          period: "Jan 2021 – Jan 2022 (1 ano e 1 mês) — MG, Brasil",
           bullets: [
             "Arquitetura hexagonal orientada a eventos em Node.js no AWS Serverless",
             "Frontend with React/Next.js (Ant Design, MSW, React Hook Form/Formik, Tailwind, AG-Grid)",
@@ -947,8 +937,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Full Stack Developer",
           company: "Editora Fórum",
-          period:
-            "Jan 2020 – Jan 2021 (1 ano e 1 mês) — Belo Horizonte, MG, Brasil",
+          period: "Jan 2020 – Jan 2021 (1 ano e 1 mês) — MG, Brasil",
           bullets: [
             "Desenvolvimento full-stack de sistemas web dentro da organização",
           ],
@@ -956,7 +945,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "CIT SENAI",
-          period: "Mai 2019 – Jan 2020 (9 meses) — Belo Horizonte, MG, Brasil",
+          period: "Mai 2019 – Jan 2020 (9 meses) — MG, Brasil",
           bullets: [
             "Projetos de IoT/Indústria 4.0/Automação usando Arduino, CLP",
             "Sistemas web desenvolvidos com JavaScript, MongoDB, MySQL",
@@ -965,7 +954,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Instrutor de Informática",
           company: "Feed Idiomas",
-          period: "Nov 2018 – Abr 2019 (6 meses) — Belo Horizonte, MG, Brasil",
+          period: "Nov 2018 – Abr 2019 (6 meses) — MG, Brasil",
           bullets: [
             "Auxiliou alunos: AutoCAD, Dreamweaver, Corel Draw, Pacote Office Avançado",
             "Suporte técnico e assistência",
@@ -1291,7 +1280,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Senior Software Developer",
           company: "Squadra Digital",
-          period: "abr 2022 – jul 2022 (4 meses) — Belo Horizonte, MG, Brasil",
+          period: "abr 2022 – jul 2022 (4 meses) — MG, Brasil",
           bullets: [
             "Liderazgo en el desarrollo e implementación de soluciones de chatbot",
             "Colaboración en frontend, backend y DevOps; planificación y gestión de proyectos",
@@ -1301,7 +1290,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "Editora Fórum",
-          period: "ene 2022 – abr 2022 (4 meses) — Belo Horizonte, MG, Brasil",
+          period: "ene 2022 – abr 2022 (4 meses) — MG, Brasil",
           bullets: [
             "Mantenimiento del sistema de gestión y flujo de usuarios de la librería",
             "Arquitectura hexagonal orientada a eventos en Node.js con AWS Serverless",
@@ -1311,8 +1300,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Junior Software Developer",
           company: "Editora Fórum",
-          period:
-            "ene 2021 – ene 2022 (1 año y 1 mes) — Belo Horizonte, MG, Brasil",
+          period: "ene 2021 – ene 2022 (1 año y 1 mes) — MG, Brasil",
           bullets: [
             "Arquitectura hexagonal orientada a eventos en Node.js en AWS Serverless",
             "Frontend with React/Next.js (Ant Design, MSW, React Hook Form/Formik, Tailwind, AG-Grid)",
@@ -1322,8 +1310,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Full Stack Developer",
           company: "Editora Fórum",
-          period:
-            "ene 2020 – ene 2021 (1 año y 1 mes) — Belo Horizonte, MG, Brasil",
+          period: "ene 2020 – ene 2021 (1 año y 1 mes) — MG, Brasil",
           bullets: [
             "Full-stack development of web systems within the organization",
           ],
@@ -1331,7 +1318,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Software Developer",
           company: "CIT SENAI",
-          period: "may 2019 – ene 2020 (9 meses) — Belo Horizonte, MG, Brasil",
+          period: "may 2019 – ene 2020 (9 meses) — MG, Brasil",
           bullets: [
             "Proyectos de IoT/Industria 4.0/Automatización con Arduino, PLC",
             "Sistemas web desarrollados con JavaScript, MongoDB, MySQL",
@@ -1340,7 +1327,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
         {
           role: "Instructor de Informática",
           company: "Feed Idiomas",
-          period: "nov 2018 – abr 2019 (6 meses) — Belo Horizonte, MG, Brasil",
+          period: "nov 2018 – abr 2019 (6 meses) — MG, Brasil",
           bullets: [
             "Asistencia a estudiantes: AutoCAD, Dreamweaver, Corel Draw, Paquete Office Avanzado",
             "Soporte técnico y asistencia",

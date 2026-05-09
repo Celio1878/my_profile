@@ -36,7 +36,7 @@ export function Footer() {
 
         {/* Social circle buttons */}
         <Reveal delay={80}>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             {[
               {
                 href: "mailto:contato@celiovieira.com",
@@ -111,19 +111,6 @@ export function Footer() {
                 {s.icon}
               </a>
             ))}
-          </div>
-        </Reveal>
-
-        {/* Contact details row */}
-        <Reveal delay={150}>
-          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
-            <a
-              href="mailto:contato@celiovieira.com"
-              className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors font-medium"
-            >
-              <Mail size={14} aria-hidden="true" />
-              contato@celiovieira.com
-            </a>
           </div>
         </Reveal>
       </div>

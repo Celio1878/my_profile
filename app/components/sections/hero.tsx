@@ -1,6 +1,6 @@
 import { useI18n } from "~/i18n";
 import { HighlightChip } from "../highlight-chip";
-import { Brain, Cloud, Code2, FileText, Layers, Sparkles } from "lucide-react";
+import { Brain, Cloud, Code2, Layers, Sparkles } from "lucide-react";
 
 export function Hero() {
   const { dict } = useI18n();
@@ -20,9 +20,9 @@ export function Hero() {
         <div className="animate-fade-in flex justify-center mb-6">
           <div className="relative">
             <img
-              src="/me.jpeg"
+              src="/working.JPEG"
               alt="Célio Vieira"
-              className="w-24 h-24 rounded-full object-cover ring-4 ring-primary/20 shadow-xl"
+              className="w-36 h-36 rounded-full object-cover ring-4 ring-primary/20 shadow-xl"
             />
             <span
               aria-hidden="true"
@@ -118,14 +118,6 @@ export function Hero() {
               <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
             </svg>
             {dict.hero.ctaYouTube}
-          </a>
-          <a
-            href="/resume.pdf"
-            download
-            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 px-5 py-2.5 text-sm font-medium transition-all hover:scale-105 active:scale-95 shadow-md"
-          >
-            <FileText size={16} aria-hidden="true" />
-            {dict.resume.downloadLabel}
           </a>
         </div>
       </div>

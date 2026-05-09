@@ -34,7 +34,7 @@ export function About() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/10 blur-3xl"
               />
-              <CardHeader className="pb-3">
+              <CardHeader>
                 <CardTitle className="text-sm font-semibold uppercase tracking-wider text-primary flex items-center gap-2">
                   <Sparkles size={14} aria-hidden="true" /> Quick Facts
                 </CardTitle>
