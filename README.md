@@ -1,164 +1,85 @@
-# Célio Vieira — Professional Profile SPA
+# Célio Vieira — Founder, AI & Data Engineer
 
-A single-page application showcasing Célio Vieira's professional profile as a FullStack, Data & AI Engineer. Built with React Router 7, featuring automatic browser language detection (English, German, Brazilian Portuguese, Spanish), system-based dark/light theme, smooth animations, and a consistent UI using shadcn/ui-style primitives.
+A modern, high-performance web platform showcasing Célio Vieira's commercial ventures, digital products, applied AI infrastructure, and engineering knowledge. Designed with a **Terminal & Vector Minimalist** aesthetic and built with React Router 8, React 19, Vite, and Tailwind CSS v4.
 
-## Objectives
+---
 
-- Present a clear, multilingual "About Me" site for Célio Vieira.
-- Share work Experience, Education, Certifications, Skills, Hobbies, Projects, and Contact info.
-- Embed the resume (PDF) for inline viewing and download.
-- Provide a fast, accessible, smooth single-page navigation experience.
+## 🚀 Vision & Objectives
 
-## Features
+- **The Aldeon Ecosystem:** Showcase **Aldeon** (`aldeon.app`) as the umbrella venture studio alongside active child products:
+  - **Be Your Stories (BYS):** Cross-platform storytelling platform on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).
+  - **Pack:** Autonomous condo mailroom automation.
+  - **TATU Design (T3O2):** Generative tattoo design studio.
+  - **PostHub:** Multi-platform social content distribution.
+  - **NodeJS App Builder & AWS CDK Factory:** Modular developer tooling on npm.
+- **Knowledge Hub (`/blog`):** In-depth technical blueprints and architectural retrospectives on AI, Lakehouses, Cloud, and Product Engineering, plus Substack dispatches.
+- **Founder Profile (`/about`):** Personal mission, what is currently being built, operating principles, and direct collaboration channels.
+- **Bilingual Reach:** English (`en`, default) and Brazilian Portuguese (`pt-BR`) with automatic browser language detection and instant `EN / PT` toggle.
 
-- 🧭 React Router 7 SPA (SSR disabled)
-- 🌍 Automatic language detection (en, de, pt-BR, es) with English fallback
-- 🎨 Tailwind CSS v4 — system-based dark/light theme via `prefers-color-scheme`
-- 🧩 shadcn/ui-style primitives (Card, Badge, Separator)
-- ✨ Smooth animations: fade-in-up, slide-in-left, scale-in, card hover lift, skill badge hover
-- 🔍 Active section highlighting in nav via IntersectionObserver
-- ♿ Accessible: skip-to-content link, landmarks, aria-current on active nav, reduced-motion friendly
-- 📄 Embedded Resume (public/resume.pdf) with view/download actions
-- 🖼️ Project screenshots for BYS, NodeJS App Builder, and CDK Factory
-- 📊 Vercel Analytics + SpeedInsights integrated
+---
 
-## Architecture Overview
+## 🧭 Route Architecture
 
-- React Router v7 app running in SPA mode (no SSR). See `react-router.config.ts`.
-- Single main route at `app/routes/home.tsx` renders all sections:
-  - Hero, About, Experience, Education, Certifications, Skills, Hobbies, Projects, Showcases, Resume, Contact
-- Internationalization: `app/i18n.tsx`
-  - Detects browser language each visit (en, de, pt-BR, es), sets `<html lang>` accordingly
-  - English is the default fallback for unsupported locales
-  - All content strings live in locale dictionaries
-- Theming: CSS `@media (prefers-color-scheme: dark)` — no manual toggle, no cookies
-- UI primitives (shadcn/ui-style): `app/components/ui/*` (Card, Badge, Separator)
-- Animations: `app/components/reveal.tsx` (scroll-into-view fade/slide), respecting `prefers-reduced-motion`
-- Accessibility: skip link in `app/root.tsx`, main/section landmarks, aria-labelledby headings, nav aria-current
+- `/` — **Flagship Showcase:** Value proposition hero, Aldeon Ecosystem vector cards, core capabilities, and latest insights preview.
+- `/blog` — **Knowledge Hub Index:** Substack publication banner, search bar, topic tags, and architectural article cards.
+- `/blog/:slug` — **Article Reader:** Dynamic Markdown post reader with code syntax styling, copy-to-clipboard buttons, reading time estimates, author bio, and social sharing.
+- `/about` — **Streamlined Founder Profile:** Personal mission, current builds across the Aldeon ecosystem, operating principles, and direct contact channels.
 
-## Tech Stack
+---
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | React 19 + React Router 7 |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 |
-| UI Primitives | shadcn/ui-style components |
-| Icons | lucide-react |
-| i18n | Custom context (`app/i18n.tsx`) |
-| Build | Vite (via React Router) |
-| Package Manager | Bun |
-| Deployment | Vercel |
-| Containerization | Docker |
+| **Framework** | React 19 + React Router 8 (with SSR build) |
+| **Language** | TypeScript 6.0.3 (Strict mode) |
+| **Styling** | Tailwind CSS v4 (Terminal & Vector Minimalist palette) |
+| **Interactive Canvas** | HTML5 dot-matrix vector grid with mouse flashlight illumination |
+| **Markdown Engine** | `marked` (v18) + Vite eager raw glob |
+| **UI Primitives** | Custom Radix/Tailwind components (`Card`, `Badge`, `Separator`) |
+| **Icons** | `lucide-react` + inline SVG brand logos (X, Substack, LinkedIn, GitHub, YouTube) |
+| **Internationalization** | Custom Context (`app/i18n.tsx` + `app/lib/profile-translations.ts`), `en` & `pt-BR` |
+| **Package Manager** | Bun |
+| **Hosting & Analytics** | Vercel (Analytics + SpeedInsights) |
 
-## Project Structure
+---
 
-```
-app/
-  components/
-    nav.tsx              # Sticky navbar with active section highlighting
-    reveal.tsx           # Scroll-into-view animation wrapper
-    loader.tsx           # Navigation loading indicator
-    ui/                  # shadcn/ui-style primitives (Card, Badge, Separator)
-  lib/
-    utils.ts             # cn() helper
-  i18n.tsx               # Locale detection + dictionaries (en, de, pt-BR, es)
-  root.tsx               # App shell, skip link, i18n provider, analytics
-  routes/
-    home.tsx             # Main page — all sections
-public/
-  resume.pdf             # Embedded resume (view + download)
-  working.JPEG                # Profile photo
-  bys-banner.png         # Be Your Stories banner
-  bys-*.png              # BYS mobile/tablet screenshots
-  express-app-builder-*.png  # NodeJS App Builder screenshots
-  cdk-factory-items.png  # CDK Factory screenshot
-react-router.config.ts   # SPA mode (ssr: false)
-MEMORY.md                # Known issues and gotchas
-CONTEXT.md               # Project context and owner info
-SUMMARY.md               # Learnings and implemented tasks log
-```
-
-## Getting Started
+## 📦 Getting Started
 
 ### Prerequisites
-
-- [Bun](https://bun.sh) (recommended) or Node.js 18+
-
-### Installation
-
-```bash
-bun install
-```
+- [Bun](https://bun.sh/) (v1.3 or later) installed locally.
 
 ### Development
-
 ```bash
+# Install dependencies
+bun install
+
+# Start development server
 bun run dev
 ```
 
-Open http://localhost:5173. Language is auto-detected from your browser (English fallback).
-
-### Type checking & linting
-
+### Validation & Build
 ```bash
+# Sync latest technical dispatches from Substack
+bun run sync-substack
+
+# Typecheck
 bun run typecheck
+
+# Lint with zero warnings
 bun run lint
-```
 
-## Building for Production
-
-```bash
+# Production build
 bun run build
 ```
 
-Artifacts are emitted to `build/client` and `build/server`.
+---
 
-## Deployment
+## 🤖 Governance & Guidelines
 
-### Vercel (recommended)
-
-Connect the repository to Vercel. It auto-detects the React Router config and deploys as a static SPA.
-
-### Docker
-
-```bash
-docker build -t my-profile .
-docker run -p 3000:3000 my-profile
-```
-
-Deploy to any Docker-compatible platform (ECS, Cloud Run, Railway, Fly.io, etc.).
-
-## Configuration & Customization
-
-- **Resume:** Replace `public/resume.pdf` with your latest CV.
-- **Content:** Edit `app/i18n.tsx` per locale. All sections (experience, skills, certs, etc.) are defined there.
-- **Profile photo:** Replace `public/working.JPEG`.
-- **Project screenshots:** Replace/add images in `public/` and update references in `app/routes/home.tsx`.
-- **SEO/meta:** Update `meta()` in `app/routes/home.tsx`.
-- **Theme:** Automatically follows the user's OS preference — no configuration needed.
-
-## Accessibility & UX Notes
-
-- Keyboard users get a visible "Skip to content" focusable link.
-- Active section is reflected with `aria-current="page"` on the nav link while scrolling.
-- Animations are disabled automatically under `prefers-reduced-motion`.
-- The `html lang` attribute is synced with the detected locale for screen readers.
-
-## FAQ
-
-- **Why no theme toggle?** Theme follows the user's OS preference automatically via `prefers-color-scheme`.
-- **Why no language selector?** Browser language is auto-detected; unsupported locales fall back to English.
-- **Can I add more locales?** Yes — extend `SupportedLocale` and add a new dictionary in `app/i18n.tsx`.
-- **PDF not rendering inline?** Some browsers block inline PDFs — users can use the provided View/Download links.
-
-## License
-
-MIT License. See [LICENSE](./LICENSE) for details.
-
-## Author & Contact
-
-- **Author:** Célio Vieira
-- **Website:** https://celiovieira.com
-- **LinkedIn:** https://www.linkedin.com/in/celio-vieira
-- **Email:** contato@celiovieira.com
+- [AGENTS.md](./AGENTS.md) — Autonomous agent operating manual, execution workflows, and error prevention checklists.
+- [RULES.md](./RULES.md) — Project architecture, coding standards, and UI invariants.
+- [CONTEXT.md](./CONTEXT.md) — Full project context and system architecture.
+- [MEMORY.md](./MEMORY.md) — Solved problems, framework quirks, and lessons learned.
+- [TASKS.md](./TASKS.md) — Completed milestones and future roadmap.
+- [SUMMARY.md](./SUMMARY.md) — Session-by-session learning and change log.

@@ -3,126 +3,122 @@
 ## What I Learned About This Project
 
 ### About Célio Vieira
-- FullStack, Data & AI Engineer with 5+ years of experience, based in Minas Gerais, Brazil
-- Currently Data Engineer & Tech Lead at Itaú Unibanco (Banco Itaú) since Jan 2025
-- Deep expertise in AWS data stack: Glue, EMR, Athena, Redshift, Kinesis, Airflow, Iceberg, Apache Spark/PySpark
-- AI engineering focus: LLMs, RAG pipelines, Ollama, HuggingFace, ComfyUI, fine-tuning on local servers
-- Side projects: Be Your Stories (BYS) — a book-sharing platform; NodeJS App Builder (npm); cdk-factory (npm)
-- Education: Postgrad in Cloud Computing (Pitagoras), BSc Computer Science (Pitagoras), BSc Computer Engineering (Una), SENAI electrical course
-- Certifications: AWS AI Practitioner, Prompt Engineering, Responsible AI, Serverless, Go (Udemy), SQL, Kafka, Solutions Architect
+- **Identity & Role:** Founder, AI & Data Engineer.
+- **Primary Focus:** Applied AI & Data/Lakehouses, backed by Distributed Architecture and Full-Stack Product Engineering.
+- **Umbrella Venture:** **Aldeon** (`aldeon.app`), an autonomous venture studio and multi-product technology ecosystem.
+- **Ventures & Products:**
+  - **Be Your Stories (BYS):** Cross-platform reading and storytelling platform with live apps on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).
+  - **Pack:** Autonomous condo mailroom automation and delivery notification system.
+  - **TATU Design (T3O2):** AI-powered custom tattoo studio and generative artwork engine.
+  - **PostHub:** Multi-platform programmatic social content distribution pipeline.
+  - **NodeJS App Builder:** Production-ready microservices CLI generator on npm.
+  - **AWS CDK Factory:** Modular Infrastructure-as-Code construct library on npm.
+- **Contact & Channels:**
+  - Email: `contact@celiovieira.com`
+  - Substack: https://substack.com/@celio1878
+  - X (Twitter): https://x.com/celio1878
+  - LinkedIn: https://www.linkedin.com/in/celio-vieira
+  - GitHub: https://github.com/Celio1878
+  - YouTube: https://www.youtube.com/@celio_vieira
 
-### About the Codebase
-- React Router 7 SPA (SSR disabled), React 19, TypeScript, Tailwind CSS v4
-- Custom i18n system in `app/i18n.tsx` supporting en, de, pt-BR, es with browser auto-detection
-- All public images already present: profile photo, BYS screenshots, App Builder screenshots, CDK Factory screenshots
-- `app/lib/translations.ts` belongs to the BYS project (unrelated) — do not modify it for profile content
-- Package manager is **Bun** — use `bun run build`, not npm
+### About the Architecture & Codebase
+- **Aesthetic:** Terminal & Vector Minimalist (carbon `#090b10`, titanium gray `#212836`, emerald `#10b981`, amber `#f59e0b`).
+- **Interactive Background:** HTML5 Canvas dot-matrix vector grid with mouse flashlight effect.
+- **Brand Imagery:** Pure vector icons with `/me.jpeg` as brand logo, favicon, and author avatar. Zero external screenshot image dependencies.
+- **Framework:** React Router 8 multi-page architecture with React 19 and Tailwind CSS v4.
+- **Blog Engine:** In-repository Markdown articles parsed with `marked` (v18) via Vite's eager raw glob.
+- **Internationalization:** Strictly English (`en`) and Brazilian Portuguese (`pt-BR`) with binary toggle.
+- **Package Manager:** **Bun** only.
 
 ---
 
 ## Tasks Implemented
 
-### Session 1 (Previous)
+### Session 12 (Current) — Terminal & Vector Minimalist Overhaul, Aldeon Ecosystem, and Channel Consolidation
 
-#### Theme System
-- [x] Removed `react-router-theme` cookie/class-based theme toggle
-- [x] Removed `ThemeToggle` from nav bar
-- [x] Removed `ThemeContext.Provider` from `root.tsx`
-- [x] Changed `@custom-variant dark` to use `@media (prefers-color-scheme: dark)` in `app.css`
-- [x] Moved dark CSS variables from `.dark {}` to `@media (prefers-color-scheme: dark) { :root {} }`
+#### 1. Visual & Aesthetic Transformation
+- [x] Configured Terminal & Vector Minimalist palette in `app/app.css` (carbon background, titanium gray borders, emerald and amber accents).
+- [x] Implemented canvas dot-matrix vector grid with interactive mouse illumination in `app/components/interactive-background.tsx`.
+- [x] Set canonical brand logo, favicon, and author avatar to `/me.jpeg` in `app/root.tsx`, `app/components/nav.tsx`, `app/components/sections/hero.tsx`, `app/routes/about.tsx`, `app/routes/blog-post.tsx`, and `public/manifest.json`.
+- [x] Removed all references to deleted PNG screenshots across all pages and blog posts.
 
-#### Content Updates (from CV)
-- [x] Updated hero subtitle to include "Data Engineer • AI Engineer"
-- [x] Rewrote About Me body with Tech Lead/AI/RAG/Ollama details
-- [x] Updated Data Engineer role to "Data Engineer & Tech Lead" with new bullets
-- [x] Expanded skills list with AI/data tools (Ollama, HuggingFace, RAG, LLM Fine-tuning, ComfyUI, Docker, TDD, SOLID, DDD, Apache Spark/Airflow/Iceberg, AWS services)
-- [x] Added SENAI education entry
-- [x] Added 3 new AI certifications (Prompt Engineering, AI Practitioner, Responsible AI)
+#### 2. The Aldeon Venture Ecosystem
+- [x] Redesigned the ventures section into **The Aldeon Ecosystem** (`app/components/sections/ventures.tsx`):
+  - Featured flagship umbrella card for **Aldeon** (`aldeon.app`).
+  - Child venture cards with custom vector badges and links: **Be Your Stories (BYS)** (Web, iOS, Android), **Pack**, **TATU Design (T3O2)**, **PostHub**, **NodeJS App Builder**, and **AWS CDK Factory**.
 
-#### UI & Visual Improvements
-- [x] Added CSS animations: `fade-in-up`, `fade-in`, `slide-in-left`, `scale-in` with stagger delays
-- [x] Added gradient text utility (`.gradient-text`) for hero name
-- [x] Added hero glow effect (`.hero-glow`)
-- [x] Added card hover lift (`.card-hover`)
-- [x] Added skill badge hover scale (`.skill-badge`)
-- [x] Added section divider gradient (`.section-divider`)
-- [x] Overhauled `home.tsx`: avatar with online indicator, highlight chips, icon-enhanced section headings, left-border accent cards with "Current" badge, grouped skills by category, improved certifications grid, enhanced footer with social links
-- [x] Updated meta tags for SEO
+#### 3. AI & Data Core Capabilities
+- [x] Updated capabilities in `app/components/sections/capabilities.tsx`:
+  - Applied AI & Private RAG Infrastructure
+  - Petabyte Lakehouse Architecture (Spark, Iceberg, S3)
+  - Distributed Cloud & Event Engines
+  - Full-Stack & Mobile Product Engineering
 
-### Session 2 (Previous)
+#### 4. Channels, Substack & Contact Consolidation
+- [x] Updated contact email to `contact@celiovieira.com` across all sections, about page, and translations.
+- [x] Added X (Twitter) (`https://x.com/celio1878`) with custom SVG mark.
+- [x] Added Substack (`https://substack.com/@celio1878`) with dedicated callout banner on `/blog` and author box on `/blog/:slug`.
 
-#### Documentation
-- [x] Created `MEMORY.md` — known issues, gotchas, and fixes to avoid repeating mistakes
-- [x] Created `CONTEXT.md` — full project context: owner info, tech stack, key files, sections, i18n, theme
-- [x] Created `SUMMARY.md` — this file; learnings and task log
-- [x] Updated `README.md` — reflects current state (no theme toggle, system dark mode, Bun, correct architecture)
+#### 5. Streamlined 2-Locale Internationalization
+- [x] Permanently eliminated German (`de`) and Spanish (`es`) from `app/i18n.tsx` and `app/lib/profile-translations.ts`.
+- [x] Supported locales strictly set to `en` (default) and `pt-BR`.
+- [x] Replaced complex language dropdown with a sleek, instant `EN / PT` binary toggle in navbar and mobile drawer.
 
-### Session 7 (Current) — Componentization & Refactoring
-- [x] Refactored `app/routes/home.tsx`: Moved all major sections to `app/components/sections/` (`Hero`, `About`, `Experience`, etc.)
-- [x] Extracted shared logic to `app/components/section.tsx` and `app/components/highlight-chip.tsx`
-- [x] Refactored `app/i18n.tsx`: Moved large translation dictionaries to `app/lib/profile-translations.ts` to improve maintainability
-- [x] Ensured `app/lib/translations.ts` (BYS project) remains untouched
-- [x] Build verified: `bun run build` passes with much cleaner route code
+#### 6. Governance & Autonomous Documentation
+- [x] Updated `AGENTS.md` with Founder, AI & Data Engineer role, 2-locale rule, and asset integrity checklist.
+- [x] Updated `RULES.md` with Terminal & Vector Minimalist standards and image policies.
+- [x] Updated `CONTEXT.md` with system architecture and Aldeon ecosystem details.
+- [x] Updated `MEMORY.md` with key lessons and anti-patterns.
+- [x] Updated `TASKS.md` with completed milestones.
+- [x] Updated `README.md` with the new positioning.
 
-### Session 6 (Previous) — Improved browser-language translations
-- [x] `app/i18n.tsx`: rewrote `detectLocale` to scan full `navigator.languages` priority list with BCP-47 normalization (`pt-*`→`pt-BR`, `de-*`→`de`, `es-*`→`es`, `en-*`→`en`)
-- [x] Added `localStorage`-backed user override (`preferred-locale`) that takes precedence over auto-detection
-- [x] `I18nProvider`: SSR-safe init (`"en"` on server + first render) + post-mount detect to prevent hydration mismatches; `setLocale` now persists choice
-
-### Session 5 (Previous) — About aside + Header/Footer polish
-- [x] Refactored About into 2-col grid: bio left, sticky aside (Quick Facts card, stats grid, daily-stack chips) right
-- [x] Nav: scroll progress bar, glass shadow on scroll, animated gradient underline + color shift on active/hover links
-- [x] Footer: gradient + radial glow background, larger circular social icon buttons with hover lift/colored shadow, centered heading and contact row
-- [x] Added `scroll-behavior: smooth` (with reduced-motion fallback) on `html`
-
-### Session 4 (Previous) — Interactive background animation
-- [x] Added `app/components/interactive-background.tsx`: canvas particle field with mouse attraction, cursor radial glow, scroll parallax + hue shift, prefers-reduced-motion + visibility-aware, DPR-aware, perf-scaled particle count
-- [x] Updated `app/app.css`: moved `bg-background` to `html`, made body transparent + relative z-index; added `.interactive-bg` (fixed, pointer-events: none, z-index: 0)
-- [x] Mounted `<InteractiveBackground />` in `app/root.tsx` body
-- [x] Build verified: `bun run build` passes (client + SSR)
-
-### Session 3 (Previous)
-
-#### i18n Locale Sync
-- [x] Updated `de` hero subtitle to full role string (FullStack • Data • AI Engineer | Cloud | Web | Mobile)
-- [x] Updated `pt-BR` hero subtitle to full role string (Engenheiro FullStack • Engenheiro de Dados • Engenheiro de IA)
-- [x] Updated `es` hero subtitle to full role string (Ingeniero FullStack • Ingeniero de Datos • Ingeniero de IA)
-- [x] Updated `de` about body with Tech Lead/AI/RAG/Ollama details
-- [x] Updated `pt-BR` about body with Tech Lead/AI/RAG/Ollama details
-- [x] Updated `es` about body with Tech Lead/AI/RAG/Ollama details
-- [x] Expanded `de` experience from 2 items to full 9-item list matching EN
-- [x] Updated `de`/`pt-BR`/`es` first experience role to "Data Engineer & Tech Lead"
-- [x] Expanded `de`/`pt-BR`/`es` skills lists with AI/data tools (Apache Spark, Airflow, Iceberg, AWS services, Ollama, HuggingFace, RAG, LLM Fine-tuning, ComfyUI, Docker, TDD, SOLID, DDD)
-- [x] Added 3 new AI certs to `de` locale (Prompt Engineering, AI Practitioner, Responsible AI — translated)
-- [x] Added 3 new AI certs to `pt-BR` locale (translated)
-- [x] Added 3 new AI certs to `es` locale (translated)
-
-### Session 8 (Previous) — Performance & Size Optimization
-- [x] Analyzed and removed unused dependencies: `react-router-theme`, `date-fns`, `vite-tsconfig-paths`, `@radix-ui/react-accordion`, `isbot`, `tw-animate-css`.
-- [x] Deleted unused components and library files: `Accordion`, `Button`, `ThemeToggle`, `ThemeContext`, `LanguageContext`, and the unrelated 1500-line `translations.ts`.
-- [x] Cleaned up `app.css`: Removed redundant `@import "tw-animate-css"` and dozens of unused CSS variables (charts, sidebars, popovers, inputs).
-- [x] Cleaned up `Card` component: Removed unused `CardFooter` and `CardAction` sub-components.
-- [x] Updated `README.md` and `CONTEXT.md` to reflect the lean project structure.
-- [x] Build verified: `bun run build` passes with a smaller, cleaner codebase.
-
-### Session 9 (Previous) — Bug Fix: Module Resolution
-- [x] Fixed "Cannot find module '~/components/loader'" error by enabling native `resolve.tsconfigPaths: true` in `vite.config.ts`.
-- [x] Converted critical imports in `app/root.tsx`, `app/routes/home.tsx`, and `app/components/sections/hero.tsx` to relative paths for increased robustness.
-- [x] Verified `react-router.config.ts` must have `ssr: true` for the server bundle build to succeed with Bun/React 19.
-- [x] Build verified: `bun run build` passes with zero errors.
-
-### Session 10 (Current) — SEO Improvements
-- [x] Created `public/robots.txt` and `public/sitemap.xml` for better search engine crawling.
-- [x] Created `public/manifest.json` and linked it in `root.tsx` for PWA support and better mobile presence.
-- [x] Enhanced meta tags in `home.tsx` with full Open Graph and Twitter Card support (OG:image, OG:url, OG:site_name, Twitter:card).
-- [x] Added JSON-LD (Schema.org) structured data to `home.tsx` for `Person` entity to improve rich results.
-- [x] Added `canonical` link and `robots` meta tags.
-- [x] Improved semantic HTML and fixed a broken contact link in the footer.
-- [x] Build verified: `bun run build` passes with no errors.
+#### 7. Verification & Quality Gates
+- [x] `bun run lint`: 0 errors, 0 warnings (`--max-warnings=0`).
+- [x] `bun run typecheck`: 0 errors.
+- [x] `bun run build`: Clean production client and SSR bundles generated.
 
 ---
 
-## Remaining / Known Gaps
+### Session 13 — Elimination of Job-Seeking Tone, Location Removal & Complete Substack Articles Sync
 
-- No automated tests exist for the profile SPA (not required by TASKS.md)
-- `de` project links (`repo`/`link`) are present but project descriptions could be more detailed in German
+#### 1. Zero Job-Seeking Tone & Profile Sanitization
+- [x] Removed hero top status badge (`Available for AI & Data Advisory...`) and avatar `ONLINE` badge.
+- [x] Simplified main route hero bio to exact requested copy:
+  > *"Engineering high-precision applied AI pipelines, agents project architecture, and lakehouse architectures — powered by deep foundations in Distributed System Architecture and FullStack Product Engineering."*
+- [x] Removed location note (`Minas Gerais, Brazil • Available for Global Remote Advisory & Collaboration`) from `/`, `/about`, and translation dictionaries.
+- [x] Sanitized contact and about copy to focus strictly on venture collaboration and technology building.
+
+#### 2. Substack Ingestion & Blog Engine Overhaul
+- [x] Created `scripts/sync-substack.ts` querying Substack API (`https://celio1878.substack.com/api/v1/posts`).
+- [x] Filtered out automated newsletter updates and synced **68 technical essays** into `app/content/blog/` (total 71 articles with native posts).
+- [x] Enhanced `app/lib/blog.ts` to support `canonicalUrl`.
+- [x] Enhanced `app/routes/blog.tsx` with Substack badges and external links (`Substack ↗`).
+- [x] Enhanced `app/routes/blog-post.tsx` with canonical SEO link and dedicated Substack dispatch banner.
+- [x] Enhanced `app/components/sections/latest-insights.tsx` with Substack badge indicators.
+- [x] Added `bun run sync-substack` to `package.json`.
+
+#### 3. Verification & Quality Gates
+- [x] `bun run lint`: 0 errors, 0 warnings (`--max-warnings=0`).
+- [x] `bun run typecheck`: 0 errors.
+- [x] `bun run build`: 71 modules transformed; production client and SSR bundles generated with 0 errors.
+
+---
+
+### Session 14 — Profile Narrative Expansion & Technical Knowledge Deepening
+
+#### 1. About Profile Expansion Without Job History
+- [x] Analyzed `public/resume.pdf` to extract technical competencies: Cloud Computing Process & Architecture postgraduate, hexagonal event-driven microservices on AWS serverless (Lambda, SQS, EventBridge, DynamoDB), petabyte lakehouse streaming/batch engines (Spark, Iceberg, Glue, EMR, Airflow), and local AI inference/quantization (Ollama, HuggingFace, ComfyUI).
+- [x] Formatted into 4 cohesive narrative paragraphs in `app/lib/profile-translations.ts` (`missionParagraphs`) for both `en` and `pt-BR`.
+- [x] Kept `missionText` as backwards-compatible summary.
+- [x] Strictly omitted corporate employer names, job titles, or date ranges.
+
+#### 2. About Route Typography & Layout
+- [x] Updated `app/routes/about.tsx` to render `dict.about.missionParagraphs.map(...)` with `space-y-4 max-w-3xl text-base sm:text-lg leading-relaxed`.
+- [x] Improved hero container layout to top-align the avatar on desktop (`items-center md:items-start md:pt-2`).
+- [x] Fixed minor typo in `og:description` meta tag.
+
+#### 3. Verification & Quality Gates
+- [x] `bun run lint`: 0 errors, 0 warnings (`--max-warnings=0`).
+- [x] `bun run typecheck`: 0 errors.
+- [x] `bun run build`: Clean production client and SSR bundles generated.
+
