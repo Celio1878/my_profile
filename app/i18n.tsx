@@ -13,26 +13,21 @@ import {
 
 export { type SupportedLocale, type Dictionary };
 
-const SUPPORTED_LOCALES: SupportedLocale[] = ["en", "de", "pt-BR", "es"];
+const SUPPORTED_LOCALES: SupportedLocale[] = ["en", "pt-BR"];
 const LOCALE_STORAGE_KEY = "preferred-locale";
 
 /**
- * Map a single BCP-47 language tag (e.g. "pt-PT", "es-MX", "de-AT") to one of
- * our supported locales. Returns null when there is no reasonable match so the
- * caller can keep scanning the `navigator.languages` priority list.
+ * Map a single BCP-47 language tag (e.g. "pt-PT", "pt-BR", "en-US") to one of
+ * our supported locales. Returns null when there is no match.
  */
 function matchLocale(tag: string): SupportedLocale | null {
   if (!tag) return null;
   const lower = tag.toLowerCase().replace("_", "-");
   const primary = lower.split("-")[0];
 
-  // Portuguese — all variants map to pt-BR (the only Portuguese dictionary we ship)
+  // Portuguese — map to pt-BR
   if (primary === "pt") return "pt-BR";
-  // German — de, de-AT, de-CH, de-DE, ...
-  if (primary === "de") return "de";
-  // Spanish — es, es-ES, es-MX, es-AR, ca (close cultural fit), gl
-  if (primary === "es") return "es";
-  // English — en, en-US, en-GB, ...
+  // English
   if (primary === "en") return "en";
 
   return null;
@@ -92,7 +87,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   // Detect & apply the browser/stored locale once on the client
   useEffect(() => {
     const detected = detectLocale();
-    if (detected !== locale) setLocaleState(detected);
+    if (detected !== locale) {
+      queueMicrotask(() => {
+        setLocaleState(detected);
+      });
+    }
     // Intentionally run only on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
