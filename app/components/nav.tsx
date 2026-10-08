@@ -1,196 +1,232 @@
-import { useI18n } from "~/i18n";
-import type { FC } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Menu as MenuIcon, X as CloseIcon } from "lucide-react";
+import { ArrowUpRight, X as CloseIcon, Menu as MenuIcon } from 'lucide-react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router';
+import { useI18n, type SupportedLocale } from '~/i18n';
 
 export const Nav: FC = () => {
-  const { dict } = useI18n();
-  const ids = useMemo(
-    () => [
-      "about",
-      "experience",
-      "education",
-      "certifications",
-      "skills",
-      "projects",
-      // Showcase sections
-      "bys-showcase",
-      "nodejs-appbuilder",
-      "cdk-factory",
-      "resume",
-      "contact",
-    ],
-    [],
-  );
-  const [active, setActive] = useState<string>(ids[0]);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const mobilePanelRef = useRef<HTMLDivElement | null>(null);
+	const { dict, locale, setLocale } = useI18n();
+	const location = useLocation();
+	const [menuOpen, setMenuOpen] = useState(false);
+	const [scrolled, setScrolled] = useState(false);
+	const [progress, setProgress] = useState(0);
 
-  // Scroll progress bar + scrolled-state shadow
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight || 1;
-      const p = Math.min(1, Math.max(0, h.scrollTop / max));
-      setProgress(p);
-      setScrolled(h.scrollTop > 8);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+	const pathname = location.pathname;
+	const isHome = pathname === '/';
+	const isBlog = pathname.startsWith('/blog');
+	const isAbout = pathname === '/about';
 
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActive(id);
-            }
-          });
-        },
-        { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.5, 1] },
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, [ids]);
+	// Scroll progress bar + scrolled shadow
+	useEffect(() => {
+		const onScroll = () => {
+			const h = document.documentElement;
+			const max = h.scrollHeight - h.clientHeight || 1;
+			const p = Math.min(1, Math.max(0, h.scrollTop / max));
+			setProgress(p);
+			setScrolled(h.scrollTop > 8);
+		};
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	}, []);
 
-  // Close mobile menu on route/hash change or Escape key
-  useEffect(() => {
-    const onHashChange = () => setMenuOpen(false);
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMenuOpen(false);
-    };
-    window.addEventListener("hashchange", onHashChange);
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("hashchange", onHashChange);
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, []);
+	// Close menus on route change or Escape
+	useEffect(() => {
+		queueMicrotask(() => {
+			setMenuOpen(false);
+		});
+	}, [pathname]);
 
-  const link = (href: string, label: string) => (
-    <a
-      href={`#${href}`}
-      className={
-        "relative px-1 py-1 transition-colors text-gray-700 dark:text-gray-300 " +
-        "hover:text-primary data-[active=true]:text-primary " +
-        "after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-1 " +
-        "after:h-[2px] after:rounded-full after:bg-gradient-to-r after:from-primary after:to-blue-500 " +
-        "after:scale-x-0 after:origin-left after:transition-transform after:duration-300 " +
-        "hover:after:scale-x-100 data-[active=true]:after:scale-x-100"
-      }
-      aria-current={active === href ? "page" : undefined}
-      data-active={active === href}
-      onClick={() => setMenuOpen(false)}
-    >
-      {label}
-    </a>
-  );
+	useEffect(() => {
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				setMenuOpen(false);
+			}
+		};
+		window.addEventListener('keydown', onKeyDown);
+		return () => window.removeEventListener('keydown', onKeyDown);
+	}, []);
 
-  return (
-    <nav
-      role="navigation"
-      aria-label="Primary"
-      className={
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 " +
-        "backdrop-blur-xl border-b " +
-        (scrolled
-          ? "bg-white/70 dark:bg-black/70 border-gray-200/80 dark:border-gray-800/80 shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
-          : "bg-white/40 dark:bg-black/40 border-transparent")
-      }
-    >
-      {/* Scroll progress bar */}
-      <div
-        aria-hidden="true"
-        className="absolute left-0 top-0 h-[2px] bg-gradient-to-r from-primary via-blue-500 to-purple-500 transition-[width] duration-150 ease-out"
-        style={{ width: `${progress * 100}%` }}
-      />
-      <div className="container mx-auto p-3 relative">
-        <div className="flex items-center justify-between">
-          {/* Desktop nav */}
-          <div className="hidden sm:flex items-center gap-6 text-sm font-medium">
-            {link("about", dict.nav.about)}
-            {link("experience", dict.nav.experience)}
-            {link("education", dict.nav.education)}
-            {link("certifications", dict.nav.certifications)}
-            {link("skills", dict.nav.skills)}
-            {link("projects", dict.nav.projects)}
-            {link("bys-showcase", dict.nav.bys)}
-            {link("nodejs-appbuilder", dict.nav.appBuilder)}
-            {link("cdk-factory", dict.nav.cdkFactory)}
-            {link("resume", dict.nav.resume)}
-            {link("contact", dict.nav.contact)}
-          </div>
+	const toggleLanguage = () => {
+		const nextLocale: SupportedLocale = locale === 'en' ? 'pt-BR' : 'en';
+		setLocale(nextLocale);
+	};
 
-          {/* Right controls */}
-          <div className="flex items-center gap-2 ml-auto">
-            {/* Hamburger for mobile */}
-            <button
-              type="button"
-              aria-label={menuOpen ? dict.ui.closeMenu : dict.ui.openMenu}
-              aria-expanded={menuOpen}
-              aria-controls="primary-navigation"
-              className="inline-flex items-center justify-center sm:hidden h-9 w-9 rounded-md border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-slate-900/70"
-              onClick={() => setMenuOpen((v) => !v)}
-            >
-              {menuOpen ? (
-                <CloseIcon className="h-5 w-5" aria-hidden="true" />
-              ) : (
-                <MenuIcon className="h-5 w-5" aria-hidden="true" />
-              )}
-            </button>
-          </div>
-        </div>
+	const navLinkClass = (isActive: boolean) =>
+		'relative px-2 py-1 transition-colors text-xs font-semibold tracking-wide ' +
+		(isActive
+			? 'text-primary font-bold'
+			: 'text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary') +
+		" after:content-[''] after:absolute after:left-2 after:right-2 after:-bottom-1 " +
+		' after:h-[2px] after:rounded-full after:bg-primary ' +
+		' after:transition-transform after:duration-200 ' +
+		(isActive ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100');
 
-        {/* Mobile panel */}
-        <div
-          id="primary-navigation"
-          ref={mobilePanelRef}
-          role="menu"
-          aria-label="Primary navigation"
-          className={
-            (menuOpen
-              ? "max-h-96 opacity-100 pointer-events-auto"
-              : "max-h-0 opacity-0 pointer-events-none") +
-            " sm:hidden overflow-hidden transition-all duration-300 ease-out"
-          }
-        >
-          <div className="mt-2 flex flex-col gap-3 text-sm font-medium bg-slate-50/70 dark:bg-slate-950/40 rounded-md p-3 border border-gray-200 dark:border-gray-800">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
-                {dict.ui.menu}
-              </span>
-            </div>
-            <hr className="border-gray-200 dark:border-gray-800" />
-            <div className="flex flex-col" role="none">
-              <div role="none">{link("about", dict.nav.about)}</div>
-              <div role="none">{link("experience", dict.nav.experience)}</div>
-              <div role="none">{link("education", dict.nav.education)}</div>
-              <div role="none">
-                {link("certifications", dict.nav.certifications)}
-              </div>
-              <div role="none">{link("skills", dict.nav.skills)}</div>
-              <div role="none">{link("projects", dict.nav.projects)}</div>
-              <div role="none">{link("bys-showcase", dict.nav.bys)}</div>
-              <div role="none">
-                {link("nodejs-appbuilder", dict.nav.appBuilder)}
-              </div>
-              <div role="none">{link("cdk-factory", dict.nav.cdkFactory)}</div>
-              <div role="none">{link("resume", dict.nav.resume)}</div>
-              <div role="none">{link("contact", dict.nav.contact)}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+	return (
+		<nav
+			role='navigation'
+			aria-label='Primary'
+			className={
+				'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ' +
+				'backdrop-blur-xl border-b ' +
+				(scrolled
+					? 'bg-white/85 dark:bg-[#090b10]/85 border-slate-200/90 dark:border-[#212836] shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
+					: 'bg-white/50 dark:bg-[#090b10]/50 border-transparent')
+			}
+		>
+			{/* Scroll progress bar */}
+			<div
+				aria-hidden='true'
+				className='absolute left-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 transition-[width] duration-150 ease-out'
+				style={{ width: `${progress * 100}%` }}
+			/>
+
+			<div className='container mx-auto px-4 sm:px-6 py-3 max-w-6xl'>
+				<div className='flex items-center justify-between'>
+					{/* Desktop Nav Items */}
+					<div className='hidden md:flex items-center gap-6'>
+						<Link to='/' className={navLinkClass(isHome)}>
+							{dict.nav.home}
+						</Link>
+
+						<a href={isHome ? '#ecosystem' : '/#ecosystem'} className={navLinkClass(false)}>
+							{dict.nav.ecosystem}
+						</a>
+
+						<a href={isHome ? '#capabilities' : '/#capabilities'} className={navLinkClass(false)}>
+							{dict.nav.capabilities}
+						</a>
+
+						<Link to='/blog' className={navLinkClass(isBlog)}>
+							{dict.nav.blog}
+						</Link>
+
+						<Link to='/about' className={navLinkClass(isAbout)}>
+							{dict.nav.about}
+						</Link>
+					</div>
+
+					{/* Desktop Right Controls: Binary Language Switch & CTA */}
+					<div className='hidden md:flex items-center gap-3'>
+						{/* Binary Language Toggle: EN / PT */}
+						<button
+							type='button'
+							onClick={toggleLanguage}
+							className='flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-[#212836] bg-slate-100/60 dark:bg-[#111620] text-xs font-mono font-bold text-slate-700 dark:text-slate-300 hover:border-emerald-500/50 transition-colors'
+							title='Switch language between English and Portuguese'
+							aria-label='Toggle language'
+						>
+							<span className={locale === 'en' ? 'text-emerald-500' : 'text-muted-foreground'}>
+								EN
+							</span>
+							<span className='text-muted-foreground font-normal'>/</span>
+							<span className={locale === 'pt-BR' ? 'text-emerald-500' : 'text-muted-foreground'}>
+								PT
+							</span>
+						</button>
+
+						{/* Let's Talk CTA button */}
+						<a
+							href={isHome ? '#contact' : '/about'}
+							className='inline-flex items-center gap-1 px-4 py-2 rounded-xl text-xs font-bold bg-primary text-white hover:bg-emerald-600 transition-all hover:scale-105 shadow-sm shadow-emerald-500/20'
+						>
+							<span>{dict.nav.contact}</span>
+							<ArrowUpRight size={13} aria-hidden='true' />
+						</a>
+					</div>
+
+					{/* Mobile hamburger & controls */}
+					<div className='flex md:hidden items-center gap-2'>
+						{/* Binary language button for mobile */}
+						<button
+							type='button'
+							onClick={toggleLanguage}
+							className='px-2 py-1 rounded-lg border border-slate-200 dark:border-[#212836] bg-slate-100/60 dark:bg-[#111620] text-xs font-mono font-bold text-slate-700 dark:text-slate-300'
+							aria-label='Toggle language'
+						>
+							<span className={locale === 'en' ? 'text-emerald-500' : 'text-muted-foreground'}>
+								EN
+							</span>
+							<span className='text-muted-foreground font-normal'>/</span>
+							<span className={locale === 'pt-BR' ? 'text-emerald-500' : 'text-muted-foreground'}>
+								PT
+							</span>
+						</button>
+
+						<button
+							type='button'
+							aria-label={menuOpen ? dict.ui.closeMenu : dict.ui.openMenu}
+							aria-expanded={menuOpen}
+							className='inline-flex items-center justify-center h-9 w-9 rounded-xl border border-slate-200 dark:border-[#212836] bg-white/80 dark:bg-[#111620] text-slate-700 dark:text-slate-300'
+							onClick={() => setMenuOpen((v) => !v)}
+						>
+							{menuOpen ? <CloseIcon size={18} /> : <MenuIcon size={18} />}
+						</button>
+					</div>
+				</div>
+
+				{/* Mobile menu drawer */}
+				{menuOpen && (
+					<div className='md:hidden mt-3 p-4 rounded-2xl border border-slate-200 dark:border-[#212836] bg-white/95 dark:bg-[#0c1017]/95 backdrop-blur-xl shadow-2xl animate-fade-in-up'>
+						<div className='flex flex-col gap-2.5 text-sm font-semibold'>
+							<Link
+								to='/'
+								onClick={() => setMenuOpen(false)}
+								className={`px-3 py-2 rounded-xl transition-colors ${
+									isHome
+										? 'bg-primary/10 text-primary'
+										: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b]'
+								}`}
+							>
+								{dict.nav.home}
+							</Link>
+							<a
+								href={isHome ? '#ecosystem' : '/#ecosystem'}
+								onClick={() => setMenuOpen(false)}
+								className='px-3 py-2 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b] transition-colors'
+							>
+								{dict.nav.ecosystem}
+							</a>
+							<a
+								href={isHome ? '#capabilities' : '/#capabilities'}
+								onClick={() => setMenuOpen(false)}
+								className='px-3 py-2 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b] transition-colors'
+							>
+								{dict.nav.capabilities}
+							</a>
+							<Link
+								to='/blog'
+								onClick={() => setMenuOpen(false)}
+								className={`px-3 py-2 rounded-xl transition-colors ${
+									isBlog
+										? 'bg-primary/10 text-primary'
+										: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b]'
+								}`}
+							>
+								{dict.nav.blog}
+							</Link>
+							<Link
+								to='/about'
+								onClick={() => setMenuOpen(false)}
+								className={`px-3 py-2 rounded-xl transition-colors ${
+									isAbout
+										? 'bg-primary/10 text-primary'
+										: 'text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b]'
+								}`}
+							>
+								{dict.nav.about}
+							</Link>
+							<a
+								href={isHome ? '#contact' : '/about'}
+								onClick={() => setMenuOpen(false)}
+								className='mt-2 w-full py-2.5 rounded-xl text-center text-xs font-bold bg-primary text-white shadow-sm'
+							>
+								{dict.nav.contact}
+							</a>
+						</div>
+					</div>
+				)}
+			</div>
+		</nav>
+	);
 };

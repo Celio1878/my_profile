@@ -17,7 +17,7 @@ import { InteractiveBackground } from "./components/interactive-background";
 import { I18nProvider } from "./i18n";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "icon", type: "image/png", href: "/favicon.png" },
+  { rel: "icon", type: "image/jpeg", href: "/me.jpeg" },
   { rel: "manifest", href: "/manifest.json" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -44,11 +44,11 @@ export function Layout({ children }: LayoutProps) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#400d7a" />
+        <meta name="theme-color" content="#090b10" />
         <meta name="robots" content="index, follow" />
         <Meta />
         <Links />
-        <title>Célio Vieira - FullStack, Data, and AI Engineer</title>
+        <title>Célio Vieira — Founder, AI & Data Engineer</title>
       </head>
       <body>
         <InteractiveBackground />
