@@ -3,18 +3,11 @@ import { useEffect, useRef } from "react";
 /**
  * InteractiveBackground
  *
- * A lightweight canvas-based animated background that reacts to:
- *  - mouse movement (particles are gently attracted toward the cursor and
- *    a soft glow follows it)
- *  - scrolling (the particle field shifts/parallaxes and hue rotates with
- *    scroll position)
- *
- * Implementation notes:
- *  - Fixed, full-viewport canvas behind the content (z-index: -1, pointer-events: none)
- *  - Respects `prefers-reduced-motion` (renders a single static frame)
- *  - Adapts particle count to viewport size for performance
- *  - Uses devicePixelRatio for crisp rendering
- *  - Pauses when the tab is hidden
+ * Terminal & Vector Dot-Matrix Grid Canvas.
+ * Renders an engineered, high-precision dot matrix grid with:
+ * - Subtle ambient emerald node shimmer
+ * - Interactive cursor radial illumination
+ * - Responsive DPR handling and reduced-motion support
  */
 export function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -33,21 +26,10 @@ export function InteractiveBackground() {
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    type Particle = {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      r: number;
-      baseR: number;
-    };
-    let particles: Particle[] = [];
-
     const mouse = { x: -9999, y: -9999, active: false };
-    let scrollY = window.scrollY;
-    let scrollTarget = window.scrollY;
     let rafId = 0;
     let running = true;
+    let time = 0;
 
     function isDark() {
       return window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -59,195 +41,149 @@ export function InteractiveBackground() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas!.width = Math.floor(width * dpr);
       canvas!.height = Math.floor(height * dpr);
-      canvas!.style.width = width + "px";
-      canvas!.style.height = height + "px";
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      // Particle count scales with screen area; capped for perf
-      const area = width * height;
-      const target = Math.round(Math.min(120, Math.max(40, area / 16000)));
-      if (particles.length !== target) {
-        particles = new Array(target).fill(0).map(() => spawn());
-      }
+      canvas!.style.width = `${width}px`;
+      canvas!.style.height = `${height}px`;
+      ctx!.scale(dpr, dpr);
     }
 
-    function spawn(): Particle {
-      const baseR = Math.random() * 1.6 + 0.6;
-      return {
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: baseR,
-        baseR,
-      };
-    }
+    resize();
+    window.addEventListener("resize", resize);
 
     function onMouseMove(e: MouseEvent) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
     }
+
     function onMouseLeave() {
       mouse.active = false;
       mouse.x = -9999;
       mouse.y = -9999;
     }
-    function onTouchMove(e: TouchEvent) {
-      if (e.touches[0]) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
-        mouse.active = true;
-      }
-    }
-    function onScroll() {
-      scrollTarget = window.scrollY;
-    }
-    function onVisibility() {
-      running = !document.hidden;
-      if (running) {
-        rafId = requestAnimationFrame(loop);
-      } else {
-        cancelAnimationFrame(rafId);
-      }
-    }
 
-    function draw() {
-      // smooth scroll interpolation for parallax
-      scrollY += (scrollTarget - scrollY) * 0.08;
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mouseleave", onMouseLeave);
 
-      ctx!.clearRect(0, 0, width, height);
+    const SPACING = 36;
+    const PROXIMITY = 160;
+
+    function drawGrid() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
 
       const dark = isDark();
-      const hue = (scrollY * 0.05) % 360;
+      time += 0.015;
 
-      // Background radial glow following the mouse
-      if (mouse.active) {
-        const grad = ctx!.createRadialGradient(
+      const baseAlpha = dark ? 0.05 : 0.08;
+      const baseR = 1.0;
+
+      const cols = Math.ceil(width / SPACING) + 1;
+      const rows = Math.ceil(height / SPACING) + 1;
+
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+          const x = c * SPACING;
+          const y = r * SPACING;
+
+          // Distance to mouse
+          const dx = mouse.x - x;
+          const dy = mouse.y - y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          // Subtle wave shimmer
+          const wave = Math.sin(time + c * 0.15 + r * 0.15);
+
+          let alpha = baseAlpha;
+          let dotRadius = baseR;
+          let isHovered = false;
+
+          if (mouse.active && dist < PROXIMITY) {
+            const factor = 1 - dist / PROXIMITY;
+            alpha = baseAlpha + factor * (dark ? 0.45 : 0.35);
+            dotRadius = baseR + factor * 1.5;
+            isHovered = true;
+          } else if (wave > 0.92) {
+            alpha = baseAlpha + (wave - 0.92) * 1.5;
+          }
+
+          ctx.beginPath();
+          ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
+
+          if (isHovered) {
+            ctx.fillStyle = dark
+              ? `rgba(16, 185, 129, ${alpha})`
+              : `rgba(5, 150, 105, ${alpha})`;
+          } else {
+            ctx.fillStyle = dark
+              ? `rgba(240, 246, 252, ${alpha})`
+              : `rgba(15, 23, 42, ${alpha})`;
+          }
+
+          ctx.fill();
+        }
+      }
+
+      // If mouse is active, render subtle radial glow around cursor
+      if (mouse.active && mouse.x > 0 && mouse.y > 0) {
+        const glowGradient = ctx.createRadialGradient(
           mouse.x,
           mouse.y,
           0,
           mouse.x,
           mouse.y,
-          280,
+          PROXIMITY,
         );
-        const glow = dark
-          ? `hsla(${(hue + 220) % 360}, 80%, 60%, 0.18)`
-          : `hsla(${(hue + 200) % 360}, 90%, 55%, 0.12)`;
-        grad.addColorStop(0, glow);
-        grad.addColorStop(1, "transparent");
-        ctx!.fillStyle = grad;
-        ctx!.fillRect(0, 0, width, height);
+        glowGradient.addColorStop(
+          0,
+          dark ? "rgba(16, 185, 129, 0.06)" : "rgba(5, 150, 105, 0.04)",
+        );
+        glowGradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+        ctx.fillStyle = glowGradient;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, PROXIMITY, 0, Math.PI * 2);
+        ctx.fill();
       }
+    }
 
-      const parallax = (scrollY * 0.15) % height;
-
-      // Update + draw particles
-      for (const p of particles) {
-        // base motion
-        p.x += p.vx;
-        p.y += p.vy;
-
-        // mouse attraction
-        if (mouse.active) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist2 = dx * dx + dy * dy;
-          if (dist2 < 200 * 200) {
-            const dist = Math.sqrt(dist2) || 1;
-            const force = (1 - dist / 200) * 0.6;
-            p.vx += (dx / dist) * force * 0.05;
-            p.vy += (dy / dist) * force * 0.05;
-            p.r = p.baseR + (1 - dist / 200) * 2;
-          } else {
-            p.r += (p.baseR - p.r) * 0.1;
-          }
-        } else {
-          p.r += (p.baseR - p.r) * 0.1;
-        }
-
-        // friction
-        p.vx *= 0.985;
-        p.vy *= 0.985;
-
-        // wrap around edges (with parallax offset on Y)
-        const py = (p.y + parallax) % height;
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
-        if (p.y < -10) p.y = height + 10;
-        if (p.y > height + 10) p.y = -10;
-
-        // draw
-        const pHue = (hue + (p.x + p.y) * 0.05) % 360;
-        ctx!.beginPath();
-        ctx!.fillStyle = dark
-          ? `hsla(${pHue}, 70%, 70%, 0.85)`
-          : `hsla(${pHue}, 65%, 45%, 0.75)`;
-        ctx!.arc(p.x, py, p.r, 0, Math.PI * 2);
-        ctx!.fill();
-      }
-
-      // Connections between nearby particles
-      const maxDist = 130;
-      const maxDist2 = maxDist * maxDist;
-      ctx!.lineWidth = 1;
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        const ay = (a.y + parallax) % height;
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const by = (b.y + parallax) % height;
-          const dx = a.x - b.x;
-          const dy = ay - by;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < maxDist2) {
-            const alpha = (1 - d2 / maxDist2) * (dark ? 0.35 : 0.25);
-            ctx!.strokeStyle = dark
-              ? `hsla(${(hue + 200) % 360}, 70%, 70%, ${alpha})`
-              : `hsla(${(hue + 200) % 360}, 65%, 40%, ${alpha})`;
-            ctx!.beginPath();
-            ctx!.moveTo(a.x, ay);
-            ctx!.lineTo(b.x, by);
-            ctx!.stroke();
-          }
-        }
-      }
+    if (reduceMotion) {
+      drawGrid();
+      return () => {
+        window.removeEventListener("resize", resize);
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseleave", onMouseLeave);
+      };
     }
 
     function loop() {
       if (!running) return;
-      draw();
+      drawGrid();
       rafId = requestAnimationFrame(loop);
     }
 
-    resize();
+    rafId = requestAnimationFrame(loop);
 
-    if (reduceMotion) {
-      // single static render, no animation loop
-      draw();
-    } else {
-      rafId = requestAnimationFrame(loop);
+    function onVisibilityChange() {
+      if (document.hidden) {
+        running = false;
+        cancelAnimationFrame(rafId);
+      } else {
+        running = true;
+        rafId = requestAnimationFrame(loop);
+      }
     }
 
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("mouseleave", onMouseLeave);
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("visibilitychange", onVisibility);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
+      running = false;
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("visibilitychange", onVisibility);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 
-  return (
-    <canvas ref={canvasRef} aria-hidden="true" className="interactive-bg" />
-  );
+  return <canvas ref={canvasRef} className="interactive-bg" aria-hidden="true" />;
 }

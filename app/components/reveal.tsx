@@ -42,7 +42,7 @@ export function Reveal({
     }
   }, [direction]);
 
-  const Comp: any = as;
+  const Comp = as as React.ElementType;
 
   return (
     <Comp

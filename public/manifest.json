@@ -1,16 +1,16 @@
 {
-  "name": "Célio Vieira — FullStack · Data · AI Engineer",
-  "short_name": "Célio Vieira",
-  "description": "Professional profile of Célio Vieira, FullStack, Data & AI Engineer.",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#400d7a",
-  "icons": [
-    {
-      "src": "/working.JPEG",
-      "sizes": "400x400",
-      "type": "image/jpeg"
-    }
-  ]
+	"name": "Célio Vieira — Founder, AI & Data Engineer",
+	"short_name": "Célio Vieira",
+	"description": "Founder, AI & Data Engineer architecting intelligent AI systems, petabyte lakehouses, and the Aldeon venture ecosystem.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#090b10",
+	"theme_color": "#090b10",
+	"icons": [
+		{
+			"src": "/me.jpeg",
+			"sizes": "400x400",
+			"type": "image/jpeg"
+		}
+	]
 }
