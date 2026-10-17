@@ -122,3 +122,35 @@
 - [x] `bun run typecheck`: 0 errors.
 - [x] `bun run build`: Clean production client and SSR bundles generated.
 
+---
+
+### Session 15 — Aldeon Platform Deep Synchronization & HandSpeak Integration
+
+#### 1. Umbrella Ecosystem & 5-Child Venture Showcase
+- [x] Integrated **HandSpeak** (`aldeon.app/handspeak`) as the 5th child venture across the ecosystem showcase with full-width prominence (`md:col-span-2`), 60 FPS 3D computer vision MediaPipe tracking, Three.js WebGL anatomy tutor, and PeerJS WebRTC encrypted video.
+- [x] Standardized all 5 child venture cards and Aldeon flagship card with comprehensive button actions:
+  - Direct web portals (`https://aldeon.app/<product>`)
+  - Live Apple App Store links (Be Your Stories `id6812739940`, TATU Design `id6742352840`)
+  - Google Play Closed Beta testing links with `(Beta)` badge (`https://play.google.com/apps/testing/com.aldeon.*`)
+  - Dedicated Technical Deep-Dive buttons linking directly to `/blog/:slug`.
+
+#### 2. Native Technical Deep-Dive Articles & Substack Protection
+- [x] Authored 5 new native, in-depth architectural blueprint articles in `app/content/blog/`:
+  - `engineering-handspeak-3d-libras-ai.md`
+  - `aldeon-unified-edge-ssr-multi-cloud-ecosystem.md`
+  - `architecting-pack-multimodal-ocr-logistics.md`
+  - `building-tatu-design-ai-stencil-ar-studio.md`
+  - `autonomous-publishing-posthub-step-functions.md`
+- [x] Updated `building-be-your-stories.md` with Meilisearch sub-15ms discovery, AWS Polly neural audiobook narration Lambdas, and updated store links.
+- [x] Protected all 8 native technical articles in `scripts/sync-substack.ts` `protectedSlugs` and verified `bun run sync-substack`.
+
+#### 3. Capabilities & About Section Enrichment
+- [x] Expanded "What I'm Building Now" on `/about` to 6 balanced cards (2x3 grid) covering Aldeon, HandSpeak, Be Your Stories, Pack, TATU Design, and PostHub.
+- [x] Updated Capabilities pillars and About 4th paragraph in both `en` and `pt-BR`.
+
+#### 4. Verification & Quality Gates
+- [x] `bun run lint`: 0 errors, 0 warnings (`--max-warnings=0`).
+- [x] `bun run typecheck`: 0 errors.
+- [x] `bun run build`: Clean production client and SSR bundles generated.
+
+

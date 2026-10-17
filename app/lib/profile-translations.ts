@@ -35,6 +35,7 @@ export type Dictionary = {
 		aldeonTagline: string;
 		aldeonDescription: string;
 		visitAldeon: string;
+		architectureDeepDive: string;
 		productsHeading: string;
 		bysTitle: string;
 		bysTagline: string;
@@ -42,6 +43,8 @@ export type Dictionary = {
 		webApp: string;
 		iosApp: string;
 		androidApp: string;
+		androidBetaApp: string;
+		deepDive: string;
 		packTitle: string;
 		packTagline: string;
 		packDescription: string;
@@ -51,6 +54,9 @@ export type Dictionary = {
 		postsTitle: string;
 		postsTagline: string;
 		postsDescription: string;
+		handspeakTitle: string;
+		handspeakTagline: string;
+		handspeakDescription: string;
 		appBuilderTitle: string;
 		appBuilderTagline: string;
 		appBuilderDescription: string;
@@ -163,28 +169,35 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 			aldeonTitle: 'Aldeon Venture Studio',
 			aldeonTagline: 'Autonomous Multi-Product Venture Ecosystem & Applied AI Studio',
 			aldeonDescription:
-				'Serving as the central web platform, orchestration layer, and consolidated host for autonomous consumer products, AI-driven automation, and cloud backends.',
+				'Serving as the central web platform, orchestration layer, and consolidated host for 5 autonomous products, AI-driven automation, and multi-cloud backends.',
 			visitAldeon: 'Visit aldeon.app',
+			architectureDeepDive: 'Architecture Deep-Dive',
 			productsHeading: 'Active Ventures & Child Applications',
 			bysTitle: 'Be Your Stories (BYS)',
 			bysTagline: 'Cross-platform storytelling & reading platform on Web, iOS, and Android.',
 			bysDescription:
-				'Digital publishing ecosystem engineered with offline-first local synchronization, cross-platform apps live on Apple App Store & Google Play, and resilient serverless cloud services.',
+				'Digital publishing ecosystem engineered with offline-first local synchronization, sub-15ms Meilisearch indexing, AWS Polly audiobook narration, and multi-platform apps live on App Store & Google Play.',
 			webApp: 'Web Application',
 			iosApp: 'App Store (iOS)',
 			androidApp: 'Google Play (Android)',
+			androidBetaApp: 'Google Play (Beta)',
+			deepDive: 'Deep-Dive',
 			packTitle: 'Pack',
-			packTagline: 'Mailroom automation & OCR parcel delivery control for residential communities.',
+			packTagline: 'Mailroom automation & sub-1.2s multimodal OCR delivery control for residential communities.',
 			packDescription:
-				'Smart condominium mailroom logistics app featuring Gemini OCR label parsing, automated resident notifications, and serverless AWS microservices.',
-			tatuTitle: 'TATU Design (T3O2)',
-			tatuTagline: 'AI-powered tattoo stencil studio, AR skin preview & portfolio manager.',
+				'Condominium mailroom logistics app featuring sub-1.2s Gemini 2.5 Flash OCR parsing (99.4% accuracy), Legend-State v3 local-first reactivity, dynamic QR/PIN handover, and automated 48h EventBridge dwell-time reminders.',
+			tatuTitle: 'TATU Design',
+			tatuTagline: 'AI tattoo stencil studio, 60 FPS AR skin projection & thermal export engine.',
 			tatuDescription:
-				'Creative studio app empowering tattoo artists with generative image stencils, augmented reality skin overlay previews, and secure cloud storage.',
+				'Design studio app empowering tattoo artists with multi-style AI stencil generation (line-art, blackwork, fine-line), 60 FPS AR camera skin-lock projection, and 1080p thermal PNG export.',
 			postsTitle: 'PostHub',
-			postsTagline: 'Autonomous multi-platform content publishing & distribution engine.',
+			postsTagline: 'Autonomous 5-platform content publishing & multi-channel syndication engine.',
 			postsDescription:
-				'Serverless distribution pipeline automating content syndication across LinkedIn, X, Substack, and social channels with Gemini AI enhancements.',
+				'Serverless distribution pipeline automating content syndication across LinkedIn, X, Substack, Facebook, and Instagram with AWS Step Functions state machines and 1-click approvals.',
+			handspeakTitle: 'HandSpeak',
+			handspeakTagline: 'Real-time 60 FPS 3D Libras translation, WebGL sign tutor & P2P video calls.',
+			handspeakDescription:
+				'Accessible communication platform featuring 60 FPS MediaPipe 3D hand tracking, full A–Z datilology with phonetic Levenshtein disambiguation, a 21-joint Three.js WebGL sign tutor, encrypted PeerJS WebRTC video calls with live captions, and dual-layer Trust & Safety moderation on GCP Cloud Run.',
 			appBuilderTitle: 'NodeJS App Builder',
 			appBuilderTagline: 'Microservices CLI generator & clean architecture template on npm.',
 			appBuilderDescription:
@@ -208,11 +221,11 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 						'Architecting zero-leakage enterprise RAG pipelines, local quantized model hosting (Ollama, HuggingFace), hybrid vector search, and autonomous multi-step agentic workflows.',
 					tags: [
 						'RAG Pipelines',
-						'Local LLMs',
-						'Ollama',
+						'Multimodal Vision/OCR',
+						'Local LLMs (Ollama)',
 						'HuggingFace',
 						'Vector DBs',
-						'Embeddings',
+						'AI Guardrails',
 						'Agentic Loops',
 					],
 				},
@@ -229,17 +242,26 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 					tags: [
 						'System Design',
 						'Event-Driven',
-						'DDD / TDD',
-						'AWS Architecture',
-						'Terraform',
+						'AWS Step Functions',
+						'GCP Cloud Run',
+						'Terraform IaC',
+						'Tenant Isolation',
 						'FinOps',
 					],
 				},
 				{
 					title: 'Full-Stack Product Engineering',
 					description:
-						'End-to-end software delivery from customer validation to high-velocity MVP and scaled multi-platform systems across Web, iOS, and Android with 60 FPS polish.',
-					tags: ['React', 'React Native', 'TypeScript', 'Node.js', 'Go', 'Tailwind CSS'],
+						'End-to-end software delivery from customer validation to high-velocity MVP and scaled multi-platform systems across Web, iOS, and Android with 60 FPS WebGL/AR and edge SSR.',
+					tags: [
+						'React 19',
+						'React Router SSR',
+						'React Native (Expo 57)',
+						'TypeScript',
+						'Three.js / WebGL',
+						'WebRTC P2P',
+						'Tailwind CSS',
+					],
 				},
 			],
 		},
@@ -283,14 +305,16 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 				'I build at the intersection of applied artificial intelligence, petabyte-scale data engineering, and commercial venture creation. As a Founder, AI & Data Engineer, my focus is turning deep technical systems into resilient, high-impact digital products. Rather than treating emerging technology as speculative demos, I approach engineering from first principles—crafting architectures that scale seamlessly under production workloads while driving real business momentum.',
 				'My engineering foundation is rooted in formal computer engineering and a postgraduate specialization in Cloud Computing Process & Architecture. Over years of hands-on architecture, I have engineered mission-critical distributed systems—from event-driven hexagonal microservices running on AWS serverless backends (Lambda, SQS, EventBridge, DynamoDB) to petabyte-scale lakehouse platforms leveraging Apache Spark, Apache Iceberg, Glue, EMR, and Airflow. I specialize in designing streaming and batch data engines that guarantee ACID transactions, partition evolution, and FinOps cost efficiency without compromising throughput.',
 				'In the AI domain, my work centers on high-precision Applied AI and private, zero-leakage infrastructure. I design retrieval-augmented generation (RAG) pipelines with hybrid vector search, prompt graph reasoning topologies, and autonomous task-oriented agents. On self-hosted servers, I actively experiment with model quantizations, fine-tuning, and inference pipelines utilizing Ollama, HuggingFace, and ComfyUI—delivering secure, local intelligence that protects data sovereignty while maximizing speed and accuracy.',
-				'Bridging systems architecture with modern full-stack product engineering (TypeScript, React, React Native, Node.js, Go, Python), I take complete end-to-end ownership from system design to production scale. This multi-disciplinary capability is the engine behind Aldeon (aldeon.app)—my venture umbrella operating live products like Be Your Stories on Web, iOS, and Android, smart automation engines, and open-source developer tooling.',
+				'Bridging systems architecture with modern full-stack product engineering (TypeScript, React 19, React Native Expo, Node.js, Go, Python), I take complete end-to-end ownership from system design to production scale. This multi-disciplinary capability is the engine behind Aldeon (aldeon.app)—my venture umbrella operating 5 live products: Be Your Stories, Pack, TATU Design, PostHub, and HandSpeak, alongside open-source developer tooling.',
 			],
 			buildingTitle: "What I'm Building Now",
 			buildingList: [
-				'Expanding Aldeon (aldeon.app) as an autonomous venture studio and multi-product technology ecosystem.',
-				'Scaling Be Your Stories across Web, iOS, and Android into a vibrant digital storytelling community.',
-				'Engineering enterprise-grade private RAG frameworks and local LLM agents for secure, offline AI inference.',
-				'Shipping condo mailroom automation with Pack and generative tattoo tools with TATU Design.',
+				'Expanding Aldeon (aldeon.app) as an autonomous venture studio and consolidated Edge SSR multi-product ecosystem.',
+				'Advancing HandSpeak with 60 FPS 3D Libras vision tracking, WebGL anatomical sign tutor, and P2P WebRTC video calls.',
+				'Scaling Be Your Stories across Web, iOS, and Android with sub-15ms Meilisearch and serverless Polly audiobooks.',
+				'Operating condominium mailroom logistics with Pack featuring sub-1.2s Gemini Flash OCR and QR handover.',
+				'Powering TATU Design AR stencil studio and PostHub 5-network autonomous social syndication pipeline.',
+				'Engineering zero-leakage private RAG frameworks, local LLM agents (Ollama), and petabyte Apache Spark/Iceberg lakehouses.',
 			],
 			principlesTitle: 'Operating Principles',
 			principles: [
@@ -363,28 +387,35 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 			aldeonTitle: 'Aldeon Venture Studio',
 			aldeonTagline: 'Ecossistema Autônomo de Produtos & Estúdio de IA Aplicada',
 			aldeonDescription:
-				'Atuando como a plataforma web central, camada de orquestração e ambiente consolidado para produtos de consumo, automações inteligentes e infraestrutura em nuvem.',
+				'Atuando como a plataforma web central, camada de orquestração e ambiente consolidado para 5 produtos autônomos, automações inteligentes e infraestrutura em nuvem.',
 			visitAldeon: 'Acessar aldeon.app',
+			architectureDeepDive: 'Arquitetura em Detalhes',
 			productsHeading: 'Projetos Ativos & Aplicativos do Ecossistema',
 			bysTitle: 'Be Your Stories (BYS)',
 			bysTagline: 'Ecossistema multiplataforma de leitura e publicação na Web, iOS e Android.',
 			bysDescription:
-				'Plataforma digital para leitores e autores com sincronização offline-first, aplicativos nativos publicados na App Store e Google Play e nuvem serverless escalável.',
+				'Plataforma digital para leitores e autores com sincronização offline-first, busca Meilisearch em sub-15ms, narração de audiolivros via AWS Polly e aplicativos publicados na App Store e Google Play.',
 			webApp: 'Aplicação Web',
 			iosApp: 'App Store (iOS)',
 			androidApp: 'Google Play (Android)',
+			androidBetaApp: 'Google Play (Beta)',
+			deepDive: 'Artigo Técnico',
 			packTitle: 'Pack',
-			packTagline: 'Automação de encomendas e triagem por OCR para condomínios residenciais.',
+			packTagline: 'Automação de portaria & triagem de encomendas com OCR multimodal em sub-1.2s.',
 			packDescription:
-				'Solução logística para condomínios com reconhecimento óptico de etiquetas via Gemini OCR, avisos automáticos aos moradores e microsserviços serverless na AWS.',
-			tatuTitle: 'TATU Design (T3O2)',
-			tatuTagline: 'Estúdio de decalques com IA, visualização em realidade aumentada e portfólio.',
+				'Solução logística para condomínios com extração OCR por IA via Gemini 2.5 Flash em sub-1.2s (99,4% de precisão), reatividade local-first com Legend-State v3, retirada via QR/PIN e lembretes de retenção via EventBridge.',
+			tatuTitle: 'TATU Design',
+			tatuTagline: 'Estúdio de decalques por IA, projeção AR na pele a 60 FPS e exportação térmica.',
 			tatuDescription:
-				'Aplicativo para tatuadores com geração de stencils por IA, simulação em realidade aumentada (AR) diretamente na pele e armazenamento seguro em nuvem.',
+				'Aplicativo profissional para tatuadores com geração de stencils multi-estilo (line-art, blackwork, fine-line), projeção anatômica em realidade aumentada a 60 FPS na câmera e exportação térmica em 1080p.',
 			postsTitle: 'PostHub',
-			postsTagline: 'Motor autônomo de publicação e distribuição de conteúdo multiplataforma.',
+			postsTagline: 'Motor autônomo de publicação e distribuição de conteúdo para 5 redes sociais.',
 			postsDescription:
-				'Esteira de distribuição serverless automatizando publicações no LinkedIn, X, Substack e redes sociais com aprimoramentos do Google Gemini.',
+				'Esteira serverless automatizando a distribuição de conteúdo no LinkedIn, X, Substack, Facebook e Instagram com máquinas de estado no AWS Step Functions e aprovações em 1 clique.',
+			handspeakTitle: 'HandSpeak',
+			handspeakTagline: 'Tradução de Libras 3D a 60 FPS em tempo real, tutor WebGL e chamadas de vídeo P2P.',
+			handspeakDescription:
+				'Plataforma de comunicação acessível com rastreamento 3D de mãos a 60 FPS via MediaPipe, datilologia A–Z completa com desambiguação fonética Levenshtein, tutor anatômico 3D em Three.js/WebGL, chamadas P2P WebRTC criptografadas com legendas flutuantes e moderação Trust & Safety no GCP Cloud Run.',
 			appBuilderTitle: 'NodeJS App Builder',
 			appBuilderTagline: 'Gerador de microsserviços CLI e arquitetura limpa publicado no npm.',
 			appBuilderDescription:
@@ -408,11 +439,11 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 						'Arquitetura de pipelines RAG sem vazamento de dados, modelos quantizados locais (Ollama, HuggingFace), busca vetorial híbrida e agentes autônomos orientados a tarefas.',
 					tags: [
 						'Pipelines RAG',
-						'LLMs Locais',
-						'Ollama',
+						'Visão Multimodal / OCR',
+						'LLMs Locais (Ollama)',
 						'HuggingFace',
 						'Bancos Vetoriais',
-						'Embeddings',
+						'Guardrails de IA',
 						'Agentes',
 					],
 				},
@@ -426,13 +457,29 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 					title: 'Arquitetura de Sistemas Distribuídos',
 					description:
 						'Design de sistemas orientados a eventos, Domain-Driven Design (DDD), microsserviços transacionais, landing zones automatizadas e governança FinOps em nuvem.',
-					tags: ['System Design', 'Event-Driven', 'DDD / TDD', 'Arquitetura AWS', 'Terraform', 'FinOps'],
+					tags: [
+						'System Design',
+						'Event-Driven',
+						'AWS Step Functions',
+						'GCP Cloud Run',
+						'Terraform IaC',
+						'Isolamento de Tenants',
+						'FinOps',
+					],
 				},
 				{
 					title: 'Engenharia Full-Stack de Produtos',
 					description:
-						'Entrega de software de ponta a ponta: validação, MVP veloz e sistemas multiplataforma robustos na Web, iOS e Android com desempenho de 60 FPS.',
-					tags: ['React', 'React Native', 'TypeScript', 'Node.js', 'Go', 'Tailwind CSS'],
+						'Entrega de software de ponta a ponta: validação, MVP veloz e sistemas multiplataforma robustos na Web, iOS e Android com 60 FPS WebGL/AR e SSR de borda.',
+					tags: [
+						'React 19',
+						'React Router SSR',
+						'React Native (Expo 57)',
+						'TypeScript',
+						'Three.js / WebGL',
+						'WebRTC P2P',
+						'Tailwind CSS',
+					],
 				},
 			],
 		},
@@ -476,14 +523,16 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 				'Atuo na convergência entre inteligência artificial aplicada, engenharia de dados em larga escala e criação de novos negócios. Como Founder e Engenheiro de IA & Dados, meu foco é transformar sistemas técnicos complexos em produtos digitais resilientes e de alto impacto. Em vez de tratar tecnologias emergentes como demonstrações conceituais, abordo a engenharia a partir de princípios fundamentais — projetando arquiteturas que escalam sob altas cargas de produção enquanto impulsionam valor de negócio tangível.',
 				'Minha base técnica é fundamentada em engenharia de computação e pós-graduação lato sensu em Processos e Arquitetura de Nuvem (Cloud Computing). Ao longo de anos de atuação arquitetural, desenvolvi sistemas distribuídos de missão crítica — desde microsserviços orientados a eventos com arquitetura hexagonal sobre infraestruturas serverless AWS (Lambda, SQS, EventBridge, DynamoDB) até plataformas de lakehouse em escala de petabytes utilizando Apache Spark, Apache Iceberg, Glue, EMR e Airflow. Especializo-me no desenho de motores de dados streaming e batch que asseguram transações ACID, evolução de partições e eficiência FinOps sem abrir mão de alta vazão.',
 				'No universo de IA, minha atuação concentra-se em IA aplicada de alta precisão e infraestruturas privadas sem vazamento de dados. Desenvolvo pipelines de RAG (Geração Aumentada por Recuperação) com busca vetorial híbrida, topologias de raciocínio em grafos de prompts e agentes autônomos orientados a tarefas. Em servidores locais dedicados, atuo no ajuste fino, quantização e esteiras de inferência utilizando Ollama, HuggingFace e ComfyUI — entregando inteligência soberana, rápida e segura.',
-				'Integrando arquitetura de sistemas com engenharia de produtos fullstack moderna (TypeScript, React, React Native, Node.js, Go, Python), assumo responsabilidade de ponta a ponta: do desenho técnico à escala em produção. Essa capacidade multidisciplinar é o motor propulsor da Aldeon (aldeon.app) — meu ecossistema de ventures que opera produtos ativos como o Be Your Stories na Web, iOS e Android, automações logísticas e ferramentas de código aberto para desenvolvedores.',
+				'Integrando arquitetura de sistemas com engenharia de produtos fullstack moderna (TypeScript, React 19, React Native Expo, Node.js, Go, Python), assumo responsabilidade de ponta a ponta: do desenho técnico à escala em produção. Essa capacidade multidisciplinar é o motor propulsor da Aldeon (aldeon.app) — meu ecossistema de ventures que opera 5 produtos ativos: Be Your Stories, Pack, TATU Design, PostHub e HandSpeak, ao lado de ferramentas de código aberto para desenvolvedores.',
 			],
 			buildingTitle: 'O Que Estou Construindo Agora',
 			buildingList: [
-				'Expandindo a Aldeon (aldeon.app) como estúdio de negócios e ecossistema de produtos tecnológicos autônomos.',
-				'Evoluindo o Be Your Stories na Web, iOS e Android para conectar leitores e autores globalmente.',
-				'Desenvolvendo frameworks empresariais de RAG privado e agentes locais para inferência rápida e segura.',
-				'Operando a automação de correspondências Pack e o estúdio de decalques inteligentes TATU Design.',
+				'Expandindo a Aldeon (aldeon.app) como estúdio de negócios e ecossistema de produtos consolidado em Edge SSR.',
+				'Evoluindo o HandSpeak com rastreamento 3D de Libras a 60 FPS, tutor anatômico WebGL e chamadas de vídeo P2P via WebRTC.',
+				'Escalando o Be Your Stories na Web, iOS e Android com busca Meilisearch em sub-15ms e audiolivros serverless via AWS Polly.',
+				'Operando a logística condominial do Pack com OCR multimodal via Gemini Flash em sub-1.2s e retirada segura por QR code.',
+				'Alavancando o estúdio de decalques em AR TATU Design e a esteira de publicação autônoma para 5 redes PostHub.',
+				'Desenvolvendo frameworks empresariais de RAG privado, agentes locais (Ollama) e lakehouses petabyte com Spark e Iceberg.',
 			],
 			principlesTitle: 'Princípios de Atuação',
 			principles: [

@@ -130,7 +130,7 @@ export default function AboutRoute() {
 				{/* Section 3: Connect & Social Channels */}
 				<section>
 					<Reveal delay={160}>
-						<div className='p-8 sm:p-10 rounded-2xl border border-gray-200/80 dark:border-gray-800/80 bg-gradient-to-br from-white/90 via-slate-50/80 to-primary/5 dark:from-slate-900/90 dark:via-slate-950/80 dark:to-primary/10 backdrop-blur-md shadow-lg'>
+						<div className='p-8 sm:p-10 rounded-2xl border border-gray-200/80 dark:border-gray-800/80 bg-linear-to-br from-white/90 via-slate-50/80 to-primary/5 dark:from-slate-900/90 dark:via-slate-950/80 dark:to-primary/10 backdrop-blur-md shadow-lg'>
 							<div className='max-w-2xl mb-8'>
 								<h2 className='text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2'>
 									{dict.about.socialsTitle}

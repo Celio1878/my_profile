@@ -43,7 +43,14 @@ Mobile reading happens in planes, subways, and low-connectivity environments. Tr
 - **Optimistic UI Updates**: User actions (bookmarking, progress tracking, highlights) commit locally in `0ms`, appending mutations to an idempotent synchronization queue.
 - **Delta-Sync Strategy**: When connectivity resumes, the client transmits change deltas with timestamp-based conflict resolution, minimizing network bandwidth and eliminating sync collisions.
 
-### 2. Cross-Platform Code Sharing
+### 2. High-Speed Discovery & Neural Audiobook Narration
+
+Beyond text persistence, reading platforms thrive on content discovery and auditory immersion:
+
+- **Sub-15ms Meilisearch Full-Text Indexing**: Rather than executing expensive database `LIKE` queries or complex regex against PostgreSQL, all published stories are ingested into a dedicated Meilisearch cluster. Search queries return ranked, highlighted results across titles, excerpts, and tags in under 15ms.
+- **AWS Polly Neural Speech Synthesis**: Long-form articles and creative stories can be narrated dynamically. An event-driven AWS Lambda pipeline splits markdown chapters into phonetic SSML paragraphs, calls AWS Polly's neural voice models (generative Camila and Thiago), and stitches the resulting MP3 audio stream to S3 and CloudFront with sub-second time-to-first-byte playback.
+
+### 3. Cross-Platform Code Sharing
 
 Maintaining distinct codebases for Web and Mobile burns velocity. By structuring shared domain logic in TypeScript:
 - **80%+ Business Logic Parity**: State machines, API contracts, sync queues, and validation schemas are shared across platforms.
@@ -65,8 +72,8 @@ export interface SyncMutation<T = unknown> {
 
 Shipping across both app stores requires strict attention to platform guidelines:
 
-- **Apple App Store Review**: Verified strict privacy controls, smooth in-app navigation, and iPad multitasking support.
-- **Google Play Store**: Optimized APK/AAB bundle size, managed background worker lifecycle, and verified diverse device form factors.
+- **Apple App Store Review**: Verified strict privacy controls, smooth in-app navigation, and iPad multitasking support (available live under App Store ID `id6812739940`).
+- **Google Play Store**: Optimized APK/AAB bundle size, managed background worker lifecycle, and verified diverse device form factors through Google Play Closed Beta testing.
 - **Performance Profiling**: Maintained 60 FPS transitions and sub-100ms cold startup times on budget mobile hardware.
 
 ## Key Learnings
@@ -75,4 +82,4 @@ Shipping across both app stores requires strict attention to platform guidelines
 2. **Design for latency**: Instant feedback loops build user trust, especially in reading and writing tools.
 3. **Automate deployment pipelines early**: Fast CI/CD pipelines allow rapid bug fixes and continuous releases across stores.
 
-*Be Your Stories is currently live on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).*
+*Be Your Stories is currently live on the unified web portal at [aldeon.app/bys](https://aldeon.app/bys), on the [Apple App Store](https://apps.apple.com/app/id6812739940), and via [Google Play Closed Beta Testing](https://play.google.com/apps/testing/com.aldeon.beyourstories).*

@@ -98,3 +98,29 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 - **Principle:** Convey senior engineering depth without reverting to an employee CV or job-seeking resume tone.
 - **Pattern:** Frame experience strictly around architectural domain mastery (formal Computer Engineering & Cloud Computing postgraduate specialization, event-driven hexagonal microservices on AWS serverless, petabyte Apache Spark & Iceberg lakehouses, and self-hosted private AI inference with Ollama, HuggingFace, and ComfyUI). Strictly omit employer corporate names, job titles, or employment date ranges.
 - **Multi-Paragraph Typography:** Modeled as `missionParagraphs: string[]` in `Dictionary.about`, rendered with `space-y-4 max-w-3xl leading-relaxed` and top-aligned alongside the author avatar (`items-center md:items-start md:pt-2`).
+
+---
+
+## 8. Aldeon Venture Ecosystem & HandSpeak Integration
+
+### 5-Product Showcase Pattern
+- **Grid Architecture:** Child ventures showcase features all 5 products under `aldeon.app`: Be Your Stories, Pack, TATU Design, PostHub, and HandSpeak.
+- **HandSpeak Highlight:** Rendered with full-width prominence (`md:col-span-2`) emphasizing 60 FPS 3D MediaPipe tracking, Three.js WebGL anatomical hand tutor, and PeerJS WebRTC encrypted video calls.
+
+### Link Hierarchy & Store Verification
+- **Web Portals:** Standardized on `https://aldeon.app/<product>`.
+- **App Store Production Links:** Live production apps on Apple App Store (Be Your Stories `id6812739940`, TATU Design `id6742352840`).
+- **Google Play Closed Beta Links:** Linked to `https://play.google.com/apps/testing/com.aldeon.*` accompanied by an emerald "(Beta)" badge.
+- **Technical Deep-Dive Routing:** Each venture card links directly to its native architectural analysis post in `/blog/:slug`.
+
+### Protected Native Deep-Dive Articles
+- `scripts/sync-substack.ts` protects 8 native long-form articles in `protectedSlugs`:
+  - `building-be-your-stories`
+  - `enterprise-rag-with-local-llms`
+  - `scaling-lakehouses-spark-iceberg`
+  - `engineering-handspeak-3d-libras-ai`
+  - `aldeon-unified-edge-ssr-multi-cloud-ecosystem`
+  - `architecting-pack-multimodal-ocr-logistics`
+  - `building-tatu-design-ai-stencil-ar-studio`
+  - `autonomous-publishing-posthub-step-functions`
+

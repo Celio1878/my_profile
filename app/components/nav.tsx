@@ -77,7 +77,7 @@ export const Nav: FC = () => {
 			{/* Scroll progress bar */}
 			<div
 				aria-hidden='true'
-				className='absolute left-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 transition-[width] duration-150 ease-out'
+				className='absolute left-0 top-0 h-0.5 bg-linear-to-r from-emerald-500 via-teal-400 to-amber-400 transition-[width] duration-150 ease-out'
 				style={{ width: `${progress * 100}%` }}
 			/>
 

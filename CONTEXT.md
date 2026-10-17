@@ -16,11 +16,12 @@ A high-performance web platform serving as **Célio Vieira's** commercial showca
 - **YouTube:** https://www.youtube.com/@celio_vieira
 
 ## Umbrella Ecosystem & Ventures
-- **Aldeon (aldeon.app):** Central venture studio & multi-product technology ecosystem.
-- **Be Your Stories (BYS):** Cross-platform offline-first digital reading and storytelling platform live on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).
-- **Pack:** Autonomous condo mailroom automation and delivery notification system.
-- **TATU Design (T3O2):** AI-powered custom tattoo studio and generative artwork engine.
-- **PostHub:** Multi-platform programmatic social content distribution pipeline.
+- **Aldeon (aldeon.app):** Central venture studio, multi-tenant edge routing, and multi-cloud technology ecosystem.
+- **HandSpeak (aldeon.app/handspeak):** 60 FPS 3D computer vision Libras sign language translation, MediaPipe WASM tracking, Three.js WebGL anatomical hand tutor, and encrypted PeerJS WebRTC accessible video calls.
+- **Be Your Stories (BYS):** Cross-platform offline-first digital reading, sub-15ms Meilisearch discovery, and neural audiobook platform live on [Web Portal](https://aldeon.app/bys), [Apple App Store](https://apps.apple.com/app/id6812739940), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.beyourstories).
+- **Pack (aldeon.app/pack):** Smart residential parcel reception locker management with sub-1.2s Gemini 2.5 Flash multimodal OCR, Legend-State v3 local-first state, EventBridge dwell schedulers, and dynamic QR + PIN pickup verification.
+- **TATU Design (aldeon.app/tatu):** High-precision edge tattoo stencil decimation (Sobel/Bayer), 60 FPS AR Skin-Lock (solving 3D clipping via 2D Cylindrical Projection), and 150ms 300 DPI thermal printing live on [Apple App Store](https://apps.apple.com/app/id6742352840) and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.tatudesign).
+- **PostHub (aldeon.app/posthub):** Autonomous 5-platform social content distribution engine driven by AWS Step Functions task tokens, dynamic x509 JWT caching, and DynamoDB Streams WebSocket synchronization.
 - **NodeJS App Builder:** Production-ready microservices CLI generator on npm (`@celio1878/express-app-builder`).
 - **AWS CDK Factory:** Modular Infrastructure-as-Code construct library on npm (`@celio1878/cdk-factory`).
 
@@ -38,7 +39,7 @@ A high-performance web platform serving as **Célio Vieira's** commercial showca
 | Styling | Tailwind CSS v4 (with CSS variables in `app/app.css`) |
 | UI Primitives | Custom Tailwind/Radix components (`Card`, `Badge`, `Separator`) |
 | Icons | `lucide-react` + inline SVGs for brand logos (X, Substack, LinkedIn, GitHub, YouTube) |
-| Markdown Engine | `marked` (v18) + Vite eager raw glob (71 bundled articles) |
+| Markdown Engine | `marked` (v18) + Vite eager raw glob (76 bundled articles: 68 Substack synced + 8 native deep dives) |
 | i18n | Custom context in `app/i18n.tsx` + `app/lib/profile-translations.ts` |
 | Build Tool | Vite 8 (via React Router) |
 | Package Manager | Bun |
@@ -48,7 +49,7 @@ A high-performance web platform serving as **Célio Vieira's** commercial showca
 | Route | Component | Purpose |
 |---|---|---|
 | `/` | `app/routes/home.tsx` | Flagship showcase: Hero value proposition, Aldeon Ecosystem, Capabilities, Latest Discoveries preview, and Contact CTA. Zero job-seeking or availability indicators. |
-| `/blog` | `app/routes/blog.tsx` | Knowledge Hub index: 71 technical articles and Substack dispatches, live search, tag filtering, and hybrid reader navigation. |
+| `/blog` | `app/routes/blog.tsx` | Knowledge Hub index: 76 technical articles and Substack dispatches, live search, tag filtering, and hybrid reader navigation. |
 | `/blog/:slug` | `app/routes/blog-post.tsx` | Article reader: Markdown rendering, canonical SEO URLs, Substack dispatches callout, and author bio. |
 | `/about` | `app/routes/about.tsx` | Streamlined founder profile: Mission, What I'm Building Now (Aldeon ecosystem), operating principles, and direct contact/social channels. |
 

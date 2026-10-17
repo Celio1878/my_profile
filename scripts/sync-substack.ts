@@ -77,6 +77,11 @@ async function sync() {
     "building-be-your-stories",
     "enterprise-rag-with-local-llms",
     "scaling-lakehouses-spark-iceberg",
+    "engineering-handspeak-3d-libras-ai",
+    "aldeon-unified-edge-ssr-multi-cloud-ecosystem",
+    "architecting-pack-multimodal-ocr-logistics",
+    "building-tatu-design-ai-stencil-ar-studio",
+    "autonomous-publishing-posthub-step-functions",
   ]);
 
   let createdCount = 0;

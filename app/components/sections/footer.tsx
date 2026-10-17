@@ -8,11 +8,11 @@ export function Footer() {
 	const copyright = `© ${currentYear} Célio Vieira. All rights reserved.`;
 
 	return (
-		<footer className='relative mt-20 overflow-hidden border-t border-slate-200/80 dark:border-[#212836] bg-gradient-to-b from-transparent via-emerald-500/5 to-emerald-500/10 dark:via-emerald-500/5 dark:to-emerald-500/15'>
+		<footer className='relative mt-20 overflow-hidden border-t border-slate-200/80 dark:border-[#212836] bg-linear-to-b from-transparent via-emerald-500/5 to-emerald-500/10 dark:via-emerald-500/5 dark:to-emerald-500/15'>
 			{/* Decorative top border glow */}
 			<div
 				aria-hidden='true'
-				className='pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent'
+				className='pointer-events-none absolute inset-x-0 -top-px h-px bg-linear-to-r from-transparent via-emerald-500/50 to-transparent'
 			/>
 
 			<div className='container mx-auto px-4 sm:px-6 py-12 max-w-6xl'>
