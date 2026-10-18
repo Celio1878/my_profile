@@ -1,10 +1,20 @@
+export interface BlogPostHeading {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
   description: string;
+  excerpt: string;
   date: string;
   tags: string[];
   readTime: string;
+  wordCount: number;
+  headings: BlogPostHeading[];
+  source: "native" | "substack";
   coverImage?: string;
   lang: string;
   author: string;
@@ -55,6 +65,12 @@ function parseMarkdownWithFrontmatter(raw: string): {
       }
     }
 
+    // Number parsing
+    if (/^\d+$/.test(val)) {
+      frontmatter[key] = Number.parseInt(val, 10);
+      continue;
+    }
+
     // Strip outer quotes
     if (
       (val.startsWith('"') && val.endsWith('"')) ||
@@ -69,10 +85,43 @@ function parseMarkdownWithFrontmatter(raw: string): {
   return { frontmatter, content };
 }
 
-function calculateReadingTime(content: string): string {
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.max(1, Math.ceil(words / 200));
-  return `${minutes} min read`;
+function extractHeadingsFromContent(content: string): BlogPostHeading[] {
+  const headings: BlogPostHeading[] = [];
+  const lines = content.split("\n");
+  for (const line of lines) {
+    const match = line.match(/^(#{2,3})\s+(.+)$/);
+    if (match) {
+      const level = match[1].length as 2 | 3;
+      const text = match[2].trim();
+      const id = text
+        .toLowerCase()
+        .replace(/<[^>]*>/g, "")
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-");
+      headings.push({ id, text, level });
+    }
+  }
+  return headings;
+}
+
+function extractExcerptFromContent(content: string, fallbackDesc: string): string {
+  const lines = content.split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (
+      trimmed &&
+      !trimmed.startsWith("#") &&
+      !trimmed.startsWith(">") &&
+      !trimmed.startsWith("```") &&
+      !trimmed.startsWith("-") &&
+      !trimmed.startsWith("👉") &&
+      !trimmed.startsWith("[") &&
+      trimmed.length > 25
+    ) {
+      return trimmed.length > 260 ? `${trimmed.slice(0, 255).trim()}…` : trimmed;
+    }
+  }
+  return fallbackDesc;
 }
 
 // In Vite, import.meta.glob with eager loads all markdown files at build time
@@ -104,19 +153,47 @@ export function getAllPosts(): BlogPost[] {
       const tags = Array.isArray(frontmatter.tags)
         ? (frontmatter.tags as string[])
         : [];
-      const readTime = calculateReadingTime(content);
+
+      // Accurate word count and read time
+      const bodyWords = content.trim().split(/\s+/).length;
+      const wordCount = typeof frontmatter.wordCount === "number"
+        ? frontmatter.wordCount
+        : bodyWords;
+      const readTime = (frontmatter.readTime as string) ||
+        `${Math.max(1, Math.ceil(wordCount / 200))} min read`;
+
       const coverImage = (frontmatter.coverImage as string) || undefined;
       const lang = (frontmatter.lang as string) || "en";
       const author = (frontmatter.author as string) || "Célio Vieira";
       const canonicalUrl = (frontmatter.canonicalUrl as string) || undefined;
+      const source: "native" | "substack" = canonicalUrl ? "substack" : "native";
+
+      // Headings & excerpt
+      const contentHeadings = extractHeadingsFromContent(content);
+      const headings = contentHeadings.length > 0
+        ? contentHeadings
+        : Array.isArray(frontmatter.headings)
+          ? (frontmatter.headings as string[]).map((h) => ({
+              id: h.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-"),
+              text: h,
+              level: 2 as const,
+            }))
+          : [];
+
+      const excerpt = (frontmatter.excerpt as string) ||
+        extractExcerptFromContent(content, description);
 
       posts.push({
         slug,
         title,
         description,
+        excerpt,
         date,
         tags,
         readTime,
+        wordCount,
+        headings,
+        source,
         coverImage,
         lang,
         author,

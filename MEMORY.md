@@ -124,3 +124,22 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
   - `building-tatu-design-ai-stencil-ar-studio`
   - `autonomous-publishing-posthub-step-functions`
 
+---
+
+## 9. Substack Publishing & Content Ingestion Pipeline
+
+### Substack ProseMirror Format vs Raw HTML
+- **Root Cause:** When publishing drafts to Substack's private API (`/api/v1/drafts`), Substack expects a ProseMirror document object (`{"type": "doc", "content": [...]}`) in `draft_body`. If a raw HTML string is provided, Substack wraps it in `<p>escaped string</p>`, transforming tags like `<p>`, `<strong>`, `<h2>` into literal text entities (`&lt;p&gt;`, `&lt;strong&gt;`).
+- **PostHub Fix (`aldeon/posts/services/src/common/substack_api.py`):** Implemented `html_to_prosemirror(html_str)` with `HTMLParser` converting HTML tags into ProseMirror block and mark nodes (`paragraph`, `heading`, `bullet_list`, `list_item`, `bold`, `italic`, `code`, `link`). Also set `"audience": "everyone"` and `"write_comment_permissions": "everyone"` so posts are public rather than paid-truncated.
+- **Sync Ingestion Sanitizer (`scripts/sync-substack.ts`):** Decodes nested HTML entities (`&lt;`, `&gt;`, `&amp;`, `&#39;`, `&quot;`) and parses HTML into clean GitHub-flavored Markdown. An automated audit confirms 0 out of 76 articles contain unparsed or exposed HTML tags.
+
+### Modern Web Typography Standards
+- **`text-wrap: balance` (`text-balance`):** Applied exclusively to headlines and titles (`h1`, `h2`, `h3`) to ensure balanced, symmetrical line breaking without manual line breaks.
+- **`text-wrap: pretty` (`text-pretty`):** Applied to body copy, excerpts, and descriptions to prevent single-word orphan lines at the end of paragraphs.
+- **Line Length (`max-w-[75ch]`):** Applied to article prose containers to maintain the 45–75 character optimal readability range.
+
+### SSR-Safe Reading Progress & TOC Scroll Tracking
+- **Scroll Handlers:** In `app/routes/blog-post.tsx`, `window.addEventListener('scroll', ...)` is guarded with `typeof window !== "undefined"` and cleaned up on unmount.
+- **Headings IDs:** IDs on `<h2>` and `<h3>` tags are assigned both in marked renderer and extracted into `headings: BlogPostHeading[]` in `app/lib/blog.ts` so the interactive Table of Contents can seamlessly scroll without hydration mismatches.
+
+

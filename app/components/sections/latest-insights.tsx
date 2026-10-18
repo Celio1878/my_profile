@@ -53,9 +53,13 @@ export function LatestInsights() {
                       <span>{post.date}</span>
                     </span>
                     <div className="flex items-center gap-2">
-                      {post.canonicalUrl && (
+                      {post.source === "substack" ? (
                         <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-amber-500 bg-amber-500/10 border border-amber-500/25 px-1.5 py-0.2 rounded">
                           Substack
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-emerald-500 bg-emerald-500/10 border border-emerald-500/25 px-1.5 py-0.2 rounded">
+                          Blueprint
                         </span>
                       )}
                       <span className="flex items-center gap-1 text-primary font-medium">
@@ -64,10 +68,10 @@ export function LatestInsights() {
                       </span>
                     </div>
                   </div>
-                  <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors leading-snug">
+                  <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors leading-snug text-balance">
                     {post.title}
                   </CardTitle>
-                  <CardDescription className="text-sm line-clamp-3 mt-2 text-gray-600 dark:text-gray-300">
+                  <CardDescription className="text-sm line-clamp-3 mt-2 text-gray-600 dark:text-gray-300 text-pretty">
                     {post.description}
                   </CardDescription>
                 </CardHeader>

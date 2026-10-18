@@ -49,8 +49,8 @@ A high-performance web platform serving as **Célio Vieira's** commercial showca
 | Route | Component | Purpose |
 |---|---|---|
 | `/` | `app/routes/home.tsx` | Flagship showcase: Hero value proposition, Aldeon Ecosystem, Capabilities, Latest Discoveries preview, and Contact CTA. Zero job-seeking or availability indicators. |
-| `/blog` | `app/routes/blog.tsx` | Knowledge Hub index: 76 technical articles and Substack dispatches, live search, tag filtering, and hybrid reader navigation. |
-| `/blog/:slug` | `app/routes/blog-post.tsx` | Article reader: Markdown rendering, canonical SEO URLs, Substack dispatches callout, and author bio. |
+| `/blog` | `app/routes/blog.tsx` | Knowledge Hub index: 76 technical articles with source segmented filter tabs (`All (76)`, `Engineering Blueprints (8)`, `Substack Dispatches (68)`), live search, tag pill counts, article metadata bars (date, source badge, word count, read time), sanitized excerpts, and outline section chips (`§ Heading`). |
+| `/blog/:slug` | `app/routes/blog-post.tsx` | Enhanced reader: Smooth reading progress bar, interactive Table of Contents (TOC) with scroll spies, rich metadata header (word count, read time, source badge, canonical Substack link), modern typography (`text-balance`, `text-pretty`), and tag-ranked related posts. |
 | `/about` | `app/routes/about.tsx` | Streamlined founder profile: Mission, What I'm Building Now (Aldeon ecosystem), operating principles, and direct contact/social channels. |
 
 ## Internationalization (i18n)

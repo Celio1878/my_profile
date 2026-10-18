@@ -89,6 +89,33 @@
 - [x] Updated project documentation (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
 - [x] Passed all quality verification gates (`bun run lint`, `bun run typecheck`, `bun run build`).
 
+### Phase 11: Substack Sanitization & Rich Knowledge Hub Experience
+- [x] Root-caused and resolved HTML tag leakage on Substack:
+  - [x] Identified that Substack drafts API requires ProseMirror JSON (`{"type": "doc", "content": [...]}`) instead of raw HTML strings.
+  - [x] Built `html_to_prosemirror` parser in `/home/celio1878/Documents/projects/aldeon/posts/services/src/common/substack_api.py`.
+  - [x] Configured `create_draft` in `publish_substack/handler.py` to set `"audience": "everyone"` and `"write_comment_permissions": "everyone"`.
+  - [x] Verified ProseMirror JSON structure with isolated unit test.
+- [x] Rebuilt Substack sync engine in `scripts/sync-substack.ts`:
+  - [x] Added `decodeHtmlEntities` handling multi-pass escaped entities (`&lt;`, `&gt;`, `&amp;`, `&#39;`).
+  - [x] Added `htmlToCleanMarkdown` and `cleanExcerpt` extracting rich prose without HTML tags.
+  - [x] Re-synced and sanitized all 68 Substack dispatches.
+  - [x] Automated audit confirmed 0 of 76 files have raw HTML tags.
+- [x] Enriched data layer in `app/lib/blog.ts`:
+  - [x] Added `BlogPostHeading` interface (`id`, `text`, `level`).
+  - [x] Added `wordCount`, `readTime`, `excerpt`, `headings`, and `source: "native" | "substack"` to `BlogPost`.
+- [x] Redesigned `/blog` Knowledge Hub in `app/routes/blog.tsx`:
+  - [x] Added segmented source filter tabs (`All Articles (76)`, `Engineering Blueprints (8)`, `Substack Dispatches (68)`).
+  - [x] Added topic tag badges with post counts.
+  - [x] Added article metadata bar (date, source badge, word count, reading time).
+  - [x] Added outline section chips (`§ Heading`) linking directly to post sections.
+- [x] Upgraded `/blog/:slug` Reader in `app/routes/blog-post.tsx`:
+  - [x] Added sticky reading progress indicator bar at the top of the viewport.
+  - [x] Added interactive Table of Contents (TOC) with active section highlight.
+  - [x] Applied modern typography standards (`text-balance` on headings, `text-pretty` on body, `max-w-[75ch]`).
+  - [x] Added tag-ranked related posts cards at the bottom.
+- [x] Synchronized bilingual keys (`en` and `pt-BR`) in `app/lib/profile-translations.ts`.
+- [x] Passed all quality gates: `bun run lint` (0 errors, 0 warnings), `bun run typecheck` (0 errors), `bun run build` (0 errors).
+
 ---
 
 ## Future Roadmap & Backlog

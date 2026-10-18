@@ -1,4 +1,15 @@
-import { ArrowRight, BookOpen, Calendar, Clock, Search, SquareArrowOutUpRight, Tag } from 'lucide-react';
+import {
+	ArrowRight,
+	BookOpen,
+	Calendar,
+	Compass,
+	FileText,
+	Layers,
+	Search,
+	Sparkles,
+	SquareArrowOutUpRight,
+	Tag,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { Nav } from '~/components/nav';
@@ -30,6 +41,8 @@ export function meta({}: Route.MetaArgs) {
 	];
 }
 
+type SourceFilter = 'all' | 'native' | 'substack';
+
 export default function BlogRoute() {
 	const { dict } = useI18n();
 	const allPosts = useMemo(() => getAllPosts(), []);
@@ -37,20 +50,40 @@ export default function BlogRoute() {
 
 	const [search, setSearch] = useState('');
 	const [selectedTag, setSelectedTag] = useState<string | null>(null);
+	const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all');
+
+	// Tag counts map
+	const tagCounts = useMemo(() => {
+		const counts: Record<string, number> = {};
+		for (const post of allPosts) {
+			for (const tag of post.tags) {
+				counts[tag] = (counts[tag] || 0) + 1;
+			}
+		}
+		return counts;
+	}, [allPosts]);
+
+	// Source breakdown counts
+	const nativeCount = useMemo(() => allPosts.filter((p) => p.source === 'native').length, [allPosts]);
+	const substackCount = useMemo(() => allPosts.filter((p) => p.source === 'substack').length, [allPosts]);
 
 	const filteredPosts = useMemo(() => {
 		return allPosts.filter((post) => {
+			const matchesSource = sourceFilter === 'all' || post.source === sourceFilter;
+
 			const matchesSearch =
 				search.trim() === '' ||
 				post.title.toLowerCase().includes(search.toLowerCase()) ||
 				post.description.toLowerCase().includes(search.toLowerCase()) ||
-				post.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+				post.excerpt.toLowerCase().includes(search.toLowerCase()) ||
+				post.tags.some((t) => t.toLowerCase().includes(search.toLowerCase())) ||
+				post.headings.some((h) => h.text.toLowerCase().includes(search.toLowerCase()));
 
 			const matchesTag = !selectedTag || post.tags.includes(selectedTag);
 
-			return matchesSearch && matchesTag;
+			return matchesSource && matchesSearch && matchesTag;
 		});
-	}, [allPosts, search, selectedTag]);
+	}, [allPosts, sourceFilter, search, selectedTag]);
 
 	return (
 		<div className='min-h-screen flex flex-col pt-20'>
@@ -59,15 +92,15 @@ export default function BlogRoute() {
 			<main className='flex-1 container mx-auto px-4 sm:px-6 max-w-6xl py-10' id='main' role='main'>
 				{/* Header */}
 				<Reveal>
-					<div className='text-center max-w-3xl mx-auto mb-12'>
+					<div className='text-center max-w-3xl mx-auto mb-10'>
 						<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-4'>
 							<BookOpen size={14} aria-hidden='true' />
 							<span>{dict.nav.blog}</span>
 						</div>
-						<h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 gradient-text'>
+						<h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 gradient-text text-balance'>
 							{dict.blog.title}
 						</h1>
-						<p className='text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8'>
+						<p className='text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8 text-pretty'>
 							{dict.blog.subtitle}
 						</p>
 
@@ -82,14 +115,14 @@ export default function BlogRoute() {
 									>
 										<path d='M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z' />
 									</svg>
-									<span className='text-xs font-bold uppercase tracking-wider text-primary'>
+									<span className='text-xs font-bold uppercase tracking-wider text-primary font-mono'>
 										Substack Publication
 									</span>
 								</div>
 								<h2 className='text-base sm:text-lg font-bold text-gray-900 dark:text-white'>
 									{dict.blog.substackBanner}
 								</h2>
-								<p className='text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed'>
+								<p className='text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed text-pretty'>
 									{dict.blog.substackText}
 								</p>
 							</div>
@@ -110,9 +143,54 @@ export default function BlogRoute() {
 					</div>
 				</Reveal>
 
-				{/* Filter & Search Bar */}
-				<Reveal delay={100}>
-					<div className='space-y-4 mb-10 max-w-3xl mx-auto'>
+				{/* Source Filter Tabs & Search Controls */}
+				<Reveal delay={80}>
+					<div className='space-y-5 mb-10 max-w-4xl mx-auto'>
+						{/* Source Filter Segmented Buttons */}
+						<div className='flex items-center justify-center p-1 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-gray-200 dark:border-gray-800 max-w-md mx-auto text-xs font-semibold shadow-inner'>
+							<button
+								type='button'
+								onClick={() => setSourceFilter('all')}
+								className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+									sourceFilter === 'all'
+										? 'bg-white dark:bg-slate-800 text-gray-900 dark:text-white shadow-xs font-bold'
+										: 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
+								}`}
+							>
+								<Layers size={13} aria-hidden='true' />
+								<span>{dict.blog.filterAllSources}</span>
+								<span className='font-mono opacity-70'>({allPosts.length})</span>
+							</button>
+
+							<button
+								type='button'
+								onClick={() => setSourceFilter('native')}
+								className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+									sourceFilter === 'native'
+										? 'bg-white dark:bg-slate-800 text-emerald-500 shadow-xs font-bold'
+										: 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
+								}`}
+							>
+								<Sparkles size={13} className='text-emerald-500' aria-hidden='true' />
+								<span>{dict.blog.filterBlueprints}</span>
+								<span className='font-mono opacity-70'>({nativeCount})</span>
+							</button>
+
+							<button
+								type='button'
+								onClick={() => setSourceFilter('substack')}
+								className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+									sourceFilter === 'substack'
+										? 'bg-white dark:bg-slate-800 text-amber-500 shadow-xs font-bold'
+										: 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
+								}`}
+							>
+								<FileText size={13} className='text-amber-500' aria-hidden='true' />
+								<span>{dict.blog.filterSubstack}</span>
+								<span className='font-mono opacity-70'>({substackCount})</span>
+							</button>
+						</div>
+
 						{/* Search input */}
 						<div className='relative'>
 							<Search
@@ -126,31 +204,32 @@ export default function BlogRoute() {
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
 								aria-label={dict.blog.searchPlaceholder}
-								className='w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all shadow-sm'
+								className='w-full pl-10 pr-16 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm transition-all shadow-sm'
 							/>
 							{search && (
 								<button
 									type='button'
 									onClick={() => setSearch('')}
-									className='absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
+									className='absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 px-2 py-1 rounded bg-gray-100 dark:bg-slate-800'
 								>
 									Clear
 								</button>
 							)}
 						</div>
 
-						{/* Tag Pills */}
-						<div className='flex flex-wrap items-center gap-2'>
+						{/* Topic Tag Pills with Counts */}
+						<div className='flex flex-wrap items-center gap-2 pt-1'>
 							<button
 								type='button'
 								onClick={() => setSelectedTag(null)}
-								className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium border ${
+								className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium border flex items-center gap-1.5 ${
 									selectedTag === null
 										? 'bg-primary text-white border-primary shadow-sm'
 										: 'bg-white/50 dark:bg-slate-900/50 border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:border-primary/50'
 								}`}
 							>
-								{dict.blog.filterAll}
+								<span>{dict.blog.filterAll}</span>
+								<span className='font-mono opacity-75'>({allPosts.length})</span>
 							</button>
 							{allTags.map((tag) => (
 								<button
@@ -164,7 +243,8 @@ export default function BlogRoute() {
 									}`}
 								>
 									<Tag size={10} aria-hidden='true' />
-									{tag}
+									<span>{tag}</span>
+									<span className='font-mono opacity-75 text-[10px]'>({tagCounts[tag] || 0})</span>
 								</button>
 							))}
 						</div>
@@ -181,6 +261,7 @@ export default function BlogRoute() {
 								onClick={() => {
 									setSearch('');
 									setSelectedTag(null);
+									setSourceFilter('all');
 								}}
 								className='mt-4 text-sm font-semibold text-primary hover:underline'
 							>
@@ -191,7 +272,7 @@ export default function BlogRoute() {
 				) : (
 					<ul className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
 						{filteredPosts.map((post: BlogPost, idx: number) => (
-							<Reveal as='li' key={post.slug} delay={Math.min(idx * 40, 400)}>
+							<Reveal as='li' key={post.slug} delay={Math.min(idx * 30, 300)}>
 								<Card className='card-hover h-full flex flex-col border border-gray-200/80 dark:border-gray-800/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg relative group'>
 									{post.coverImage && (
 										<div className='relative h-44 w-full overflow-hidden bg-slate-100 dark:bg-slate-950 border-b border-gray-100 dark:border-gray-800'>
@@ -203,45 +284,79 @@ export default function BlogRoute() {
 											/>
 										</div>
 									)}
-									<CardHeader className='pb-3 flex-1'>
-										<div className='flex items-center justify-between text-xs text-muted-foreground gap-2 mb-2.5'>
-											<span className='flex items-center gap-1 font-mono'>
+									<CardHeader className='pb-3 flex-1 space-y-2'>
+										{/* Meta Top Line */}
+										<div className='flex items-center justify-between text-xs text-muted-foreground gap-2 font-mono'>
+											<span className='flex items-center gap-1 shrink-0'>
 												<Calendar size={12} aria-hidden='true' />
 												<time dateTime={post.date}>{post.date}</time>
 											</span>
-											<div className='flex items-center gap-2'>
-												{post.canonicalUrl && (
-													<span className='inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-amber-500 bg-amber-500/10 border border-amber-500/25 px-1.5 py-0.5 rounded'>
-														Substack
+
+											<div className='flex items-center gap-2 shrink-0'>
+												{post.source === 'native' ? (
+													<span className='inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-1.5 py-0.5 rounded'>
+														<Sparkles size={10} aria-hidden='true' />
+														{dict.blog.sourceBlueprint}
+													</span>
+												) : (
+													<span className='inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/25 px-1.5 py-0.5 rounded'>
+														{dict.blog.sourceSubstack}
 													</span>
 												)}
-												<span className='flex items-center gap-1 font-medium text-primary'>
-													<Clock size={12} aria-hidden='true' />
-													{post.readTime}
-												</span>
 											</div>
 										</div>
+
+										{/* Post Title */}
 										<Link to={`/blog/${post.slug}`} className='block focus:outline-none'>
-											<CardTitle className='text-lg font-bold group-hover:text-primary transition-colors leading-snug'>
+											<CardTitle className='text-lg font-bold group-hover:text-primary transition-colors leading-snug text-balance'>
 												{post.title}
 											</CardTitle>
 										</Link>
-										<CardDescription className='text-sm line-clamp-3 mt-2 text-gray-600 dark:text-gray-300'>
+
+										{/* Subtitle */}
+										<CardDescription className='text-xs line-clamp-2 text-gray-600 dark:text-gray-300 text-pretty'>
 											{post.description}
 										</CardDescription>
+
+										{/* Key Section Outline Preview */}
+										{post.headings.length > 0 && (
+											<div className='pt-1.5 pb-0.5'>
+												<div className='p-2 rounded-lg bg-slate-50/80 dark:bg-slate-950/60 border border-gray-100 dark:border-gray-800/80 space-y-1'>
+													<div className='flex items-center gap-1 text-[10px] font-mono uppercase font-bold tracking-wider text-muted-foreground'>
+														<Compass size={10} aria-hidden='true' />
+														<span>{dict.blog.keySections}</span>
+													</div>
+													<div className='flex flex-wrap gap-1'>
+														{post.headings.slice(0, 3).map((h) => (
+															<span
+																key={h.id}
+																className='text-[10px] font-mono text-gray-600 dark:text-gray-300 bg-white dark:bg-slate-900 px-1.5 py-0.5 rounded border border-gray-200/60 dark:border-gray-800/80 truncate max-w-[210px]'
+																title={h.text}
+															>
+																§ {h.text}
+															</span>
+														))}
+													</div>
+												</div>
+											</div>
+										)}
 									</CardHeader>
+
 									<CardContent className='pt-0 mt-auto'>
-										<div className='flex flex-wrap gap-1.5 mb-4'>
+										{/* Tags */}
+										<div className='flex flex-wrap gap-1.5 mb-3.5'>
 											{post.tags.slice(0, 3).map((tag) => (
 												<Badge
 													key={tag}
 													variant='outline'
-													className='text-[11px] font-normal py-0 px-2 bg-slate-100/50 dark:bg-slate-800/50'
+													className='text-[10px] font-normal py-0 px-2 bg-slate-100/50 dark:bg-slate-800/50'
 												>
 													{tag}
 												</Badge>
 											))}
 										</div>
+
+										{/* Footer Actions */}
 										<div className='flex items-center justify-between text-xs font-semibold pt-2.5 border-t border-gray-100/80 dark:border-gray-800/80'>
 											<Link
 												to={`/blog/${post.slug}`}

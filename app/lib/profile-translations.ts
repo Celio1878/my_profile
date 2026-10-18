@@ -89,6 +89,9 @@ export type Dictionary = {
 		searchPlaceholder: string;
 		filterAll: string;
 		filterLangAll: string;
+		filterAllSources: string;
+		filterBlueprints: string;
+		filterSubstack: string;
 		readTime: string;
 		publishedOn: string;
 		by: string;
@@ -103,6 +106,15 @@ export type Dictionary = {
 		substackBanner: string;
 		substackText: string;
 		substackCta: string;
+		words: string;
+		tableOfContents: string;
+		keySections: string;
+		sourceBlueprint: string;
+		sourceSubstack: string;
+		readDispatch: string;
+		readingProgress: string;
+		allTopics: string;
+		totalArticlesCount: string;
 	};
 	about: {
 		heading: string;
@@ -276,9 +288,12 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 			title: 'Knowledge Hub & Discoveries',
 			subtitle:
 				'Practical engineering blueprints, architectural decisions, and product experiments from the field.',
-			searchPlaceholder: 'Search articles by topic, keywords, or technology...',
+			searchPlaceholder: 'Search 76 articles by topic, architecture, or keywords...',
 			filterAll: 'All Topics',
 			filterLangAll: 'All Languages',
+			filterAllSources: 'All Articles',
+			filterBlueprints: 'Engineering Blueprints',
+			filterSubstack: 'Substack Dispatches',
 			readTime: 'min read',
 			publishedOn: 'Published on',
 			by: 'By',
@@ -294,6 +309,15 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 			substackText:
 				'Join my Substack publication for in-depth technical breakdowns, applied AI architectures, and venture building insights.',
 			substackCta: 'Read & Subscribe on Substack',
+			words: 'words',
+			tableOfContents: 'Table of Contents',
+			keySections: 'Key Sections',
+			sourceBlueprint: 'Blueprint',
+			sourceSubstack: 'Substack',
+			readDispatch: 'Read Article',
+			readingProgress: 'Reading Progress',
+			allTopics: 'All Topics',
+			totalArticlesCount: 'Total Articles',
 		},
 		about: {
 			heading: 'About Célio Vieira',
@@ -494,9 +518,12 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 		blog: {
 			title: 'Hub de Conhecimento & Descobertas',
 			subtitle: 'Arquitetura de sistemas, engenharia de dados, IA aplicada e lições práticas.',
-			searchPlaceholder: 'Pesquisar artigos por tópico, tecnologia ou palavras-chave...',
+			searchPlaceholder: 'Pesquisar 76 artigos por tópico, tecnologia ou palavras-chave...',
 			filterAll: 'Todos os Tópicos',
 			filterLangAll: 'Todos os Idiomas',
+			filterAllSources: 'Todos os Artigos',
+			filterBlueprints: 'Blueprints de Engenharia',
+			filterSubstack: 'Dispatches do Substack',
 			readTime: 'min de leitura',
 			publishedOn: 'Publicado em',
 			by: 'Por',
@@ -512,6 +539,15 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
 			substackText:
 				'Acompanhe meu Substack para análises técnicas aprofundadas, arquiteturas de IA aplicada e lições de construção de ventures.',
 			substackCta: 'Ler e Assinar no Substack',
+			words: 'palavras',
+			tableOfContents: 'Índice do Artigo',
+			keySections: 'Principais Seções',
+			sourceBlueprint: 'Blueprint',
+			sourceSubstack: 'Substack',
+			readDispatch: 'Ler Artigo',
+			readingProgress: 'Progresso de Leitura',
+			allTopics: 'Todos os Tópicos',
+			totalArticlesCount: 'Total de Artigos',
 		},
 		about: {
 			heading: 'Sobre Célio Vieira',

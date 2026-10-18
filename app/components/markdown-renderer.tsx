@@ -21,10 +21,10 @@ export const MarkdownRenderer: FC<MarkdownRendererProps> = ({
       const isExternal = href.startsWith("http://") || href.startsWith("https://");
       const titleAttr = title ? ` title="${title}"` : "";
       const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";
-      return `<a href="${href}"${titleAttr}${targetAttr} class="text-blue-600 dark:text-blue-400 hover:underline font-medium">${text}</a>`;
+      return `<a href="${href}"${titleAttr}${targetAttr} class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">${text}</a>`;
     };
 
-    // Customize headings
+    // Customize headings with text-balance
     renderer.heading = ({ text, depth }) => {
       const id = text
         .toLowerCase()
@@ -33,22 +33,27 @@ export const MarkdownRenderer: FC<MarkdownRendererProps> = ({
         .replace(/\s+/g, "-");
 
       const classes: Record<number, string> = {
-        1: "text-3xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2",
-        2: "text-2xl font-bold mt-8 mb-3 tracking-tight text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-1.5",
-        3: "text-xl font-semibold mt-6 mb-2.5 text-gray-900 dark:text-gray-100",
-        4: "text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200",
+        1: "text-3xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 text-balance",
+        2: "text-2xl font-bold mt-8 mb-3 tracking-tight text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-1.5 text-balance",
+        3: "text-xl font-semibold mt-6 mb-2.5 text-gray-900 dark:text-gray-100 text-balance",
+        4: "text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200 text-balance",
       };
 
-      const headingClass = classes[depth] || "text-base font-semibold mt-4 mb-2";
+      const headingClass = classes[depth] || "text-base font-semibold mt-4 mb-2 text-balance";
       return `<h${depth} id="${id}" class="${headingClass} group flex items-center gap-2">
         <span>${text}</span>
         <a href="#${id}" class="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm" aria-label="Link to section">#</a>
       </h${depth}>`;
     };
 
-    // Customize blockquotes
+    // Customize paragraphs with text-pretty
+    renderer.paragraph = ({ text }) => {
+      return `<p class="leading-relaxed my-4 text-pretty">${text}</p>`;
+    };
+
+    // Customize blockquotes with text-pretty
     renderer.blockquote = ({ text }) => {
-      return `<blockquote class="border-l-4 border-primary/70 bg-primary/5 dark:bg-primary/10 pl-4 py-2 my-4 rounded-r-md text-gray-700 dark:text-gray-300 italic">${text}</blockquote>`;
+      return `<blockquote class="border-l-4 border-primary/70 bg-primary/5 dark:bg-primary/10 pl-4 py-2 my-4 rounded-r-md text-gray-700 dark:text-gray-300 italic text-pretty">${text}</blockquote>`;
     };
 
     // Customize code blocks
@@ -68,7 +73,13 @@ export const MarkdownRenderer: FC<MarkdownRendererProps> = ({
       </div>`;
     };
 
-    const parsed = marked.parse(content, {
+    // Defensive decode: unescape any stray escaped tags outside code blocks
+    const normalizedContent = content.replace(
+      /&lt;(\/?(?:p|h[1-6]|strong|em|b|i|ul|ol|li|code|blockquote|br))\b(.*?)&gt;/gi,
+      "<$1$2>"
+    );
+
+    const parsed = marked.parse(normalizedContent, {
       renderer,
       gfm: true,
       breaks: true,
@@ -111,7 +122,7 @@ export const MarkdownRenderer: FC<MarkdownRendererProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`markdown-body text-gray-800 dark:text-gray-200 leading-relaxed text-base space-y-4 ${className}`}
+      className={`markdown-body text-gray-800 dark:text-gray-200 leading-relaxed text-base space-y-4 max-w-[75ch] mx-auto ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

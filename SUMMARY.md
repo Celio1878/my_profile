@@ -153,4 +153,46 @@
 - [x] `bun run typecheck`: 0 errors.
 - [x] `bun run build`: Clean production client and SSR bundles generated.
 
+---
+
+### Session 16 — Substack HTML Sanitization, Upstream PostHub ProseMirror Engine & Rich Knowledge Hub Experience
+
+#### 1. Upstream PostHub Publisher Architecture (`aldeon/posts/services`)
+- [x] Root-caused exposed HTML tags on `https://celio1878.substack.com`: Substack drafts API requires ProseMirror document JSON rather than raw HTML strings.
+- [x] Implemented `unescape_and_clean_html`, `ProseMirrorBuilder` (`HTMLParser`), and `html_to_prosemirror` in `posts/services/src/common/substack_api.py`.
+- [x] Updated `publish_substack/handler.py` to convert `body_html` into ProseMirror JSON format, setting `"audience": "everyone"` and `"write_comment_permissions": "everyone"` for public readership.
+- [x] Successfully verified ProseMirror node hierarchy (`paragraph`, `heading`, `bullet_list`, `bold`, `italic`, `code`, `link`) using isolated Python tests.
+
+#### 2. Substack Ingestion & Sanitization Engine
+- [x] Upgraded `scripts/sync-substack.ts` with multi-pass HTML entity decoding (`decodeHtmlEntities`) and Markdown conversion (`htmlToCleanMarkdown`).
+- [x] Sanitized and refreshed all 68 Substack articles into clean, readable Markdown without broken tags.
+- [x] Automated audit verified that **0 out of 76 articles** contain raw or unparsed HTML tags.
+
+#### 3. Data Layer & Modern Web Typography
+- [x] Extended `BlogPost` interface in `app/lib/blog.ts` with `wordCount`, `readTime`, `excerpt`, `headings: BlogPostHeading[]`, and `source: "native" | "substack"`.
+- [x] Applied modern typography best practices in `app/components/markdown-renderer.tsx`:
+  - `text-balance` on headings `<h1>`–`<h6>` for symmetrical wrapping.
+  - `text-pretty` on paragraph body copy and blockquotes to eliminate orphan words.
+  - `max-w-[75ch]` on prose containers for optimal reading comfort.
+- [x] Added bilingual translation keys (`en` and `pt-BR`) in `app/lib/profile-translations.ts` for source filters, section outlines, reading progress, and table of contents.
+
+#### 4. Knowledge Hub & Reader UX Overhaul
+- [x] Redesigned `app/routes/blog.tsx`:
+  - Segmented source filter tabs: `All Articles (76)`, `Engineering Blueprints (8)`, `Substack Dispatches (68)`.
+  - Topic tag pills with dynamic post counts.
+  - Card metadata header bar: Publication date, source badge (`Substack` vs `Blueprint`), word count, and estimated read time.
+  - Section outline chips (`§ Heading`) offering a quick scannable architecture of each post.
+- [x] Redesigned `app/routes/blog-post.tsx`:
+  - Dynamic sticky reading progress indicator bar at the top of the viewport.
+  - Interactive Table of Contents (TOC) with scroll position tracking.
+  - Enhanced article header with word count, read time, author avatar, and canonical Substack link.
+  - Tag-ranked related articles section.
+- [x] Updated `app/components/sections/latest-insights.tsx` to display distinct source badges (`Substack` vs `Blueprint`) and typography improvements.
+
+#### 5. Verification & Quality Gates
+- [x] `bun run lint`: 0 errors, 0 warnings (`--max-warnings=0`).
+- [x] `bun run typecheck`: 0 errors.
+- [x] `bun run build`: Clean production client and SSR bundles generated.
+
+
 
