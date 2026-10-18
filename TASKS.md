@@ -116,6 +116,19 @@
 - [x] Synchronized bilingual keys (`en` and `pt-BR`) in `app/lib/profile-translations.ts`.
 - [x] Passed all quality gates: `bun run lint` (0 errors, 0 warnings), `bun run typecheck` (0 errors), `bun run build` (0 errors).
 
+### Phase 12: Live Substack Corpus Sanitization & Full-Content Knowledge Hub Sync
+- [x] Audited all 87 published posts on `https://celio1878.substack.com` using `SUBSTACK_SESSION_COOKIE` from AWS Secrets Manager (`linkedin-posts-prod-secrets`, `--profile adm`).
+- [x] Deleted all 19 `"Automated Newsletter Update"` fallback posts on Substack (`DELETE /api/v1/drafts/{id}`).
+- [x] Sanitized all 68 substantive articles into clean ProseMirror JSON (`draft_body`):
+  - [x] Unescaped multi-layer HTML entities (`&lt;`, `&gt;`, `&amp;`, `&quot;`, `&#39;`).
+  - [x] Trimmed incomplete trailing sentences and dangling heading fragments across 16 cut-off posts.
+  - [x] Cleaned `# Deep Dive: ...` Markdown prefix on post `200012832`.
+  - [x] Set `audience: "everyone"` and `write_comment_permissions: "everyone"` across all 68 posts.
+- [x] Completed Substack OTP step-up verification with persistent `MozillaCookieJar`, updated `SUBSTACK_SESSION_COOKIE` in AWS Secrets Manager (`--profile adm`), and silently republished all 68 posts (`POST /api/v1/drafts/{id}/publish` with `{"send": false}`).
+- [x] Hardened `ProseMirrorBuilder` in `aldeon/posts/services/src/common/substack_api.py` (flushing unclosed blocks, handling nested `<li><p>` tags, and clearing inline marks at block boundaries).
+- [x] Upgraded `scripts/sync-substack.ts` and re-synced all 68 full-length Substack articles and their real `<h2>`/`<h3>` headings into `app/content/blog/*.md`.
+- [x] Verified 0 exposed HTML tags on both the live Substack public API (`celio1878.substack.com/api/v1/posts`) and local `app/content/blog/*.md`, and passed `bun run lint`, `bun run typecheck`, and `bun run build`.
+
 ---
 
 ## Future Roadmap & Backlog

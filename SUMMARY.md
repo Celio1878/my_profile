@@ -194,5 +194,21 @@
 - [x] `bun run typecheck`: 0 errors.
 - [x] `bun run build`: Clean production client and SSR bundles generated.
 
+---
+
+### Session 17 (Current) — Live Substack Corpus Sanitization & Full-Content Knowledge Hub Sync
+
+#### 1. Live Substack Publication Cleanup & Sanitization (`celio1878.substack.com`)
+- [x] Audited all 87 published posts on `https://celio1878.substack.com` using `SUBSTACK_SESSION_COOKIE` from AWS Secrets Manager (`linkedin-posts-prod-secrets`, `--profile adm`).
+- [x] Deleted all **19** `"Automated Newsletter Update"` fallback posts (`DELETE /api/v1/drafts/{id}`).
+- [x] Sanitized all **68** substantive technical articles into valid ProseMirror JSON AST (`draft_body`), trimming incomplete trailing sentences/headings on 16 cut-off posts, cleaning the `# Deep Dive: ...` prefix on post `200012832`, and configuring `audience: "everyone"` and `write_comment_permissions: "everyone"`.
+- [x] Completed Substack OTP login verification using a persistent `MozillaCookieJar`, rotated and updated the fresh `SUBSTACK_SESSION_COOKIE` in AWS Secrets Manager (`--profile adm`), and silently republished all **68 / 68** posts live (`POST /api/v1/drafts/{id}/publish` with `{"send": false}`).
+- [x] Verified on the live public Substack API (`https://celio1878.substack.com/api/v1/posts`) that **0 out of 68** posts have exposed HTML tags or paywall locks.
+
+#### 2. Upstream PostHub Hardening & Full Knowledge Hub Ingestion
+- [x] Hardened `ProseMirrorBuilder` in `aldeon/posts/services/src/common/substack_api.py` to flush unclosed blocks, preserve nested `<p>` inside `<li>`, handle `<br>`, and clear inline marks at block boundaries.
+- [x] Upgraded `scripts/sync-substack.ts` to ingest the full multi-section `body_html` (~1,000–1,500 words per article) and extract real `<h2>`/`<h3>` section headings into `app/content/blog/*.md`.
+- [x] Verified `bun run lint`, `bun run typecheck`, and `bun run build` all pass with exit code `0`.
+
 
 
