@@ -69,7 +69,7 @@ export default function AboutRoute() {
 						</div>
 					</Reveal>
 
-					<div className='grid gap-4 sm:grid-cols-3'>
+					<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 						{dict.about.buildingList.map((item, idx) => (
 							<Reveal key={idx} delay={idx * 80 + 100}>
 								<Card className='h-full border border-gray-200/80 dark:border-gray-800/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md hover:border-primary/40 transition-colors shadow-sm'>

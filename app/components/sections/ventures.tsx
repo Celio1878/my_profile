@@ -2,6 +2,7 @@ import {
 	ArrowRight,
 	BookOpen,
 	Cloud,
+	Compass,
 	ExternalLink,
 	Layers,
 	PackageCheck,
@@ -90,12 +91,12 @@ export function Ventures() {
 
 					<div className='flex flex-wrap gap-2 mt-5 font-mono text-xs'>
 						{[
-							'5 Active Products',
+							'7 Active Products',
 							'Vercel Edge SSR (gru1)',
 							'Zero-Backend Isolation',
-							'AWS • GCP • Supabase',
-							'Terraform IaC',
-							'RevenueCat & Stripe',
+							'AWS • GCP • Supabase • BigQuery',
+							'dbt-core & Terraform IaC',
+							'OnMemory (<20KB Governance)',
 						].map((chip) => (
 							<span
 								key={chip}
@@ -117,8 +118,93 @@ export function Ventures() {
 			</div>
 
 			<div className='grid md:grid-cols-2 gap-6 mb-12'>
-				{/* Child Venture 1: Be Your Stories (BYS) */}
-				<Reveal delay={120}>
+				{/* Child Venture 1: SwanGo (Featured Full-Width Card) */}
+				<Reveal delay={120} className='md:col-span-2'>
+					<Card className='card-hover h-full flex flex-col border border-emerald-500/30 bg-gradient-to-br from-white/80 via-slate-50/70 to-emerald-500/5 dark:from-[#0d1520]/80 dark:via-[#0a0f18]/70 dark:to-emerald-950/10 backdrop-blur-md relative overflow-hidden shadow-sm'>
+						<CardHeader className='pb-3 flex-1'>
+							<div className='flex items-center justify-between gap-2 mb-2'>
+								<Badge
+									variant='outline'
+									className='bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 text-xs font-mono font-semibold'
+								>
+									FinTech &amp; Medallion Data Warehouse
+								</Badge>
+								<span className='text-[11px] font-mono text-emerald-500 font-bold'>
+									Web Console • BigQuery + dbt • GCP Cloud Run
+								</span>
+							</div>
+							<CardTitle className='text-xl sm:text-2xl font-bold flex items-center gap-2'>
+								<Compass size={20} className='text-emerald-500' />
+								<span>{dict.ecosystem.swangoTitle}</span>
+							</CardTitle>
+							<p className='text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5'>
+								{dict.ecosystem.swangoTagline}
+							</p>
+							<CardDescription className='text-xs sm:text-sm mt-2 text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl'>
+								{dict.ecosystem.swangoDescription}
+							</CardDescription>
+						</CardHeader>
+						<CardContent className='pt-0'>
+							<div className='flex flex-wrap gap-1.5 mb-5 font-mono'>
+								{[
+									'dbt-core + BigQuery (20 Tables)',
+									'1,076+ B3/CVM/BCB Assets',
+									'5 Quant Trade Engines',
+									'SHA-256 Shared Workspaces',
+									'6-Stage Simulator',
+									'4-Track Financial Academy',
+								].map((tag) => (
+									<Badge
+										key={tag}
+										variant='outline'
+										className='text-[11px] bg-emerald-500/5 border-emerald-500/20 text-emerald-700 dark:text-emerald-300'
+									>
+										{tag}
+									</Badge>
+								))}
+							</div>
+							<div className='flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-[#212836]'>
+								<a
+									href='https://aldeon.app/swango'
+									target='_blank'
+									rel='noreferrer'
+									className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white hover:bg-emerald-500 transition-colors shadow-sm'
+								>
+									<span>{dict.ecosystem.webApp}</span>
+									<SquareArrowOutUpRight size={11} />
+								</a>
+								<a
+									href='https://aldeon.app/swango/simulator'
+									target='_blank'
+									rel='noreferrer'
+									className='inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono border border-slate-200 dark:border-[#212836] text-slate-700 dark:text-slate-300 hover:border-emerald-500 transition-colors'
+								>
+									<span>{dict.ecosystem.simulatorApp}</span>
+									<SquareArrowOutUpRight size={11} />
+								</a>
+								<a
+									href='https://aldeon.app/swango/learn'
+									target='_blank'
+									rel='noreferrer'
+									className='inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono border border-slate-200 dark:border-[#212836] text-slate-700 dark:text-slate-300 hover:border-emerald-500 transition-colors'
+								>
+									<span>{dict.ecosystem.academyApp}</span>
+									<SquareArrowOutUpRight size={11} />
+								</a>
+								<Link
+									to='/blog/architecting-swango-dbt-bigquery-medallion-b3-finance'
+									className='text-xs font-mono text-emerald-500 hover:underline inline-flex items-center gap-1 ml-auto font-semibold'
+								>
+									<span>{dict.ecosystem.deepDive}</span>
+									<ArrowRight size={12} />
+								</Link>
+							</div>
+						</CardContent>
+					</Card>
+				</Reveal>
+
+				{/* Child Venture 2: Be Your Stories (BYS) */}
+				<Reveal delay={160}>
 					<Card className='card-hover h-full flex flex-col border border-slate-200/90 dark:border-[#212836] bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
 						<CardHeader className='pb-3 flex-1'>
 							<div className='flex items-center justify-between gap-2 mb-2'>
@@ -196,8 +282,8 @@ export function Ventures() {
 					</Card>
 				</Reveal>
 
-				{/* Child Venture 2: Pack */}
-				<Reveal delay={160}>
+				{/* Child Venture 3: Pack */}
+				<Reveal delay={200}>
 					<Card className='card-hover h-full flex flex-col border border-slate-200/90 dark:border-[#212836] bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
 						<CardHeader className='pb-3 flex-1'>
 							<div className='flex items-center justify-between gap-2 mb-2'>
@@ -205,7 +291,7 @@ export function Ventures() {
 									variant='outline'
 									className='bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 text-xs font-mono'
 								>
-									Logistics & PropTech
+									Logistics &amp; PropTech
 								</Badge>
 								<span className='text-[11px] font-mono text-emerald-500 font-bold'>
 									Android Beta • Web • Cloud
@@ -271,8 +357,8 @@ export function Ventures() {
 					</Card>
 				</Reveal>
 
-				{/* Child Venture 3: TATU Design */}
-				<Reveal delay={200}>
+				{/* Child Venture 4: TATU Design */}
+				<Reveal delay={240}>
 					<Card className='card-hover h-full flex flex-col border border-slate-200/90 dark:border-[#212836] bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
 						<CardHeader className='pb-3 flex-1'>
 							<div className='flex items-center justify-between gap-2 mb-2'>
@@ -280,7 +366,7 @@ export function Ventures() {
 									variant='outline'
 									className='bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20 text-xs font-mono'
 								>
-									Creative AI & AR Studio
+									Creative AI &amp; AR Studio
 								</Badge>
 								<span className='text-[11px] font-mono text-emerald-500 font-bold'>
 									iOS • Android Beta • Web
@@ -350,8 +436,8 @@ export function Ventures() {
 					</Card>
 				</Reveal>
 
-				{/* Child Venture 4: PostHub */}
-				<Reveal delay={240}>
+				{/* Child Venture 5: PostHub */}
+				<Reveal delay={280}>
 					<Card className='card-hover h-full flex flex-col border border-slate-200/90 dark:border-[#212836] bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
 						<CardHeader className='pb-3 flex-1'>
 							<div className='flex items-center justify-between gap-2 mb-2'>
@@ -359,7 +445,7 @@ export function Ventures() {
 									variant='outline'
 									className='bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 text-xs font-mono'
 								>
-									Marketing Automation & AI
+									Marketing Automation &amp; AI
 								</Badge>
 								<span className='text-[11px] font-mono text-emerald-500 font-bold'>
 									Android Beta • Web • Cloud
@@ -424,29 +510,29 @@ export function Ventures() {
 					</Card>
 				</Reveal>
 
-				{/* Child Venture 5: HandSpeak (Featured Full-Width Card) */}
-				<Reveal delay={260} className='md:col-span-2'>
-					<Card className='card-hover h-full flex flex-col border border-cyan-500/30 bg-gradient-to-br from-white/80 via-slate-50/70 to-cyan-500/5 dark:from-[#0d1520]/80 dark:via-[#0a0f18]/70 dark:to-cyan-950/10 backdrop-blur-md relative overflow-hidden shadow-sm'>
+				{/* Child Venture 6: HandSpeak */}
+				<Reveal delay={300}>
+					<Card className='card-hover h-full flex flex-col border border-cyan-500/25 bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
 						<CardHeader className='pb-3 flex-1'>
 							<div className='flex items-center justify-between gap-2 mb-2'>
 								<Badge
 									variant='outline'
-									className='bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30 text-xs font-mono font-semibold'
+									className='bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20 text-xs font-mono'
 								>
-									Accessibility & 3D Vision AI
+									Accessibility &amp; 3D Vision AI
 								</Badge>
-								<span className='text-[11px] font-mono text-cyan-400 font-bold'>
+								<span className='text-[11px] font-mono text-cyan-500 font-bold'>
 									Web 3D Studio • GCP Cloud Run
 								</span>
 							</div>
-							<CardTitle className='text-xl sm:text-2xl font-bold flex items-center gap-2'>
-								<Sparkles size={20} className='text-cyan-400' />
+							<CardTitle className='text-xl font-bold flex items-center gap-2'>
+								<Sparkles size={18} className='text-cyan-400' />
 								<span>{dict.ecosystem.handspeakTitle}</span>
 							</CardTitle>
-							<p className='text-xs sm:text-sm font-semibold text-cyan-600 dark:text-cyan-400 mt-0.5'>
+							<p className='text-xs font-semibold text-cyan-600 dark:text-cyan-400 mt-0.5'>
 								{dict.ecosystem.handspeakTagline}
 							</p>
-							<CardDescription className='text-xs sm:text-sm mt-2 text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl'>
+							<CardDescription className='text-xs sm:text-sm mt-2 text-slate-600 dark:text-slate-300 leading-relaxed'>
 								{dict.ecosystem.handspeakDescription}
 							</CardDescription>
 						</CardHeader>
@@ -454,16 +540,16 @@ export function Ventures() {
 							<div className='flex flex-wrap gap-1.5 mb-5 font-mono'>
 								{[
 									'60 FPS 3D Hand Tracking',
-									'Three.js WebGL Rig',
+									'57+ WebGL Poses',
+									'5-Track Libras Academy',
+									'Camera Practice Mode',
 									'PeerJS WebRTC P2P',
-									'Phonetic Levenshtein AI',
-									'Multimodal Safety Guard',
 									'GCP Cloud Run',
 								].map((tag) => (
 									<Badge
 										key={tag}
 										variant='outline'
-										className='text-[11px] bg-cyan-500/5 border-cyan-500/20 text-cyan-700 dark:text-cyan-300'
+										className='text-[11px] bg-slate-100/50 dark:bg-[#161e2b]/50'
 									>
 										{tag}
 									</Badge>
@@ -474,17 +560,91 @@ export function Ventures() {
 									href='https://aldeon.app/handspeak'
 									target='_blank'
 									rel='noreferrer'
-									className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white hover:bg-cyan-500 transition-colors shadow-sm'
+									className='inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white hover:bg-cyan-500 transition-colors'
 								>
 									<span>{dict.ecosystem.webApp}</span>
 									<SquareArrowOutUpRight size={11} />
 								</a>
+								<a
+									href='https://aldeon.app/handspeak/learn'
+									target='_blank'
+									rel='noreferrer'
+									className='inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono border border-slate-200 dark:border-[#212836] text-slate-700 dark:text-slate-300 hover:border-cyan-500 transition-colors'
+								>
+									<span>{dict.ecosystem.academyApp}</span>
+									<SquareArrowOutUpRight size={11} />
+								</a>
 								<Link
 									to='/blog/engineering-handspeak-3d-libras-ai'
-									className='text-xs font-mono text-cyan-500 hover:underline inline-flex items-center gap-1 ml-auto font-semibold'
+									className='text-xs font-mono text-cyan-500 hover:underline inline-flex items-center gap-1 ml-auto'
 								>
 									<span>{dict.ecosystem.deepDive}</span>
-									<ArrowRight size={12} />
+								</Link>
+							</div>
+						</CardContent>
+					</Card>
+				</Reveal>
+
+				{/* Child Venture 7: OnMemory */}
+				<Reveal delay={320}>
+					<Card className='card-hover h-full flex flex-col border border-indigo-500/25 bg-white/70 dark:bg-[#0f141c]/70 backdrop-blur-md'>
+						<CardHeader className='pb-3 flex-1'>
+							<div className='flex items-center justify-between gap-2 mb-2'>
+								<Badge
+									variant='outline'
+									className='bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 text-xs font-mono'
+								>
+									AI Engineering &amp; Dev Governance
+								</Badge>
+								<span className='text-[11px] font-mono text-emerald-500 font-bold'>
+									Web Linter • Portable CLI • CI Gate
+								</span>
+							</div>
+							<CardTitle className='text-xl font-bold flex items-center gap-2'>
+								<Terminal size={18} className='text-indigo-400' />
+								<span>{dict.ecosystem.onmemoryTitle}</span>
+							</CardTitle>
+							<p className='text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5'>
+								{dict.ecosystem.onmemoryTagline}
+							</p>
+							<CardDescription className='text-xs sm:text-sm mt-2 text-slate-600 dark:text-slate-300 leading-relaxed'>
+								{dict.ecosystem.onmemoryDescription}
+							</CardDescription>
+						</CardHeader>
+						<CardContent className='pt-0'>
+							<div className='flex flex-wrap gap-1.5 mb-5 font-mono'>
+								{[
+									'<20KB Memory Ceiling',
+									'-83.6% Token Savings',
+									'5-Field Anti-Patterns',
+									'Interactive Stack Composer',
+									'Zero-Leak Security CI',
+									'Portable CLI',
+								].map((tag) => (
+									<Badge
+										key={tag}
+										variant='outline'
+										className='text-[11px] bg-slate-100/50 dark:bg-[#161e2b]/50'
+									>
+										{tag}
+									</Badge>
+								))}
+							</div>
+							<div className='flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-[#212836]'>
+								<a
+									href='https://aldeon.app/on-memory'
+									target='_blank'
+									rel='noreferrer'
+									className='inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition-colors'
+								>
+									<span>{dict.ecosystem.stackComposerApp}</span>
+									<SquareArrowOutUpRight size={11} />
+								</a>
+								<Link
+									to='/blog/on-memory-deterministic-ai-engineering-governance'
+									className='text-xs font-mono text-indigo-400 hover:underline inline-flex items-center gap-1 ml-auto'
+								>
+									<span>{dict.ecosystem.deepDive}</span>
 								</Link>
 							</div>
 						</CardContent>

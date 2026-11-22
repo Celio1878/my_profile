@@ -262,6 +262,8 @@ async function sync() {
     "architecting-pack-multimodal-ocr-logistics",
     "building-tatu-design-ai-stencil-ar-studio",
     "autonomous-publishing-posthub-step-functions",
+    "architecting-swango-dbt-bigquery-medallion-b3-finance",
+    "on-memory-deterministic-ai-engineering-governance",
   ]);
 
   let createdCount = 0;
