@@ -83,35 +83,49 @@ Rather than relying purely on heuristic thresholds, HandSpeak combines geometric
 
 ---
 
-## 3. The 3D Anatomical WebGL Sign Tutor
+## 3. The 57+ Pose 3D Anatomical WebGL Sign Tutor & Practice Mode
 
 Communication is bidirectional. When a hearing participant replies by typing in the chat, Deaf signers benefit from seeing how that text is formed in Libras hand shapes.
 
-We built a **Three.js WebGL Anatomical Rig** (`anatomical-hand-scene.ts`) featuring:
+We built a **Three.js WebGL Anatomical Rig** (`anatomical-hand-scene.ts`) expanded to **57+ articulated poses** with 100% parity across the A–Z alphabet (`26`), numbers `0–10` (`11`), and core conversational expressions (`20+`):
 - **21 Articular Joints & 20 Cybernetic Bones**: Fully articulated 3D mesh with smooth geometric pose interpolation (`interpolateHandPoses`).
 - **360° Orbit & Camera Presets**: Palmar, dorsal, lateral, and top-down perspectives allowing learners and signers to inspect articulation depth.
-- **Phrase Sequencer**: Converts chat messages into real-time sign animations at configurable speeds ($0.5\times$, $1\times$, $1.5\times$).
+- **Synced Movement Flow Cadence Presets**: Shared timing presets (`accessible` `550ms`, `natural` `320ms`, `fluent` `220ms`) synchronized between the translator engine, 3D tutor, and Academy deep-links (`?practice=` and `?sign=`).
+- **Interactive Camera Practice Mode**: Real-time accuracy scoring against live webcam landmarks so learners can verify handshape (`CM`) and orientation (`O`) immediately.
 - **Strict WebGL Memory Lifecycle**: Enforces comprehensive geometry and material disposal with `requestAnimationFrame` cancellation upon unmount to eliminate memory leaks.
 
 ---
 
-## 4. P2P WebRTC Video & Dual-Layer Trust & Safety
+## 4. P2P WebRTC Video, Zero-Cost Solo Privacy & Trust & Safety
 
 For real-time remote communication between signers and hearing individuals, HandSpeak implements serverless P2P WebRTC calls via **PeerJS**:
 
 - **Room Code Handshake**: Lightweight 6-character room codes (e.g. `HS-7482`) allow instant connections with zero signup friction.
 - **Floating Subtitles & Mutual Comprehension Reactions**: Displays dynamic live captions directly over the remote video feed, accompanied by quick tactile reactions (👍 *Understood*, 🔄 *Please repeat*, ⏳ *One moment*, 👏 *Agree*).
-- **Dual-Layer Multimodal Moderation**:
+- **Zero-Cost Solo Webcam Isolation**: Solo local translation and Camera Practice Mode run **100% on-device** via local WebAssembly + WebGL with **$0 server or multimodal API cost**. Server-side `VideoSafetyGuard` moderation activates **strictly inside active 2-peer remote WebRTC calls** (`P2PVideoCallModal`).
+- **Dual-Layer Multimodal Moderation (Remote Calls)**:
   - *Tier 1 (Client Canvas 128x128)*: Heuristic skin-tone and velocity monitoring in the browser.
-  - *Tier 2 (GCP Cloud Run Microservice)*: Periodic frame moderation via FastAPI and Gemini multimodal evaluation (3s cruise / 1s burst under visual anomaly), with immediate blur and disconnect if critical policy violations occur.
+  - *Tier 2 (GCP Cloud Run Microservice)*: Periodic frame moderation via FastAPI (3s cruise / 1s burst under visual anomaly), with immediate blur and disconnect if critical policy violations occur.
+
+---
+
+## 5. Bilingual 5-Track Libras & Accessibility Academy (`/handspeak/learn`)
+
+To broaden adoption before users ever sign in, HandSpeak includes a **100% free, zero-login, zero-backend bilingual (`PT-BR`/`EN`) Academy** at [`aldeon.app/handspeak/learn`](https://aldeon.app/handspeak/learn):
+
+1. **Track 1 — Accessibility, LBI & 10-Point Etiquette Audit**: Practical communication audit grounded in Brazil's inclusion standards.
+2. **Track 2 — The 5 Phonological Parameters (`CM/PA/M/O/ENM`)**: Visual topic-comment grammar and structural sign anatomy.
+3. **Track 3 — Neutral Signing Space & 11-Pair Collision Lab**: Interactive geometric breakdowns for high-collision pairs (`F/T`, `A/S`, `U/V`, `G/L`, `G/Q`, `K/P/H`, `I/J`, `1/D`, `2/V`, `5/B`, `0/O`).
+4. **Track 4 — Real-World Two-Way Scenarios**: Five practical dialogue flows paired with visual repair strategies.
+5. **Track 5 — Lip-Reading (~30%) vs. Captions + Sign Clarity Simulator**: Demonstrates why lip-reading alone fails most words and links learners directly into `?practice=` sessions with synchronized cadence presets.
 
 ---
 
 ## Production Outcomes
 
 - **60 FPS** continuous tracking with $<16\text{ms}$ frame processing latency on standard laptop webcams.
-- **100% A–Z** datilology coverage, numbers $0$–$10$, and high-frequency conversational expressions.
-- **Zero Server Media Costs**: Video and data streams flow directly between client peers via WebRTC.
-- **Sovereign Privacy**: Hand landmarks are computed locally in client WebAssembly memory; camera frames never leave the device unless explicitly flagged by safety protocols.
+- **57+ 3D Poses** achieving 100% parity across `A–Z`, `0–10`, and core conversational expressions.
+- **Zero Server Media & Solo Practice Costs**: Video and data streams flow directly between peers via WebRTC, while solo practice runs 100% locally in WASM + WebGL.
+- **Sovereign Privacy**: Hand landmarks are computed locally in client WebAssembly memory; camera frames never leave the device in solo practice.
 
-*HandSpeak is live on the Aldeon platform at [aldeon.app/handspeak](https://aldeon.app/handspeak).*
+*HandSpeak and its 5-track Libras Academy are live at [aldeon.app/handspeak](https://aldeon.app/handspeak) and [aldeon.app/handspeak/learn](https://aldeon.app/handspeak/learn).*

@@ -101,20 +101,20 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 
 ---
 
-## 8. Aldeon Venture Ecosystem & HandSpeak Integration
+## 8. Aldeon Venture Ecosystem, SwanGo, OnMemory & HandSpeak Integration
 
-### 5-Product Showcase Pattern
-- **Grid Architecture:** Child ventures showcase features all 5 products under `aldeon.app`: Be Your Stories, Pack, TATU Design, PostHub, and HandSpeak.
-- **HandSpeak Highlight:** Rendered with full-width prominence (`md:col-span-2`) emphasizing 60 FPS 3D MediaPipe tracking, Three.js WebGL anatomical hand tutor, and PeerJS WebRTC encrypted video calls.
+### 7-Product Showcase Pattern
+- **Grid Architecture:** Child ventures showcase features all **7 active products** under `aldeon.app`: **SwanGo** (`md:col-span-2` full-width highlight showcasing `$0/mo` `dbt-core` + BigQuery Medallion warehouse, 5 quantitative engines, 6-Stage Simulator, and 4-track Financial Academy), followed by 3 balanced two-column rows: `(Be Your Stories + Pack)`, `(TATU Design + PostHub)`, and `(HandSpeak + OnMemory)`.
+- **Developer Tooling Grid:** Open-source npm packages (`NodeJS App Builder` and `AWS CDK Factory`) remain in the 2-column grid below the 7 active ventures.
 
 ### Link Hierarchy & Store Verification
-- **Web Portals:** Standardized on `https://aldeon.app/<product>`.
-- **App Store Production Links:** Live production apps on Apple App Store (Be Your Stories `id6812739940`, TATU Design `id6742352840`).
+- **Web Portals:** Standardized on `https://aldeon.app/<product>` plus direct secondary deep-links for **SwanGo** (`/swango/simulator`, `/swango/learn`) and **HandSpeak** (`/handspeak/learn`).
+- **App Store Production Links:** Live production apps on Apple App Store (Be Your Stories `id6812739940`, TATU Design `id6812737660`).
 - **Google Play Closed Beta Links:** Linked to `https://play.google.com/apps/testing/com.aldeon.*` accompanied by an emerald "(Beta)" badge.
 - **Technical Deep-Dive Routing:** Each venture card links directly to its native architectural analysis post in `/blog/:slug`.
 
-### Protected Native Deep-Dive Articles
-- `scripts/sync-substack.ts` protects 8 native long-form articles in `protectedSlugs`:
+### Protected Native Deep-Dive Articles (10 Total)
+- `scripts/sync-substack.ts` protects **10** native long-form articles in `protectedSlugs`:
   - `building-be-your-stories`
   - `enterprise-rag-with-local-llms`
   - `scaling-lakehouses-spark-iceberg`
@@ -123,6 +123,8 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
   - `architecting-pack-multimodal-ocr-logistics`
   - `building-tatu-design-ai-stencil-ar-studio`
   - `autonomous-publishing-posthub-step-functions`
+  - `architecting-swango-dbt-bigquery-medallion-b3-finance`
+  - `on-memory-deterministic-ai-engineering-governance`
 
 ---
 

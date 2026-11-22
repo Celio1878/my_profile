@@ -129,6 +129,20 @@
 - [x] Upgraded `scripts/sync-substack.ts` and re-synced all 68 full-length Substack articles and their real `<h2>`/`<h3>` headings into `app/content/blog/*.md`.
 - [x] Verified 0 exposed HTML tags on both the live Substack public API (`celio1878.substack.com/api/v1/posts`) and local `app/content/blog/*.md`, and passed `bun run lint`, `bun run typecheck`, and `bun run build`.
 
+### Phase 13: Aldeon 7-Product Ecosystem Synchronization (SwanGo, OnMemory & HandSpeak Academy)
+- [x] Upgraded `app/components/sections/ventures.tsx` to showcase all **7 active Aldeon products**:
+  - [x] Featured **SwanGo** (`aldeon.app/swango`) as full-width highlight card (`md:col-span-2`) with quick actions to 6-Stage Simulator (`/swango/simulator`), 4-Track Financial Academy (`/swango/learn`), and native blueprint.
+  - [x] Paired `(Be Your Stories + Pack)`, `(TATU Design + PostHub)`, and `(HandSpeak + OnMemory)` in 3 balanced two-column rows above the 2-column Open-Source Developer Tooling grid.
+  - [x] Surfaced **HandSpeak Academy** (`/handspeak/learn`) and **OnMemory Stack Composer & Linter** (`/on-memory`) direct actions.
+- [x] Authored 2 new native Engineering Blueprints and upgraded 2 existing blueprints (10 protected blueprints / 78 total articles):
+  - [x] `app/content/blog/architecting-swango-dbt-bigquery-medallion-b3-finance.md`
+  - [x] `app/content/blog/on-memory-deterministic-ai-engineering-governance.md`
+  - [x] Updated `aldeon-unified-edge-ssr-multi-cloud-ecosystem.md` (7 products, domain-sliced portal, `oxc-parser` AST i18n parity, `verify:ssr` across 164 renders).
+  - [x] Updated `engineering-handspeak-3d-libras-ai.md` (57+ poses, Camera Practice Mode, synced cadence presets, 5-track Bilingual Libras Academy, zero-cost solo webcam isolation).
+  - [x] Protected all 10 native blueprints in `scripts/sync-substack.ts`.
+- [x] Expanded `/about` `"What I'm Building Now"` to 8 balanced cards (`sm:grid-cols-2 lg:grid-cols-4`) and enriched Capabilities & bilingual EN/PT-BR dictionaries in `app/lib/profile-translations.ts`.
+- [x] Updated governance docs (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`) and verified `bun run lint`, `bun run typecheck`, and `bun run build`.
+
 ---
 
 ## Future Roadmap & Backlog

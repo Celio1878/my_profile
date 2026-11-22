@@ -196,7 +196,7 @@
 
 ---
 
-### Session 17 (Current) — Live Substack Corpus Sanitization & Full-Content Knowledge Hub Sync
+### Session 17 — Live Substack Corpus Sanitization & Full-Content Knowledge Hub Sync
 
 #### 1. Live Substack Publication Cleanup & Sanitization (`celio1878.substack.com`)
 - [x] Audited all 87 published posts on `https://celio1878.substack.com` using `SUBSTACK_SESSION_COOKIE` from AWS Secrets Manager (`linkedin-posts-prod-secrets`, `--profile adm`).
@@ -212,3 +212,22 @@
 
 
 
+---
+
+### Session 18 (Current) — Aldeon 7-Product Ecosystem Expansion, SwanGo & OnMemory Integration, and 10 Native Engineering Blueprints
+
+#### 1. 7-Product Ecosystem Showcase & Action Links
+- [x] Upgraded `app/components/sections/ventures.tsx` from 5 to **7 active Aldeon products**:
+  - Featured **SwanGo** (`aldeon.app/swango`) in the full-width highlight card (`md:col-span-2`) showcasing its `$0/mo` 20-table `dbt-core` + BigQuery Medallion warehouse, 1,076+ tracked B3/CVM/BCB/Crypto/SEC EDGAR assets, 5 quantitative engines, SHA-256 shared workspaces, 6-Stage Interactive Simulator (`/swango/simulator`), and 4-track Financial Academy (`/swango/learn`).
+  - Added **OnMemory** (`aldeon.app/on-memory`) paired with **HandSpeak** (`aldeon.app/handspeak` + `/handspeak/learn` Academy) in Row 3 alongside `(Be Your Stories + Pack)` and `(TATU Design + PostHub)`.
+  - Preserved `NodeJS App Builder` and `AWS CDK Factory` in the Open-Source Developer Tooling grid below.
+
+#### 2. Bilingual Copy, Capabilities & 8-Card About Expansion
+- [x] Synchronized `en` and `pt-BR` dictionaries in `app/lib/profile-translations.ts` with 1:1 key parity for SwanGo, OnMemory, HandSpeak Academy upgrades, Capabilities (`dbt-core`, `BigQuery Medallion`, `OnMemory Governance (<20KB)`, `Quantitative Engines`, AST i18n parity), `78 articles` search copy, and all 7 Aldeon products in `about.missionParagraphs[3]`.
+- [x] Expanded `"What I'm Building Now"` to 8 cards (`01`–`08`) rendered in a balanced `sm:grid-cols-2 lg:grid-cols-4` grid in `app/routes/about.tsx`.
+
+#### 3. Native Engineering Blueprints (8 → 10) & Verification Gates
+- [x] Authored `architecting-swango-dbt-bigquery-medallion-b3-finance.md` and `on-memory-deterministic-ai-engineering-governance.md`.
+- [x] Updated `aldeon-unified-edge-ssr-multi-cloud-ecosystem.md` and `engineering-handspeak-3d-libras-ai.md` with the 7-product portal architecture, `oxc-parser` AST i18n checks, `verify:ssr`, 57+ 3D WebGL poses, and 5-track Libras Academy.
+- [x] Protected all 10 native blueprint slugs in `scripts/sync-substack.ts`.
+- [x] Verified `bun run lint`, `bun run typecheck`, and `bun run build` exit with code `0`.
