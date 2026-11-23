@@ -64,3 +64,6 @@ test-results/
 scratch/
 tmp/
 temp/
+
+# Private documents (never served or committed)
+private/

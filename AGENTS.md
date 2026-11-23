@@ -21,7 +21,7 @@ This document defines the strict engineering guidelines, workflows, and quality 
 | **Framework** | **React Router 8** + **React 19** | SSR enabled in `react-router.config.ts`. Multi-route architecture (`/`, `/blog`, `/blog/:slug`, `/about`). |
 | **Language** | **TypeScript 6.0.3** | Strict typing enabled. `"noImplicitAny": true`. Zero typecheck errors. |
 | **Styling** | **Tailwind CSS v4** | CSS variables in `app.css`. System-based dark mode (`@media (prefers-color-scheme: dark)`). |
-| **Markdown Engine** | **marked v18** + raw Vite glob | Blog articles loaded via `import.meta.glob('../content/blog/*.md', { query: '?raw', eager: true })`. |
+| **Markdown Engine** | **marked v18** + Shiki + sanitize-html (build-time) | Compiled by `scripts/build-blog.ts` into `app/content/generated/` (metadata index + lazy per-slug HTML). Never parse markdown at runtime; never edit generated files by hand. |
 | **Internationalization** | Custom context in `app/i18n.tsx` | Supported locales strictly: `en` (default), `pt-BR`. |
 | **Linter & Code Standards** | **ESLint 9** + TypeScript-ESLint | Must pass `bun run lint` with `--max-warnings=0`. |
 
@@ -64,8 +64,18 @@ bun run lint
 # 2. Complete TypeScript compiler validation
 bun run typecheck
 
-# 3. Complete production bundle build (Client + SSR)
+# 3. Prettier formatting consistency
+bun run format:check
+
+# 4. Content-pipeline unit tests + corpus integrity audit
+bun run test
+bun run audit:content
+
+# 5. Complete production bundle build (Client + SSR)
 bun run build
+
+# 6. SSR smoke suite against the production server
+bun run smoke
 ```
 
 ### Step 5: Post-Execution Documentation

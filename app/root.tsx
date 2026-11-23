@@ -1,24 +1,23 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useNavigation,
-} from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useNavigation } from "react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { type ReactNode } from "react";
-import { Loader } from "./components/loader";
 import { ErrorBoundaryPage } from "./error-boundary-page";
 import { InteractiveBackground } from "./components/interactive-background";
-import { I18nProvider } from "./i18n";
+import { I18nProvider, useI18n } from "./i18n";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", type: "image/jpeg", href: "/me.jpeg" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
   { rel: "manifest", href: "/manifest.json" },
+  {
+    rel: "alternate",
+    type: "application/rss+xml",
+    title: "Célio Vieira — Knowledge Hub",
+    href: "/rss.xml",
+  },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -30,6 +29,15 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+
+function SkipLink() {
+  const { dict } = useI18n();
+  return (
+    <a href="#main" className="skip-link">
+      {dict.ui.skipToMain}
+    </a>
+  );
+}
 
 interface LayoutProps {
   children: ReactNode;
@@ -48,11 +56,15 @@ export function Layout({ children }: LayoutProps) {
         <meta name="robots" content="index, follow" />
         <Meta />
         <Links />
-        <title>Célio Vieira — Founder, AI & Data Engineer</title>
       </head>
       <body>
         <InteractiveBackground />
-        <I18nProvider>{isNavigating ? <Loader /> : children}</I18nProvider>
+        <I18nProvider>
+          <SkipLink />
+          {/* Lightweight top indicator — never unmounts the current page. */}
+          {isNavigating && <div className="nav-loading-bar" aria-hidden="true" />}
+          {children}
+        </I18nProvider>
         <ScrollRestoration />
         <Scripts />
         <Analytics />

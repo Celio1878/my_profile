@@ -6,10 +6,13 @@ A modern, high-performance web platform showcasing Célio Vieira's commercial ve
 
 ## 🚀 Vision & Objectives
 
-- **The Aldeon Ecosystem:** Showcase **Aldeon** (`aldeon.app`) as the umbrella venture studio alongside active child products:
-  - **Be Your Stories (BYS):** Cross-platform storytelling platform on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).
+- **The Aldeon Ecosystem:** Showcase **Aldeon** (`aldeon.app`) as the umbrella venture studio alongside 7 active child products:
+  - **SwanGo:** B3-first financial control & market intelligence ([aldeon.app/swango](https://aldeon.app/swango)).
+  - **OnMemory:** AI engineering memory governance protocol ([aldeon.app/on-memory](https://aldeon.app/on-memory)).
+  - **HandSpeak:** Real-time 3D Libras translation & accessibility ([aldeon.app/handspeak](https://aldeon.app/handspeak)).
+  - **Be Your Stories (BYS):** Cross-platform storytelling platform on [Web](https://aldeon.app/bys), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6812739940), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.bys).
   - **Pack:** Autonomous condo mailroom automation.
-  - **TATU Design (T3O2):** Generative tattoo design studio.
+  - **TATU Design (T3O2):** AI tattoo stencil studio & AR skin projection.
   - **PostHub:** Multi-platform social content distribution.
   - **NodeJS App Builder & AWS CDK Factory:** Modular developer tooling on npm.
 - **Knowledge Hub (`/blog`):** In-depth technical blueprints and architectural retrospectives on AI, Lakehouses, Cloud, and Product Engineering, plus Substack dispatches.
@@ -21,9 +24,11 @@ A modern, high-performance web platform showcasing Célio Vieira's commercial ve
 ## 🧭 Route Architecture
 
 - `/` — **Flagship Showcase:** Value proposition hero, Aldeon Ecosystem vector cards, core capabilities, and latest insights preview.
-- `/blog` — **Knowledge Hub Index:** Substack publication banner, search bar, topic tags, and architectural article cards.
-- `/blog/:slug` — **Article Reader:** Dynamic Markdown post reader with code syntax styling, copy-to-clipboard buttons, reading time estimates, author bio, and social sharing.
+- `/blog` — **Knowledge Hub Index:** Substack publication banner, URL-synced search/filters (`?q=&tag=&source=`), topic tags, and architectural article cards.
+- `/blog/:slug` — **Article Reader:** Build-time rendered & sanitized Markdown with Shiki syntax highlighting, guarded copy buttons, TOC scroll spy, reading progress, BlogPosting JSON-LD, and X/LinkedIn/Web Share actions. Real 404 for missing slugs.
 - `/about` — **Streamlined Founder Profile:** Personal mission, current builds across the Aldeon ecosystem, operating principles, and direct contact channels.
+- `/sitemap.xml` & `/rss.xml` — SEO sitemap and RSS 2.0 feed (resource routes).
+- `*` — Branded 404/error page (no stack traces in production).
 
 ---
 
@@ -35,12 +40,12 @@ A modern, high-performance web platform showcasing Célio Vieira's commercial ve
 | **Language** | TypeScript 6.0.3 (Strict mode) |
 | **Styling** | Tailwind CSS v4 (Terminal & Vector Minimalist palette) |
 | **Interactive Canvas** | HTML5 dot-matrix vector grid with mouse flashlight illumination |
-| **Markdown Engine** | `marked` (v18) + Vite eager raw glob |
-| **UI Primitives** | Custom Radix/Tailwind components (`Card`, `Badge`, `Separator`) |
-| **Icons** | `lucide-react` + inline SVG brand logos (X, Substack, LinkedIn, GitHub, YouTube) |
-| **Internationalization** | Custom Context (`app/i18n.tsx` + `app/lib/profile-translations.ts`), `en` & `pt-BR` |
+| **Markdown Engine** | Build-time pipeline: `marked` v18 + Shiki (dual themes) + `sanitize-html` → metadata index + lazy per-article HTML |
+| **UI Primitives** | Custom Radix/Tailwind components (`Card`, `Badge`) + `@tailwindcss/typography` |
+| **Icons** | `lucide-react` + canonical brand SVGs (`app/components/brand-icons.tsx`) |
+| **Internationalization** | Custom Context (`app/i18n.tsx` + `app/lib/profile-translations.ts`), `en` & `pt-BR`, full parity |
 | **Package Manager** | Bun |
-| **Hosting & Analytics** | Vercel (Analytics + SpeedInsights) |
+| **Hosting & Analytics** | Vercel (Analytics + SpeedInsights + custom outbound events); Bun Dockerfile; GitHub Actions CI |
 
 ---
 
@@ -60,17 +65,21 @@ bun run dev
 
 ### Validation & Build
 ```bash
-# Sync latest technical dispatches from Substack
+# Sync latest technical dispatches from Substack, then recompile content
 bun run sync-substack
+bun run content:build
 
-# Typecheck
-bun run typecheck
+# Full quality gate chain (also runs in CI)
+bun run lint          # ESLint, zero warnings
+bun run typecheck     # React Router typegen + tsc
+bun run format:check  # Prettier
+bun run test          # Vitest content-pipeline suite
+bun run audit:content # Corpus + compiled index integrity
+bun run build         # Production client + SSR bundles
+bun run smoke         # SSR smoke tests against the production server
 
-# Lint with zero warnings
-bun run lint
-
-# Production build
-bun run build
+# Regenerate brand assets (OG card + PWA icons) after changing public/me.jpeg
+bun run scripts/build-assets.ts
 ```
 
 ---

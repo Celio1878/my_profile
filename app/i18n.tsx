@@ -1,15 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import {
-  dictionaries,
-  type Dictionary,
-  type SupportedLocale,
-} from "./lib/profile-translations";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { dictionaries, type Dictionary, type SupportedLocale } from "./lib/profile-translations";
 
 export { type SupportedLocale, type Dictionary };
 
@@ -100,10 +90,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   // and persist explicit user choices.
   useEffect(() => {
     try {
-      document.documentElement.setAttribute(
-        "lang",
-        locale.startsWith("pt") ? "pt-BR" : locale,
-      );
+      document.documentElement.setAttribute("lang", locale.startsWith("pt") ? "pt-BR" : locale);
     } catch {}
   }, [locale]);
 
@@ -119,9 +106,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const dict = useMemo(() => dictionaries[locale] ?? dictionaries.en, [locale]);
 
   const value = useMemo(() => ({ locale, setLocale, dict }), [locale, dict]);
-  return (
-    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
-  );
+  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
 export function useI18n() {

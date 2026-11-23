@@ -25,6 +25,9 @@ export function Reveal({
   const { ref, inView } = useInView({
     triggerOnce: true,
     rootMargin: "-40px 0px",
+    // Start visible so SSR HTML (and no-JS clients) never hide content;
+    // below-the-fold elements hide once the observer reports them out of view.
+    initialInView: true,
   });
 
   const initialTransform = useMemo(() => {

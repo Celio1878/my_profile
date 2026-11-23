@@ -1,4 +1,4 @@
-// ESLint flat config for bys_ui
+// ESLint flat config for professional_profile (celiovieira.com)
 // Minimal, aligned with project guidelines and React Router SSR setup
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";

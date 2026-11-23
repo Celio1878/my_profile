@@ -7,7 +7,10 @@
 - **Primary Focus:** Applied AI & Data/Lakehouses, backed by Distributed Architecture and Full-Stack Product Engineering.
 - **Umbrella Venture:** **Aldeon** (`aldeon.app`), an autonomous venture studio and multi-product technology ecosystem.
 - **Ventures & Products:**
-  - **Be Your Stories (BYS):** Cross-platform reading and storytelling platform with live apps on [Web](https://beyourstories.com), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6748356526), and [Google Play](https://play.google.com/store/apps/details?id=com.celio1878.beyourstories).
+  - **SwanGo:** B3-first financial control & market intelligence on [aldeon.app/swango](https://aldeon.app/swango).
+  - **OnMemory:** AI engineering memory governance protocol on [aldeon.app/on-memory](https://aldeon.app/on-memory).
+  - **HandSpeak:** 3D Libras translation & accessibility platform on [aldeon.app/handspeak](https://aldeon.app/handspeak).
+  - **Be Your Stories (BYS):** Cross-platform reading and storytelling platform with live apps on [Web](https://aldeon.app/bys), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6812739940), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.bys).
   - **Pack:** Autonomous condo mailroom automation and delivery notification system.
   - **TATU Design (T3O2):** AI-powered custom tattoo studio and generative artwork engine.
   - **PostHub:** Multi-platform programmatic social content distribution pipeline.
@@ -214,7 +217,7 @@
 
 ---
 
-### Session 18 (Current) — Aldeon 7-Product Ecosystem Expansion, SwanGo & OnMemory Integration, and 10 Native Engineering Blueprints
+### Session 18 — Aldeon 7-Product Ecosystem Expansion, SwanGo & OnMemory Integration, and 10 Native Engineering Blueprints
 
 #### 1. 7-Product Ecosystem Showcase & Action Links
 - [x] Upgraded `app/components/sections/ventures.tsx` from 5 to **7 active Aldeon products**:
@@ -231,3 +234,30 @@
 - [x] Updated `aldeon-unified-edge-ssr-multi-cloud-ecosystem.md` and `engineering-handspeak-3d-libras-ai.md` with the 7-product portal architecture, `oxc-parser` AST i18n checks, `verify:ssr`, 57+ 3D WebGL poses, and 5-track Libras Academy.
 - [x] Protected all 10 native blueprint slugs in `scripts/sync-substack.ts`.
 - [x] Verified `bun run lint`, `bun run typecheck`, and `bun run build` exit with code `0`.
+
+---
+
+### Session 19 (Current) — Full-Application Audit & Remediation (P0 Critical + P1 Quality + P2 Quick Wins)
+
+#### 1. Audit Findings (verified empirically via SSR inspection + corpus diagnostics)
+- Critical: literal `**bold**` markdown in all article paragraphs (marked v18 renderer API misuse); missing typography plugin; broken Dockerfile (`npm` + nonexistent lockfile); soft-404s; no home `<h1>`; duplicate `<title>`; unsanitized `dangerouslySetInnerHTML`; unguarded clipboard; 752KB shared client chunk; corrupted X brand SVG; missing sitemap; manifest/icon size lies; mixed-language PT UI; sync tag pollution; 104 files failing formatting.
+
+#### 2. Build-Time Content Pipeline (kills the renderer bug class + bundle weight)
+- [x] `scripts/lib/markdown.ts` + `scripts/build-blog.ts`: frontmatter parsing (with unescaping), fence-aware headings/excerpts/word counts, marked v18 `parseInline(tokens)`, Shiki dual-theme highlighting, `sanitize-html` hardening (scheme blocking, attribute escaping, `completelyDiscard`).
+- [x] `app/content/generated/index.json` (metadata, eager) + per-slug HTML JSON (lazy glob). Shared chunk **752KB → 163KB**; article chunks 5–15KB on demand.
+- [x] `blog-post` loader throws real 404; `MarkdownRenderer` now only wires copy buttons + localized labels.
+
+#### 3. SEO, Assets & Accessibility
+- [x] `/sitemap.xml` + `/rss.xml` resource routes; canonical + Twitter cards everywhere; BlogPosting JSON-LD; home h1 + identity eyebrow; single title via route meta.
+- [x] `scripts/build-assets.ts` (sharp): `og.png` 1200×630, `icon-192/512.png`, `apple-touch-icon.png`; corrected manifest; removed orphan assets; `resume.pdf` → gitignored `private/`.
+- [x] `brand-icons.tsx` canonical SVGs (fixed X glyph); skip link; drawer focus trap + scroll lock; `aria-pressed`; TOC scroll spy; `CardTitle` → `h3`; SSR-visible `Reveal` (`initialInView`).
+
+#### 4. i18n Completion & UX
+- [x] 151 keys with verified EN/PT-BR parity; zero hardcoded user-facing strings; localized dates/numbers/read times; interpolated counts; "multicontas" typo fix.
+- [x] URL-synced blog filters; `HashLink` client-side section nav; consistent Contact CTA; top nav indicator replaces full-page Loader; single rAF reading-progress bar; canvas perf fixes.
+
+#### 5. Pipeline Hardening & QA Automation
+- [x] Sync: word-boundary tags, pagination + validation, stale pruning, safe trailing trim, import-safe; `audit:content` gate.
+- [x] Vitest (20 tests), `smoke-ssr.ts` (10 assertions), GitHub Actions CI; Prettier config + format gate; dead code/keys/deps removed; Bun Dockerfile.
+- [x] P2 quick wins: RSS, outbound analytics events, Shiki highlighting, Web Share + LinkedIn share.
+- [x] All gates green: `lint`, `typecheck`, `format:check`, `test`, `audit:content`, `build`, `smoke`.

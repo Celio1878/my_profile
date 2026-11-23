@@ -1,128 +1,73 @@
-import { marked } from "marked";
-import { type FC, useMemo, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef } from "react";
+import { useI18n } from "~/i18n";
+import { copyText } from "~/lib/clipboard";
 
 interface MarkdownRendererProps {
-  content: string;
+  /** Pre-rendered, sanitized HTML produced at build time (scripts/build-blog.ts). */
+  html: string;
   className?: string;
 }
 
-export const MarkdownRenderer: FC<MarkdownRendererProps> = ({
-  content,
-  className = "",
-}) => {
+/**
+ * Renders build-time article HTML and wires interactive affordances:
+ * copy-to-clipboard code buttons (localized, guarded) and localized
+ * heading-anchor labels. No markdown parsing happens at runtime.
+ */
+export const MarkdownRenderer: FC<MarkdownRendererProps> = ({ html, className = "" }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const { dict } = useI18n();
 
-  const html = useMemo(() => {
-    // Configure marked for clean GitHub-like markdown
-    const renderer = new marked.Renderer();
-
-    // Customize links to open in new tab securely
-    renderer.link = ({ href, title, text }) => {
-      const isExternal = href.startsWith("http://") || href.startsWith("https://");
-      const titleAttr = title ? ` title="${title}"` : "";
-      const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";
-      return `<a href="${href}"${titleAttr}${targetAttr} class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">${text}</a>`;
-    };
-
-    // Customize headings with text-balance
-    renderer.heading = ({ text, depth }) => {
-      const id = text
-        .toLowerCase()
-        .replace(/<[^>]*>/g, "")
-        .replace(/[^\w\s-]/g, "")
-        .replace(/\s+/g, "-");
-
-      const classes: Record<number, string> = {
-        1: "text-3xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 text-balance",
-        2: "text-2xl font-bold mt-8 mb-3 tracking-tight text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-1.5 text-balance",
-        3: "text-xl font-semibold mt-6 mb-2.5 text-gray-900 dark:text-gray-100 text-balance",
-        4: "text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200 text-balance",
-      };
-
-      const headingClass = classes[depth] || "text-base font-semibold mt-4 mb-2 text-balance";
-      return `<h${depth} id="${id}" class="${headingClass} group flex items-center gap-2">
-        <span>${text}</span>
-        <a href="#${id}" class="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm" aria-label="Link to section">#</a>
-      </h${depth}>`;
-    };
-
-    // Customize paragraphs with text-pretty
-    renderer.paragraph = ({ text }) => {
-      return `<p class="leading-relaxed my-4 text-pretty">${text}</p>`;
-    };
-
-    // Customize blockquotes with text-pretty
-    renderer.blockquote = ({ text }) => {
-      return `<blockquote class="border-l-4 border-primary/70 bg-primary/5 dark:bg-primary/10 pl-4 py-2 my-4 rounded-r-md text-gray-700 dark:text-gray-300 italic text-pretty">${text}</blockquote>`;
-    };
-
-    // Customize code blocks
-    renderer.code = ({ text, lang }) => {
-      const language = lang || "text";
-      return `<div class="relative my-5 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-slate-900 shadow-sm group">
-        <div class="flex items-center justify-between px-4 py-1.5 bg-slate-950/80 border-b border-gray-800 text-xs text-gray-400 font-mono">
-          <span class="font-medium">${language}</span>
-          <button type="button" class="copy-code-btn text-xs text-gray-400 hover:text-white px-2 py-0.5 rounded transition-colors bg-white/5 hover:bg-white/10" data-code="${encodeURIComponent(
-            text
-          )}">Copy</button>
-        </div>
-        <pre class="p-4 overflow-x-auto text-sm font-mono text-gray-100 leading-relaxed"><code>${text.replace(
-          /</g,
-          "&lt;"
-        ).replace(/>/g, "&gt;")}</code></pre>
-      </div>`;
-    };
-
-    // Defensive decode: unescape any stray escaped tags outside code blocks
-    const normalizedContent = content.replace(
-      /&lt;(\/?(?:p|h[1-6]|strong|em|b|i|ul|ol|li|code|blockquote|br))\b(.*?)&gt;/gi,
-      "<$1$2>"
-    );
-
-    const parsed = marked.parse(normalizedContent, {
-      renderer,
-      gfm: true,
-      breaks: true,
-    });
-
-    return parsed as string;
-  }, [content]);
-
-  // Attach event listener for copy code buttons
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    const copyButtons = el.querySelectorAll<HTMLButtonElement>(".copy-code-btn");
-    const cleanupFns: Array<() => void> = [];
+    const timers: number[] = [];
+    const cleanups: Array<() => void> = [];
 
-    copyButtons.forEach((btn) => {
+    el.querySelectorAll<HTMLButtonElement>(".copy-code-btn").forEach((btn) => {
+      btn.setAttribute("aria-label", dict.ui.copyCode);
+      const label = btn.querySelector<HTMLElement>("[data-copy-label]");
+      if (label) label.textContent = dict.ui.copyCode;
+
       const handler = () => {
         const raw = btn.getAttribute("data-code");
         if (!raw) return;
-        const decoded = decodeURIComponent(raw);
-        navigator.clipboard.writeText(decoded).then(() => {
-          const original = btn.innerText;
-          btn.innerText = "Copied!";
-          btn.classList.add("text-emerald-400");
-          setTimeout(() => {
-            btn.innerText = original;
-            btn.classList.remove("text-emerald-400");
+        let decoded = raw;
+        try {
+          decoded = decodeURIComponent(raw);
+        } catch {
+          /* keep raw value */
+        }
+        void copyText(decoded).then((ok) => {
+          if (!ok || !label) return;
+          label.textContent = dict.ui.codeCopied;
+          btn.classList.add("text-emerald-500");
+          const timer = window.setTimeout(() => {
+            label.textContent = dict.ui.copyCode;
+            btn.classList.remove("text-emerald-500");
           }, 2000);
+          timers.push(timer);
         });
       };
 
       btn.addEventListener("click", handler);
-      cleanupFns.push(() => btn.removeEventListener("click", handler));
+      cleanups.push(() => btn.removeEventListener("click", handler));
     });
 
-    return () => cleanupFns.forEach((fn) => fn());
-  }, [html]);
+    el.querySelectorAll<HTMLElement>('[data-i18n-aria="linkToSection"]').forEach((anchor) => {
+      anchor.setAttribute("aria-label", dict.ui.linkToSection);
+    });
+
+    return () => {
+      cleanups.forEach((fn) => fn());
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [html, dict]);
 
   return (
     <div
       ref={containerRef}
-      className={`markdown-body text-gray-800 dark:text-gray-200 leading-relaxed text-base space-y-4 max-w-[75ch] mx-auto ${className}`}
+      className={`markdown-body text-gray-800 dark:text-gray-200 leading-relaxed text-base max-w-[75ch] mx-auto ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

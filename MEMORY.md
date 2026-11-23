@@ -49,7 +49,7 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 
 ### Terminal & Vector Minimalist Palette
 - **Palette:** Carbon black background (`#090b10`), titanium gray borders (`#212836`), emerald primary (`#10b981`), amber accent (`#f59e0b`).
-- **Dot-Matrix Vector Grid:** Canvas background in `app/components/interactive-background.tsx` uses 28px grid spacing, responsive resize listeners, and mouse radial light cones.
+- **Dot-Matrix Vector Grid:** Canvas background in `app/components/interactive-background.tsx` uses 36px grid spacing, cached `matchMedia` scheme detection, pointer-only mouse listeners, visibility pause, and reduced-motion resize redraws.
 
 ---
 
@@ -147,5 +147,53 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 ### SSR-Safe Reading Progress & TOC Scroll Tracking
 - **Scroll Handlers:** In `app/routes/blog-post.tsx`, `window.addEventListener('scroll', ...)` is guarded with `typeof window !== "undefined"` and cleaned up on unmount.
 - **Headings IDs:** IDs on `<h2>` and `<h3>` tags are assigned both in marked renderer and extracted into `headings: BlogPostHeading[]` in `app/lib/blog.ts` so the interactive Table of Contents can seamlessly scroll without hydration mismatches.
+
+---
+
+## 10. Full-Application Audit Remediation (Phase 14)
+
+### marked v18 Renderer API — Literal Markdown Bug (Critical)
+- **Issue:** Custom `renderer.paragraph`/`renderer.heading` used raw `token.text`, but marked v18 defaults call `this.parser.parseInline(tokens)`. Result: every paragraph rendered literal `**bold**`, `` `code` `` and `[link](url)`; `renderer.link` was dead code for paragraph links.
+- **Fix:** Markdown is now compiled **at build time** (`scripts/lib/markdown.ts` + `scripts/build-blog.ts`) with correct `parseInline(tokens)` usage. Runtime never parses markdown.
+
+### Build-Time Content Pipeline & Bundle Splitting
+- **Architecture:** `app/content/generated/index.json` (metadata, ~163KB client chunk vs previous 752KB) + per-slug `<slug>.json` (sanitized Shiki-highlighted HTML) loaded via lazy `import.meta.glob` (negative pattern excludes `index.json` to avoid `INEFFECTIVE_DYNAMIC_IMPORT`).
+- **Generated files are committed** so `typecheck` works on fresh clones. `build`/`dev` scripts regenerate automatically; `bun run content:build` for manual runs. After `sync-substack`, recompile content.
+- **Sanitization:** `sanitize-html` with `disallowedTagsMode: "completelyDiscard"` (the typed union is `"discard" | "escape" | "recursiveEscape" | "completelyDiscard"` — `"drop"` is a runtime alias that fails typecheck). Link `href`/`title` escaped; `javascript:`/`data:`/`vbscript:` schemes neutralized; entity decoding is **fence-aware** (code samples keep literal `&lt;p&gt;`).
+
+### Tailwind v4 Gotchas
+- `prose` classes require `@plugin "@tailwindcss/typography"` — without it, article lists/tables render unstyled (preflight resets them).
+- `py-0.2` is NOT generated (spacing bare values must be multiples of 0.25); it silently produced no CSS.
+- Shiki dual themes use `defaultColor: false` + CSS vars (`--shiki-light/dark`), toggled via the media-based dark variant in `app.css`.
+
+### SSR / SEO Fixes
+- **Duplicate `<title>`:** static `<title>` in `root.tsx` Layout + route `meta` produced two title tags. Removed the static one; every route (incl. catch-all 404) owns its title via `meta`.
+- **Soft-404:** `/blog/<missing>` returned 200. Now `loader` throws `data(..., { status: 404 })`; catch-all `route("*")` does the same; branded ErrorBoundary renders it (stack traces only in `import.meta.env.DEV`).
+- **Hidden SSR content:** `Reveal` rendered `opacity:0` server-side. Fixed with `initialInView: true` — SSR/no-JS sees everything; below-fold elements hide only after the observer reports them out of view.
+- **Home had no `<h1>`:** hero tagline is now the `h1`, with a name/role eyebrow above it.
+- **Hydration-safe formatting:** `formatDate`/`formatNumber` take the app locale (starts `"en"` on server AND first client render); `navigator.share` button revealed post-mount only.
+
+### Substack Sync Hardening
+- **Tag pollution:** substring regexes matched "ren**ai**ssance"/"dom**ai**n" → AI and "para**graph**" → Algorithms. Now word-boundary regexes (`deriveTags`), covered by unit tests.
+- Pagination loop (was hardcoded 2 pages/100 posts), response validation, stale-file pruning (Substack-sourced only, protected slugs untouched), no fabricated `wordCount: 1100`, trailing-trim never drops code fences, `sync()` guarded by `process.argv[1]` so imports don't trigger network calls.
+
+### Assets & Brand Integrity
+- **X logo SVG was corrupted** in footer/contact (`L4.99 21.75` vs canonical `24.75`). All brand marks now live in `app/components/brand-icons.tsx` (single source of truth).
+- `me.jpeg` is 200×200 — manifest previously claimed 400×400. Generated `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, and a 1200×630 `og.png` via `scripts/build-assets.ts` (sharp + SVG text; Lato/DejaVu fonts available on this machine).
+- Removed orphans `public/favicon.png`, `public/working.JPEG`; moved `resume.pdf` → gitignored `private/` (never served; keeps zero-CV positioning).
+
+### UX & Performance Patterns
+- Full-page `<Loader/>` swap on navigation unmounted every page (and was off-palette purple `#400d7a`). Replaced with a thin animated top bar (`.nav-loading-bar`); children never unmount.
+- One reading-progress bar (article route); nav's duplicate gradient bar removed. Scroll handlers are rAF-throttled.
+- `HashLink` component: plain anchor on `/`, client-side `Link to="/#section"` elsewhere (no full reloads). Contact CTA consistent everywhere.
+- Blog filters live in URL search params (`?q=&tag=&source=`) — shareable, back/forward works.
+- Canvas: cached `matchMedia` (was called per frame), pointer-only mouse listeners, reduced-motion resize redraw, visibility pause.
+- Mobile drawer: focus trap + body scroll lock + `aria-controls`; skip link implemented (`ui.skipToMain`); `CardTitle` renders `h3`.
+
+### Tooling & QA
+- **Dockerfile was broken:** `npm ci` + `COPY package-lock.json` (file never existed; Bun-only repo). Rewritten on `oven/bun:1` with `bun.lock`.
+- Prettier config added (`.prettierrc.json`, 2 spaces/double quotes/100 cols); `format:check` is now a gate; `app/content`, `public`, `*.md` ignored.
+- QA chain: Vitest (`tests/content-pipeline.test.ts`, 20 tests) + `scripts/audit-content.ts` (corpus/index integrity) + `scripts/smoke-ssr.ts` (boots prod server, asserts titles/h1/404s/sitemap/rss/parsed markdown) + GitHub Actions CI on `develop`/`main`.
+- Removed dead code: `Section`, `Separator`, `loader.tsx`, `getPostsByTag`, `yearsExperience`/`firstYear`, `isbot` dep, ~25 unused dictionary keys.
 
 

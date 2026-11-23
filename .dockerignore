@@ -1,3 +1,7 @@
 .react-router
+.git
+build
 node_modules
+private
 README.md
+*.log

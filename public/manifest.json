@@ -1,16 +1,1 @@
-{
-	"name": "Célio Vieira — Founder, AI & Data Engineer",
-	"short_name": "Célio Vieira",
-	"description": "Founder, AI & Data Engineer architecting intelligent AI systems, petabyte lakehouses, and the Aldeon venture ecosystem.",
-	"start_url": "/",
-	"display": "standalone",
-	"background_color": "#090b10",
-	"theme_color": "#090b10",
-	"icons": [
-		{
-			"src": "/me.jpeg",
-			"sizes": "400x400",
-			"type": "image/jpeg"
-		}
-	]
-}
+{"name": "Célio Vieira — Founder, AI & Data Engineer", "short_name": "Célio Vieira", "description": "Founder, AI & Data Engineer architecting intelligent AI systems, petabyte lakehouses, and the Aldeon venture ecosystem.", "start_url": "/", "display": "standalone", "background_color": "#090b10", "theme_color": "#090b10", "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"}, {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}, {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}]}

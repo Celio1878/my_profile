@@ -19,15 +19,19 @@ This file establishes the non-negotiable coding, architectural, and design rules
    - **DO NOT** add job-seeking badges or availability indicators (e.g., "Available for Hire", "Available for Advisory", "Online for Hire").
    - Do not display personal location metadata ("Minas Gerais, Brazil...").
 3. **Substack Articles Ingestion:**
-   - Articles from Substack are synchronized via `scripts/sync-substack.ts` into `app/content/blog/*.md`.
+   - Articles from Substack are synchronized via `scripts/sync-substack.ts` into `app/content/blog/*.md` (paginated fetch, word-boundary tag derivation, stale-file pruning).
    - All Substack articles maintain canonical SEO links to Substack and are tagged with `Substack`.
-4. **Zero Missing Images / Vector-First Cards:**
-   - Use `/me.jpeg` as brand logo, favicon, and author avatar.
-   - Do NOT reference deleted PNG screenshots from `/public`.
-   - All venture cards use styled vector cards, badge indicators, and inline SVG logos.
-5. **No External Runtime CMS:**
+4. **Build-Time Content Pipeline (no runtime markdown):**
+   - `scripts/build-blog.ts` compiles `app/content/blog/*.md` into `app/content/generated/index.json` (metadata only) + per-slug sanitized HTML JSON (lazy-loaded). It runs automatically before `dev` and `build`.
+   - Markdown is rendered with marked v18 using `this.parser.parseInline(tokens)` (never raw `token.text`), highlighted with Shiki dual themes, and sanitized with `sanitize-html`. **Never** render unsanitized HTML or parse markdown at runtime.
+   - Generated JSON is committed so `typecheck` works on fresh clones; never edit generated files by hand.
+5. **Zero Missing Images / Vector-First Cards:**
+   - Use `/me.jpeg` as brand logo, favicon, and author avatar; `/og.png` for Open Graph/Twitter cards; `/icon-192.png` & `/icon-512.png` for the manifest (regenerate via `scripts/build-assets.ts`).
+   - Do NOT reference deleted PNG screenshots from `/public`. Orphan/legacy files (`favicon.png`, `working.JPEG`) are removed; `resume.pdf` lives in gitignored `private/` and is never served.
+   - All venture cards use styled vector cards, badge indicators, and the canonical `app/components/brand-icons.tsx` SVGs (single source of truth for X/Substack/LinkedIn/GitHub/YouTube).
+6. **No External Runtime CMS:**
    - Content is stored locally in `app/content/blog/*.md`.
-   - Loaded at build time via Vite's `import.meta.glob`.
+   - Compiled at build time; metadata imported eagerly, article HTML via lazy `import.meta.glob`.
 
 ---
 
@@ -57,9 +61,12 @@ This file establishes the non-negotiable coding, architectural, and design rules
 2. **Dictionary Parity:**
    - All translations live in `app/lib/profile-translations.ts`.
    - Every key added to `en` **must** also be added to `pt-BR`.
+   - **Zero hardcoded user-facing strings** in components — including aria-labels, titles, badges, and code-copy buttons. Article counts are interpolated (`{count}`), never baked into translations.
+   - Dates and numbers render through `formatDate`/`formatNumber` (`app/utils/dates.ts`) using the app locale (deterministic between SSR and hydration). Read time renders as `readTimeMinutes` + `dict.blog.readTime`.
 3. **Safe Hydration:**
    - Server rendering defaults to `"en"`.
    - Client detection runs post-mount with user override stored in `preferred-locale` in `localStorage`.
+   - Client-only capabilities (e.g. `navigator.share`) are revealed post-mount, never during the first render.
 
 ---
 
@@ -71,8 +78,16 @@ This file establishes the non-negotiable coding, architectural, and design rules
 2. **Bun Only:**
    - Always run commands with `bun`. Never use `npm`, `npx`, or `yarn`.
 3. **Icons:**
-   - `Github`, `Linkedin`, and `Youtube` do NOT exist in `lucide-react`. Use standard inline SVGs.
+   - `Github`, `Linkedin`, and `Youtube` do NOT exist in `lucide-react`. Use `app/components/brand-icons.tsx` (canonical 24×24 SVGs) for all brand marks.
 4. **Mandatory Verification Gates:**
    - `bun run lint` must exit code 0 (`--max-warnings=0`).
    - `bun run typecheck` must exit code 0.
+   - `bun run format:check` must exit code 0 (Prettier config in `.prettierrc.json`).
+   - `bun run test` (Vitest content-pipeline suite) must exit code 0.
+   - `bun run audit:content` must exit code 0 (corpus + compiled index integrity).
    - `bun run build` must build client and server bundles with exit code 0.
+   - `bun run smoke` must pass all SSR smoke checks after a build.
+5. **SEO & Errors:**
+   - Every page route defines a unique `<title>` via `meta` (no static title in `root.tsx`), canonical link, and Twitter card.
+   - Missing articles/routes must return real HTTP 404 (`throw data(..., { status: 404 })`), never soft-200.
+   - Production error pages never expose stack traces (`import.meta.env.DEV` only).

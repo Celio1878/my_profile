@@ -143,10 +143,37 @@
 - [x] Expanded `/about` `"What I'm Building Now"` to 8 balanced cards (`sm:grid-cols-2 lg:grid-cols-4`) and enriched Capabilities & bilingual EN/PT-BR dictionaries in `app/lib/profile-translations.ts`.
 - [x] Updated governance docs (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`) and verified `bun run lint`, `bun run typecheck`, and `bun run build`.
 
+### Phase 14: Full-Application Audit & Remediation (P0 + P1 + P2 quick wins)
+- [x] **P0 — Critical fixes:**
+  - [x] Root-caused literal `**bold**`/`` `code` `` rendering (marked v18 `parseInline(tokens)` API) and eliminated the bug class with a build-time content pipeline.
+  - [x] Added `@tailwindcss/typography` + `.markdown-body` tuning so article lists/tables/inline code render correctly.
+  - [x] Rewrote broken Dockerfile on `oven/bun:1` with `bun.lock` (was `npm ci` + nonexistent `package-lock.json`).
+  - [x] Real HTTP 404 for missing articles (`loader` throw) and unknown routes (catch-all), rendered by a branded, i18n ErrorBoundary (no prod stack traces).
+  - [x] Home `<h1>` + identity eyebrow; removed duplicate static `<title>` from root.
+  - [x] Sanitized the markdown pipeline: `sanitize-html`, escaped link attributes, blocked `javascript:`/`data:` schemes, fence-aware entity decoding.
+  - [x] Guarded clipboard (fallback + `.catch`) and cleaned up all timers.
+- [x] **P1-8 — Build-time pipeline & bundle splitting:** `scripts/build-blog.ts` + `scripts/lib/markdown.ts` compile 78 articles into metadata index (eager) + per-slug sanitized Shiki-highlighted HTML (lazy). Shared client chunk 752KB → 163KB; zero runtime markdown parsing.
+- [x] **P1-9 — Complete i18n:** every hardcoded string (badges, banners, share, author box, errors, aria-labels, copy buttons) moved into both dictionaries (151 keys, verified parity); localized dates/numbers; interpolated article counts; fixed "multiconas" → "multicontas".
+- [x] **P1-10 — SEO package:** `/sitemap.xml` + `/rss.xml` resource routes (robots.txt reference now resolves), canonical + Twitter cards on all routes, BlogPosting JSON-LD, generated 1200×630 `og.png` + 192/512 PWA icons + apple-touch-icon, corrected manifest.
+- [x] **P1-11 — Accessibility:** skip link, mobile drawer focus trap + scroll lock, `aria-pressed` filters, keyboard-visible heading anchors, real TOC scroll spy (IntersectionObserver), semantic `h3` card titles.
+- [x] **P1-12 — Assets:** canonical `brand-icons.tsx` (fixed corrupted X glyph), removed `favicon.png`/`working.JPEG`, moved `resume.pdf` to gitignored `private/`.
+- [x] **P1-13 — Sync hardening:** word-boundary tags, paginated validated fetch, stale pruning, safe trailing trim, no fabricated word counts, import-safe module; `audit:content` integrity gate.
+- [x] **P1-14 — UX/perf:** top navigation indicator replaces full-page Loader; single reading-progress bar; rAF-throttled scroll; `HashLink` client-side section nav; consistent Contact CTA; URL-synced blog filters; canvas matchMedia caching + reduced-motion resize fix + pointer-only listeners.
+- [x] **P1-15 — Hygiene:** Prettier config + one-time format + `format:check` gate; removed dead components/exports/keys/deps; fixed eslint config header.
+- [x] **P1-16 — QA automation:** Vitest suite (20 tests), `smoke-ssr.ts` (10 SSR assertions), GitHub Actions CI running the full gate chain.
+- [x] **P2 quick wins:** RSS feed, Vercel Analytics outbound events (stores/Aldeon/Substack/npm/socials), Shiki syntax highlighting (dual themes), Web Share API + LinkedIn share buttons.
+- [x] Updated governance docs (`CONTEXT.md`, `MEMORY.md`, `RULES.md`, `TASKS.md`, `SUMMARY.md`, `README.md`, `AGENTS.md`).
+- [x] Passed all gates: `lint`, `typecheck`, `format:check`, `test`, `audit:content`, `build`, `smoke`.
+
 ---
 
 ## Future Roadmap & Backlog
 
-- [ ] **RSS Feed**: Generate static `public/rss.xml` for blog articles.
 - [ ] **Interactive Canvas Architecture Diagrams**: Canvas/Mermaid visualizations for complex lakehouse and RAG pipelines in blog articles.
-- [ ] **Custom Vercel Analytics Events**: Track clicks to Apple App Store, Google Play, Aldeon, and Substack subscriptions.
+- [ ] **Full-text search index**: prebuilt compact index (e.g. MiniSearch) for body-content search on `/blog` (current search covers title/description/excerpt/tags/headings; full corpus index deferred to avoid client bundle weight).
+- [ ] **Per-venture case-study pages** (`/ventures/:slug`) and commercial advisory engagement models section (content decisions pending).
+- [ ] **Substack latest-dispatches widget / subscribe embed** on home.
+- [ ] **Blueprint series grouping** UI for the 10 native Engineering Blueprints.
+- [ ] **PWA offline shell** (service worker) — icons/manifest now installability-ready.
+- [ ] **Error tracking** (e.g. Sentry) and **Lighthouse CI performance budgets**.
+- [ ] **Locale-prefixed routes** (`/pt/…`) for bilingual SEO (larger routing change).

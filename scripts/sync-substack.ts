@@ -1,5 +1,16 @@
+/**
+ * Substack → build-time markdown synchronization.
+ *
+ *   bun run sync-substack
+ *
+ * Fetches the full publication archive (paginated, validated), sanitizes the
+ * HTML into clean GitHub-flavored markdown, derives word-boundary tags, and
+ * prunes local files for posts deleted on Substack. Native blueprints are
+ * protected and never overwritten.
+ */
 import fs from "node:fs";
 import path from "node:path";
+import { parseFrontmatter } from "./lib/markdown";
 
 interface SubstackPost {
   id: number;
@@ -66,14 +77,17 @@ export function htmlToCleanMarkdown(rawHtml: string, postId?: number): string {
   text = text.replace(/<h[1-6][^>]*>[^<]*$/gi, "");
 
   // Bold, italic, inline code
-  text = text.replace(/<(strong|b)[^>]*>([\s\S]*?)<\/\1>/gi, (_, __, inner) => `**${inner.trim()}**`);
+  text = text.replace(
+    /<(strong|b)[^>]*>([\s\S]*?)<\/\1>/gi,
+    (_, __, inner) => `**${inner.trim()}**`,
+  );
   text = text.replace(/<(em|i)[^>]*>([\s\S]*?)<\/\1>/gi, (_, __, inner) => `*${inner.trim()}*`);
   text = text.replace(/<code[^>]*>([\s\S]*?)<\/code>/gi, (_, inner) => `\`${inner.trim()}\``);
 
   // Links
   text = text.replace(
     /<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi,
-    (_, href, inner) => `[${inner.replace(/<[^>]+>/g, "").trim()}](${href})`
+    (_, href, inner) => `[${inner.replace(/<[^>]+>/g, "").trim()}](${href})`,
   );
 
   // List items (including nested <p> inside <li>)
@@ -85,7 +99,6 @@ export function htmlToCleanMarkdown(rawHtml: string, postId?: number): string {
       .trim();
     return cleanedLi ? `\n- ${cleanedLi}` : "";
   });
-  // Handle unclosed final <li> if present
   text = text.replace(/<li[^>]*>([\s\S]*?)$/gi, (_, inner) => {
     const cleanedLi = inner
       .replace(/<\/?p[^>]*>/gi, " ")
@@ -111,23 +124,28 @@ export function htmlToCleanMarkdown(rawHtml: string, postId?: number): string {
   // Normalize multiple newlines
   text = text.replace(/\n{3,}/g, "\n\n").trim();
 
-  // Trim incomplete trailing blocks or cut-off sentences at the end of the article
-  const blocks = text.split(/\n\n+/).map((b) => b.trim()).filter(Boolean);
+  // Trim incomplete trailing sentences — never drop code fences or whole lists.
+  const blocks = text
+    .split(/\n\n+/)
+    .map((b) => b.trim())
+    .filter(Boolean);
   while (blocks.length > 0) {
     const last = blocks[blocks.length - 1];
+    // Code fences are legitimate terminal content: keep them.
+    if (/^(```|~~~)/.test(last)) break;
     // Drop dangling heading at the very end
     if (/^#{1,6}\s+/.test(last)) {
       blocks.pop();
       continue;
     }
-    // Check if the block is a bullet list
     if (last.startsWith("- ")) {
-      const items = last.split(/\n(?=- )/).map((item) => item.trim()).filter(Boolean);
+      const items = last
+        .split(/\n(?=- )/)
+        .map((item) => item.trim())
+        .filter(Boolean);
       while (items.length > 0) {
         const lastItem = items[items.length - 1];
-        if (/[.!?)"'”’]$/.test(lastItem)) {
-          break;
-        }
+        if (/[.!?)"'”’:]$/.test(lastItem)) break;
         const match = lastItem.match(/^([\s\S]*[.!?]["')”’]?)(?:\s+[^\n]*)$/);
         if (match && match[1].replace(/^- /, "").trim().length > 10) {
           items[items.length - 1] = match[1].trim();
@@ -144,10 +162,8 @@ export function htmlToCleanMarkdown(rawHtml: string, postId?: number): string {
       break;
     }
 
-    // Standard paragraph block
-    if (/[.!?)"'”’]$/.test(last)) {
-      break;
-    }
+    // Standard paragraph block (colon endings are legitimate, e.g. lead-ins)
+    if (/[.!?)"'”’:]$/.test(last)) break;
     const sentenceMatch = last.match(/^([\s\S]*[.!?]["')”’]?)(?:\s+[\s\S]*)$/);
     if (sentenceMatch && sentenceMatch[1].trim().length > 15) {
       blocks[blocks.length - 1] = sentenceMatch[1].trim();
@@ -177,7 +193,9 @@ export function cleanExcerpt(markdown: string, fallbackDesc: string): string {
   const paragraphs = markdown
     .split(/\n\n+/)
     .map((b) => b.trim())
-    .filter((b) => b.length > 30 && !b.startsWith("#") && !b.startsWith("- ") && !b.startsWith(">"));
+    .filter(
+      (b) => b.length > 30 && !b.startsWith("#") && !b.startsWith("- ") && !b.startsWith(">"),
+    );
 
   const base = paragraphs[0] || fallbackDesc;
   const plain = base
@@ -194,34 +212,46 @@ export function cleanExcerpt(markdown: string, fallbackDesc: string): string {
   return (lastSpace > 160 ? sliced.slice(0, lastSpace) : sliced).replace(/[,;:\s]+$/, "") + "…";
 }
 
-function deriveTags(title: string, description: string): string[] {
+/**
+ * Word-boundary tag derivation. Substring matching previously mis-tagged
+ * articles ("renaissance"/"domain" contain "ai"; "paragraph" contains "graph").
+ */
+export function deriveTags(title: string, description: string): string[] {
   const text = `${title} ${description}`.toLowerCase();
   const tags = new Set<string>();
 
-  if (/aws|ec2|glue|sqs|cloud|eks|serverless|lambda|dynamodb/.test(text)) {
+  if (/\b(aws|ec2|glue|sqs|cloud|eks|serverless|lambda|dynamodb|gcp|azure)\b/.test(text)) {
     tags.add("AWS");
     tags.add("Cloud");
   }
-  if (/data|lakehouse|spark|iceberg|dbt|etl|streaming|pipeline|analytics|finops/.test(text)) {
+  if (
+    /\b(data|database|databases|metadata|lakehouse|lakehouses|spark|iceberg|dbt|etl|streaming|pipeline|pipelines|analytics|finops|warehouse)\b/.test(
+      text,
+    )
+  ) {
     tags.add("Data Engineering");
   }
-  if (/ai|llm|prompt|agent|gpt|openai|rag|inference|foundation model|deep learning|vision/.test(text)) {
+  if (
+    /\b(ai|llm|llms|prompt|prompts|agent|agents|agentic|gpt|openai|rag|inference|vision|ml)\b/.test(
+      text,
+    )
+  ) {
     tags.add("AI");
     tags.add("LLMs");
   }
-  if (/algorithm|data structure|complexity|np-hard|graph|computation|sorting/.test(text)) {
+  if (/\b(algorithm|algorithms|graph|graphs|complexity|np-hard|sorting|computation)\b/.test(text)) {
     tags.add("Algorithms");
   }
-  if (/quantum|qubit/.test(text)) {
+  if (/\b(quantum|qubit|qubits)\b/.test(text)) {
     tags.add("Quantum Computing");
   }
-  if (/storytelling|author|creator|publishing|literature/.test(text)) {
+  if (/\b(storytelling|author|authors|creator|publishing|literature)\b/.test(text)) {
     tags.add("Creator Economy");
   }
-  if (/leadership|leader|management|culture|executive/.test(text)) {
+  if (/\b(leadership|leader|management|culture|executive)\b/.test(text)) {
     tags.add("Leadership");
   }
-  if (/open source|github|foss/.test(text)) {
+  if (/\b(open source|github|foss)\b/.test(text)) {
     tags.add("Open Source");
   }
 
@@ -233,14 +263,42 @@ function deriveTags(title: string, description: string): string[] {
   return Array.from(tags);
 }
 
+const PROTECTED_SLUGS = new Set([
+  "building-be-your-stories",
+  "enterprise-rag-with-local-llms",
+  "scaling-lakehouses-spark-iceberg",
+  "engineering-handspeak-3d-libras-ai",
+  "aldeon-unified-edge-ssr-multi-cloud-ecosystem",
+  "architecting-pack-multimodal-ocr-logistics",
+  "building-tatu-design-ai-stencil-ar-studio",
+  "autonomous-publishing-posthub-step-functions",
+  "architecting-swango-dbt-bigquery-medallion-b3-finance",
+  "on-memory-deterministic-ai-engineering-governance",
+]);
+
 async function fetchAllSubstackPosts(): Promise<SubstackPost[]> {
-  console.log("Fetching Substack posts from API...");
-  const p1: SubstackPost[] = await fetch("https://celio1878.substack.com/api/v1/posts?limit=50").then((r) => r.json());
-  const p2: SubstackPost[] = await fetch("https://celio1878.substack.com/api/v1/posts?limit=50&offset=50").then((r) => r.json());
-  const all = [...p1, ...p2];
+  console.log("Fetching Substack posts from API (paginated)...");
+  const all: SubstackPost[] = [];
+  const limit = 50;
+  for (let offset = 0; offset < 1000; offset += limit) {
+    const res = await fetch(
+      `https://celio1878.substack.com/api/v1/posts?limit=${limit}&offset=${offset}`,
+    );
+    if (!res.ok) {
+      throw new Error(`Substack API returned ${res.status} at offset ${offset}`);
+    }
+    const page: unknown = await res.json();
+    if (!Array.isArray(page)) {
+      throw new Error("Unexpected Substack API response shape (expected an array)");
+    }
+    all.push(...(page as SubstackPost[]));
+    if (page.length < limit) break;
+  }
   console.log(`Fetched ${all.length} total posts from Substack.`);
 
-  const substantive = all.filter((p) => !p.title.toLowerCase().includes("automated newsletter update"));
+  const substantive = all.filter(
+    (p) => !p.title.toLowerCase().includes("automated newsletter update"),
+  );
   console.log(`Filtered to ${substantive.length} substantive technical dispatches.`);
   return substantive;
 }
@@ -253,26 +311,15 @@ async function sync() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const protectedSlugs = new Set([
-    "building-be-your-stories",
-    "enterprise-rag-with-local-llms",
-    "scaling-lakehouses-spark-iceberg",
-    "engineering-handspeak-3d-libras-ai",
-    "aldeon-unified-edge-ssr-multi-cloud-ecosystem",
-    "architecting-pack-multimodal-ocr-logistics",
-    "building-tatu-design-ai-stencil-ar-studio",
-    "autonomous-publishing-posthub-step-functions",
-    "architecting-swango-dbt-bigquery-medallion-b3-finance",
-    "on-memory-deterministic-ai-engineering-governance",
-  ]);
-
   let createdCount = 0;
+  const syncedSlugs = new Set<string>();
 
   for (const post of posts) {
-    if (protectedSlugs.has(post.slug)) {
+    if (PROTECTED_SLUGS.has(post.slug)) {
       console.log(`Skipping protected native article: ${post.slug}`);
       continue;
     }
+    syncedSlugs.add(post.slug);
 
     let rawTitle = decodeHtmlEntities(post.title).trim();
     if (post.id === 200012832 || rawTitle.startsWith("# Deep Dive:")) {
@@ -287,21 +334,18 @@ async function sync() {
     const fullMarkdown = htmlToCleanMarkdown(rawBody, post.id);
 
     const computedWords = fullMarkdown.split(/\s+/).filter(Boolean).length;
-    const wordCount = computedWords > 100 ? computedWords : post.wordcount && post.wordcount > 0 ? post.wordcount : 1100;
+    const wordCount = computedWords > 0 ? computedWords : (post.wordcount ?? 0);
     const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
     const readTime = `${readTimeMinutes} min read`;
 
     const excerpt = cleanExcerpt(fullMarkdown, cleanDesc).replace(/"/g, '\\"');
-    const date = post.post_date ? post.post_date.slice(0, 10) : new Date().toISOString().slice(0, 10);
+    const date = post.post_date
+      ? post.post_date.slice(0, 10)
+      : new Date().toISOString().slice(0, 10);
     const tags = deriveTags(rawTitle, cleanDesc);
     const canonicalUrl = post.canonical_url;
 
-    const extractedHeadings = extractMarkdownHeadings(fullMarkdown);
-    const hasOwnHeadings = extractedHeadings.length > 0;
-    const headings = hasOwnHeadings
-      ? [...extractedHeadings, "Continue Reading on Substack"]
-      : ["Executive Summary & Strategic Context", "Technical Analysis & Field Perspective", "Continue Reading on Substack"];
-
+    const hasOwnHeadings = extractMarkdownHeadings(fullMarkdown).length > 0;
     const bodySection = hasOwnHeadings
       ? fullMarkdown
       : `## Executive Summary & Strategic Context\n\n${cleanDesc}\n\n## Technical Analysis & Field Perspective\n\n${fullMarkdown || cleanDesc}`;
@@ -319,7 +363,6 @@ source: "substack"
 lang: "en"
 author: "Célio Vieira"
 canonicalUrl: "${canonicalUrl}"
-headings: ${JSON.stringify(headings)}
 ---
 
 > **Originally published on Substack Publication.**  
@@ -341,10 +384,30 @@ The full publication dispatch, community discussions, and ongoing engineering fo
     createdCount++;
   }
 
-  console.log(`Successfully synced and sanitized ${createdCount} full-length Substack articles into ${outputDir}!`);
+  // Prune local Substack-sourced files whose posts no longer exist remotely.
+  let prunedCount = 0;
+  for (const file of fs.readdirSync(outputDir).filter((f) => f.endsWith(".md"))) {
+    const slug = file.replace(/\.md$/, "");
+    if (PROTECTED_SLUGS.has(slug) || syncedSlugs.has(slug)) continue;
+    const raw = fs.readFileSync(path.join(outputDir, file), "utf-8");
+    const { data } = parseFrontmatter(raw);
+    if (typeof data.canonicalUrl === "string" && data.canonicalUrl) {
+      fs.rmSync(path.join(outputDir, file));
+      prunedCount++;
+      console.log(`Pruned stale Substack article: ${slug}`);
+    }
+  }
+
+  console.log(
+    `✓ Synced ${createdCount} Substack articles (pruned ${prunedCount} stale) into app/content/blog/. Run "bun run content:build" to recompile.`,
+  );
 }
 
-sync().catch((err) => {
-  console.error("Sync failed:", err);
-  process.exit(1);
-});
+const isDirectRun =
+  typeof process.argv[1] === "string" && process.argv[1].includes("sync-substack");
+if (isDirectRun) {
+  sync().catch((err) => {
+    console.error("Sync failed:", err);
+    process.exit(1);
+  });
+}
