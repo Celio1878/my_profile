@@ -25,7 +25,19 @@ const checks: Check[] = [
     name: "home renders with a single title and an h1",
     path: "/",
     status: 200,
-    includes: ["<h1", "skip-link", "Célio Vieira"],
+    includes: [
+      "<h1",
+      "skip-link",
+      "Célio Vieira",
+      "twitch.tv/celio1878",
+      "medium.com/@celio.vieira1878",
+      "/academy",
+      "aldeon.app/rag-on",
+      "aldeon.app/mem-on",
+      "aldeon.app/postshub",
+      "apps.apple.com/app/pack/id6797659977",
+      "apps.apple.com/us/app/postshub/id6813979346",
+    ],
     custom: (body) => {
       const titles = body.match(/<title>/g) || [];
       return titles.length === 1 ? null : `expected 1 <title>, found ${titles.length}`;
@@ -38,6 +50,82 @@ const checks: Check[] = [
     excludes: ["opacity:0"],
   },
   { name: "blog index renders", path: "/blog", status: 200, includes: ["Knowledge Hub"] },
+  {
+    name: "academy hub renders with YouTube link and no Twitch CTA",
+    path: "/academy",
+    status: 200,
+    includes: ["<h1", "Academy", "youtube.com/@celio_vieira"],
+    excludes: ["Live Coding on Twitch"],
+    custom: (body) => {
+      const main = body.split("<main")[1]?.split("</main>")[0] ?? "";
+      return main.includes("twitch.tv/celio1878")
+        ? "unexpected twitch.tv/celio1878 inside /academy <main>"
+        : null;
+    },
+  },
+  {
+    name: "academy inaugural lesson renders with JSON-LD",
+    path: "/academy/local-ai-coding-ollama-opencode-qwen3",
+    status: 200,
+    includes: ["application/ld+json", "RTX 3070", "Ollama", "OpenCode"],
+  },
+  {
+    name: "missing academy lesson returns real 404",
+    path: "/academy/definitely-missing-lesson",
+    status: 404,
+  },
+  {
+    name: "RagOn blueprint renders Shiki code + JSON-LD + parsed markdown",
+    path: "/blog/ragon-air-gapped-zero-leak-rag-studio",
+    status: 200,
+    includes: ["shiki", "application/ld+json", "BM25", "FNV-1a", "init-rag-on.mjs"],
+    excludes: ["**Unbounded Vector-DB"],
+  },
+  {
+    name: "local AI blueprint renders Shiki code + JSON-LD + parsed markdown",
+    path: "/blog/local-ai-coding-stack-ollama-opencode-qwen3",
+    status: 200,
+    includes: [
+      "shiki",
+      "application/ld+json",
+      "RTX 3070",
+      "OpenCode",
+      "Qwen3-Coder",
+      "qwen3.5-fast:9b",
+      "OLLAMA_NUM_PARALLEL=1",
+    ],
+    excludes: ["**Zero Data Leakage", "**NVIDIA RTX 3070"],
+  },
+  {
+    name: "Antigravity + Gemini blueprint renders Shiki code + JSON-LD + parsed markdown",
+    path: "/blog/mastering-gemini-models-in-antigravity-agy",
+    status: 200,
+    includes: [
+      "shiki",
+      "application/ld+json",
+      "Antigravity",
+      "Hydrogen",
+      "Neon",
+      "Carbon",
+      "hooks.json",
+    ],
+    excludes: ["**Gemini 4 Hydrogen", "**Deny"],
+  },
+  {
+    name: "Antigravity slash commands blueprint renders Shiki code + JSON-LD + parsed markdown",
+    path: "/blog/antigravity-agy-slash-commands-complete-guide",
+    status: 200,
+    includes: [
+      "shiki",
+      "application/ld+json",
+      "/grill-me",
+      "/swarm",
+      "/compact",
+      "/rollback",
+      "/skills reload",
+    ],
+    excludes: ["**/plan**", "**Planning & Execution**"],
+  },
   {
     name: "article renders parsed inline markdown + highlighting",
     path: "/blog/enterprise-rag-with-local-llms",
@@ -57,12 +145,25 @@ const checks: Check[] = [
     status: 404,
   },
   { name: "unknown route returns real 404", path: "/no-such-page", status: 404 },
-  { name: "about renders", path: "/about", status: 200, includes: ["About Célio Vieira"] },
   {
-    name: "sitemap.xml serves valid XML",
+    name: "about renders with Twitch and Medium links",
+    path: "/about",
+    status: 200,
+    includes: ["About Célio Vieira", "twitch.tv/celio1878", "medium.com/@celio.vieira1878"],
+  },
+  {
+    name: "sitemap.xml serves valid XML with Academy and Local AI blueprint",
     path: "/sitemap.xml",
     status: 200,
-    includes: ["<urlset", "<loc>"],
+    includes: [
+      "<urlset",
+      "<loc>",
+      "/academy",
+      "/blog/local-ai-coding-stack-ollama-opencode-qwen3",
+      "/blog/ragon-air-gapped-zero-leak-rag-studio",
+      "/blog/mastering-gemini-models-in-antigravity-agy",
+      "/blog/antigravity-agy-slash-commands-complete-guide",
+    ],
   },
   {
     name: "rss.xml serves valid RSS",

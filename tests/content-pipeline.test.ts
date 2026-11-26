@@ -73,6 +73,12 @@ describe("headings & excerpts", () => {
     expect(headings[1].id).toBe("with-code-and-bold");
   });
 
+  it("normalizes diacritics for Portuguese heading slugs", () => {
+    expect(slugifyHeading("Segurança, Memória & Configuração")).toBe(
+      "seguranca-memoria-configuracao",
+    );
+  });
+
   it("extracts clean prose excerpts", () => {
     expect(extractExcerpt(sample, "fallback")).toBe(
       "A sufficiently long prose paragraph that should become the excerpt.",
