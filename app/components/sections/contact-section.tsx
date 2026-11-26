@@ -3,7 +3,9 @@ import type { FC } from "react";
 import {
   GitHubIcon,
   LinkedInIcon,
+  MediumIcon,
   SubstackIcon,
+  TwitchIcon,
   XIcon,
   YouTubeIcon,
   type BrandIconProps,
@@ -29,7 +31,7 @@ export function ContactSection() {
     {
       key: "x",
       href: "https://x.com/celio1878",
-      label: "X (@celio1878)",
+      label: dict.contact.xTwitter,
       icon: XIcon,
       iconClass: "text-slate-700 dark:text-slate-300 group-hover:text-primary",
       external: true,
@@ -71,6 +73,24 @@ export function ContactSection() {
       external: true,
       trackTarget: "youtube_channel",
     },
+    {
+      key: "twitch",
+      href: "https://www.twitch.tv/celio1878",
+      label: dict.contact.twitch,
+      icon: TwitchIcon,
+      iconClass: "text-purple-500",
+      external: true,
+      trackTarget: "twitch_profile",
+    },
+    {
+      key: "medium",
+      href: "https://medium.com/@celio.vieira1878",
+      label: dict.contact.medium,
+      icon: MediumIcon,
+      iconClass: "text-slate-800 dark:text-slate-200 group-hover:text-primary",
+      external: true,
+      trackTarget: "medium_profile",
+    },
   ];
 
   const cardClass =
@@ -93,7 +113,7 @@ export function ContactSection() {
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto mb-8 font-mono text-xs">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto mb-8 font-mono text-xs">
             {/* Email */}
             <a href={`mailto:${dict.contact.emailAddress}`} className={cardClass}>
               <div className="flex items-center gap-2.5 truncate">

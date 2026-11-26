@@ -3,7 +3,9 @@ import { Link } from "react-router";
 import {
   GitHubIcon,
   LinkedInIcon,
+  MediumIcon,
   SubstackIcon,
+  TwitchIcon,
   XIcon,
   YouTubeIcon,
 } from "~/components/brand-icons";
@@ -61,16 +63,19 @@ export function Footer() {
             <Link to="/blog" className="hover:text-primary transition-colors">
               {dict.nav.blog}
             </Link>
+            <Link to="/academy" className="hover:text-primary transition-colors">
+              {dict.nav.academy}
+            </Link>
             <Link to="/about" className="hover:text-primary transition-colors">
               {dict.nav.about}
             </Link>
           </div>
 
-          {/* Socials: Email, X, Substack, LinkedIn, GitHub, YouTube */}
-          <div className="flex items-center gap-2">
+          {/* Socials: Email, X, Substack, Medium, LinkedIn, GitHub, YouTube, Twitch */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <a
               href="mailto:contact@celiovieira.com"
-              aria-label="Email"
+              aria-label={dict.ui.emailLabel}
               className={`${socialLinkClass} hover:text-emerald-500 hover:border-emerald-500/60`}
             >
               <Mail size={14} aria-hidden="true" />
@@ -129,6 +134,28 @@ export function Footer() {
               className={`${socialLinkClass} hover:text-red-500 hover:border-red-500/60`}
             >
               <YouTubeIcon size={13} />
+            </a>
+
+            <a
+              href="https://www.twitch.tv/celio1878"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Twitch"
+              onClick={() => trackOutbound("twitch_profile", "footer")}
+              className={`${socialLinkClass} hover:text-purple-500 hover:border-purple-500/60`}
+            >
+              <TwitchIcon size={13} />
+            </a>
+
+            <a
+              href="https://medium.com/@celio.vieira1878"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Medium"
+              onClick={() => trackOutbound("medium_profile", "footer")}
+              className={`${socialLinkClass} hover:text-emerald-500 hover:border-emerald-500/60`}
+            >
+              <MediumIcon size={13} />
             </a>
           </div>
         </div>
