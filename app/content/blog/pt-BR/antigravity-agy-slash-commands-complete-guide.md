@@ -1,74 +1,74 @@
 ---
-title: "O Manual de Campo Completo dos Comandos Slash do Antigravity (agy): Cada Comando / Explicado"
+title: "O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado"
 slug: "antigravity-agy-slash-commands-complete-guide"
-description: "Detalhamento completo de todos os 47 comandos slash oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/."
+description: "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/."
 date: "2026-11-26"
 tags: ["AI", "Agents", "Antigravity", "Gemini", "Developer Tooling", "CLI", "Architecture"]
 lang: "pt-BR"
 author: "Célio Vieira"
 ---
 
-## Por Que Comandos Slash São o Plano de Controle do Antigravity (agy)
+## Por Que Comandos São o Plano de Controle do Antigravity (agy)
 
 Digitar linguagem natural em um prompt de terminal entrega autocompletar; digitar `/` dentro do Google Antigravity (`agy`) abre o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.
 
-Na **Parte 1** ([Stack Local de Programação com IA](/blog/local-ai-coding-stack-ollama-opencode-qwen3)) e na **Parte 2** ([Dominando Modelos Gemini no Antigravity](/blog/mastering-gemini-models-in-antigravity-agy)), cobrimos roteamento de hardware/modelo, Orchestrator Mode em duas fases, governança limitada `<20KB` com MemOn e execução em sandbox. Este **Manual de Campo Parte 3** detalha cada um dos **47 comandos slash oficiais integrados da TUI do `agy`**, agrupa-os por categoria operacional, documenta playbooks comprovados de encadeamento de comandos, destaca armadilhas comuns e mostra como criar seus próprios comandos `/` customizados usando pacotes modernos em `.agents/skills/`.
+Na **Parte 1** ([Stack Local de Programação com IA](/blog/local-ai-coding-stack-ollama-opencode-qwen3)) e na **Parte 2** ([Dominando Modelos Gemini no Antigravity](/blog/mastering-gemini-models-in-antigravity-agy)), cobrimos roteamento de hardware/modelo, Orchestrator Mode em duas fases, governança limitada `<20KB` com MemOn e execução em sandbox. Este **Manual de Campo Parte 3** detalha cada um dos **47 comandos oficiais integrados da TUI do `agy`**, agrupa-os por categoria operacional, documenta playbooks comprovados de encadeamento de comandos, destaca armadilhas comuns e mostra como criar seus próprios comandos `/` customizados usando pacotes modernos em `.agents/skills/`.
 
 ---
 
-## Matriz Completa de Referência Rápida dos Comandos Slash do Antigravity (agy)
+## Matriz Completa de Referência Rápida dos Comandos do Antigravity (agy)
 
 Digitar `/` abre uma paleta interativa filtrável dentro da UI de terminal do `agy` (e no canvas de chat do Antigravity 2.0). Aqui está a referência completa dos 47 comandos organizada entre planejamento, raciocínio, ciclo de vida da conversa, ferramental/governança, navegação no workspace, configuração de modelos e utilitários:
 
-| Comando | Alias | Categoria | Propósito Principal |
-|---|---|---|---|
-| `` `/plan <task>` `` | — | **Planejamento e Execução** | Explora a codebase, esclarece requisitos e redige um Plano de Implementação revisável antes das edições |
-| `` `/grill-me <task>` `` | — | Planejamento e Execução | Entrevista o usuário uma pergunta por vez (com respostas recomendadas) para resolver ambiguidades |
-| `` `/goal <task>` `` | — | Planejamento e Execução | Executa autonomamente sem pausas intermediárias até que o objetivo seja verificado como concluído |
-| `/effort` | — | Raciocínio | Define ou inspeciona o nível de esforço de raciocínio do modelo ativo (`low` até `max` / `xhigh`) |
-| `` `/boost <task>` `` | — | Raciocínio | Raciocínio profundo multiagente sob demanda para bugs complexos, condições de corrida e algoritmos (tiers pagos) |
-| `` `/swarm <task>` `` | — | Orquestração Multiagente | Cria um coordenador + workers paralelos nomeados + `@verifier` em um quadro compartilhado |
-| `/teamwork` | — | Orquestração Multiagente | Times autônomos de agentes guiados por blueprint para projetos multi-arquivo/multidias (Pro/Ultra) |
-| `` `/compact [message]` `` | — | Conversas | Resume a conversa em um checkpoint e opcionalmente continua com `<message>` |
-| `/clear` | `/new` | Conversas | Limpa o terminal e reinicia o contexto ativo da conversa |
-| `/resume` | `/switch` | Conversas | Abre seletor interativo de threads para buscar e carregar sessões anteriores do workspace |
-| `/fork` | `/branch` | Conversas | Clona o histórico da conversa ativa em uma sessão paralela independente |
-| `/rollback` | — | Conversas | Retrocede o histórico da conversa até uma mensagem/turno anterior |
-| `` `/rename <title>` `` | — | Conversas | Renomeia a thread da conversa ativa |
-| `/title` | — | Conversas | Alterna ou atualiza o rastreamento do título da janela do terminal |
-| `` `/btw <query>` `` | — | Contexto / Utilitários | Faz uma pergunta paralela em segundo plano sem poluir ou pausar a thread principal |
-| `` `/copy [n|btw]` `` | — | Utilitários | Copia a última resposta, a *n*-ésima resposta mais recente ou a resposta mais recente de `/btw` |
-| `/agents` | — | Ferramentas e Tarefas | Abre o Agent Manager para alternar agentes customizados e monitorar subagentes em background |
-| `/tasks` | — | Ferramentas e Tarefas | Abre o Task Manager para monitorar processos de shell em background e logs |
-| `` `/schedule <cron> <cmd>` `` | — | Ferramentas e Tarefas | Registra um timer único ou agendamento cron recorrente que desperta o agente |
-| `` `/browser <task>` `` | — | Ferramentas e Tarefas | Delega automação de navegador, checagens de DOM e depuração de UI para o subagente de browser |
-| `/artifact` | — | Ferramentas e Tarefas | Abre o painel interativo Artifact Review para planos, walkthroughs e relatórios |
-| `/permissions` | — | Ferramentas e Segurança | Abre o painel interativo de permissões de ferramentas (`Deny > Ask > Allow`) |
-| `/hooks` | — | Ferramentas e Segurança | Navega pelos hooks de ciclo de vida ativos (`PreToolUse`, `PostToolUse` e `Stop`) |
-| `/mcp` | — | Ferramentas e Tarefas | Abre o gerenciador de servidores Model Context Protocol (MCP) |
-| `/skills` | — | Ferramentas e Tarefas | Lista skills locais/globais; execute `/skills reload` para recarregar skills do disco a quente |
-| `/plugins` | — | Ferramentas e Tarefas | Abre o Plugins Manager ou executa inline `install`, `uninstall`, `enable`, `disable`, `list` |
-| `/learn` | — | Ferramentas e Memória | Captura correções da sessão como regras ou skills persistentes via proposta revisável |
-| `` `/agy-customizations [req]` `` | — | Ferramentas e Tarefas | Carrega o guia de customização para construir, corrigir ou auditar regras, skills, plugins, hooks e MCP |
-| `` `/add-dir <path>` `` | — | Workspace | Anexa um caminho de diretório adicional ao workspace ativo |
-| `` `/codesearch <query>` `` | `/cs`, `/search` | Workspace | Abre painel interativo de Code Search em streaming por todo o workspace |
-| `/diff` | — | Workspace / Revisão | Abre visualizador interativo Diff/Review para inspecionar turnos, diffs e commits linha a linha |
-| `` `/open <path>` `` | — | Workspace | Abre o arquivo ou diretório alvo no editor padrão do sistema operacional |
-| `/context` | — | Workspace / Contexto | Visualiza a alocação de tokens e saturação da janela de contexto em tempo real |
-| `` `/model [model]` `` | — | Configuração | Alterna o modelo padrão persistente ou executa one-shot `` `/model <model> <prompt>` `` |
-| `/config` | `/settings` | Configuração | Abre o overlay interativo do Settings Editor |
-| `/keybindings` | — | Configuração | Abre o editor interativo de atalhos de teclado |
-| `/statusline` | — | Configuração | Abre o overlay de customização do layout da barra de status |
-| `/usage` | — | Conta | Exibe o uso atual de cota por modelo |
-| `/credits` | — | Conta | Visualiza créditos de IA restantes e links de recarga |
-| `/logout` | — | Conta | Desconecta a conta e limpa tokens de autenticação do keyring seguro |
-| `/remote` | — | Utilitários | Alterna capacidades de Remote Control / sessão de agente remoto |
-| `/voice` | — | Utilitários | Fala ao vivo (`/voice live`) ou dita prompts (`/voice dictate`) |
-| `` `/antigravity-guide [q]` `` | — | Utilitários | Consulta a documentação integrada e o sitemap para ajuda de configuração do Antigravity |
-| `/changelog` | — | Utilitários | Abre o visualizador de notas de lançamento (ou imprime mudanças da CLI em modo headless) |
-| `/feedback` | — | Utilitários | Abre o painel de envio de feedback do produto |
-| `/help` | — | Utilitários | Exibe o painel de ajuda com comandos e atalhos de teclado |
-| `/exit` | `/quit` | Utilitários | Encerra a sessão da TUI do `agy` de forma limpa (equivalente a `Ctrl+D Ctrl+D`) |
+| Comando                           | Alias            | Categoria                   | Propósito Principal                                                                                              |
+| --------------------------------- | ---------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `` `/plan <task>` ``              | —                | **Planejamento e Execução** | Explora a codebase, esclarece requisitos e redige um Plano de Implementação revisável antes das edições          |
+| `` `/grill-me <task>` ``          | —                | Planejamento e Execução     | Entrevista o usuário uma pergunta por vez (com respostas recomendadas) para resolver ambiguidades                |
+| `` `/goal <task>` ``              | —                | Planejamento e Execução     | Executa autonomamente sem pausas intermediárias até que o objetivo seja verificado como concluído                |
+| `/effort`                         | —                | Raciocínio                  | Define ou inspeciona o nível de esforço de raciocínio do modelo ativo (`low` até `max` / `xhigh`)                |
+| `` `/boost <task>` ``             | —                | Raciocínio                  | Raciocínio profundo multiagente sob demanda para bugs complexos, condições de corrida e algoritmos (tiers pagos) |
+| `` `/swarm <task>` ``             | —                | Orquestração Multiagente    | Cria um coordenador + workers paralelos nomeados + `@verifier` em um quadro compartilhado                        |
+| `/teamwork`                       | —                | Orquestração Multiagente    | Times autônomos de agentes guiados por blueprint para projetos multi-arquivo/multidias (Pro/Ultra)               |
+| `` `/compact [message]` ``        | —                | Conversas                   | Resume a conversa em um checkpoint e opcionalmente continua com `<message>`                                      |
+| `/clear`                          | `/new`           | Conversas                   | Limpa o terminal e reinicia o contexto ativo da conversa                                                         |
+| `/resume`                         | `/switch`        | Conversas                   | Abre seletor interativo de threads para buscar e carregar sessões anteriores do workspace                        |
+| `/fork`                           | `/branch`        | Conversas                   | Clona o histórico da conversa ativa em uma sessão paralela independente                                          |
+| `/rollback`                       | —                | Conversas                   | Retrocede o histórico da conversa até uma mensagem/turno anterior                                                |
+| `` `/rename <title>` ``           | —                | Conversas                   | Renomeia a thread da conversa ativa                                                                              |
+| `/title`                          | —                | Conversas                   | Alterna ou atualiza o rastreamento do título da janela do terminal                                               |
+| `` `/btw <query>` ``              | —                | Contexto / Utilitários      | Faz uma pergunta paralela em segundo plano sem poluir ou pausar a thread principal                               |
+| `` `/copy [n                      | btw]` ``         | —                           | Utilitários                                                                                                      | Copia a última resposta, a *n*-ésima resposta mais recente ou a resposta mais recente de `/btw` |
+| `/agents`                         | —                | Ferramentas e Tarefas       | Abre o Agent Manager para alternar agentes customizados e monitorar subagentes em background                     |
+| `/tasks`                          | —                | Ferramentas e Tarefas       | Abre o Task Manager para monitorar processos de shell em background e logs                                       |
+| `` `/schedule <cron> <cmd>` ``    | —                | Ferramentas e Tarefas       | Registra um timer único ou agendamento cron recorrente que desperta o agente                                     |
+| `` `/browser <task>` ``           | —                | Ferramentas e Tarefas       | Delega automação de navegador, checagens de DOM e depuração de UI para o subagente de browser                    |
+| `/artifact`                       | —                | Ferramentas e Tarefas       | Abre o painel interativo Artifact Review para planos, walkthroughs e relatórios                                  |
+| `/permissions`                    | —                | Ferramentas e Segurança     | Abre o painel interativo de permissões de ferramentas (`Deny > Ask > Allow`)                                     |
+| `/hooks`                          | —                | Ferramentas e Segurança     | Navega pelos hooks de ciclo de vida ativos (`PreToolUse`, `PostToolUse` e `Stop`)                                |
+| `/mcp`                            | —                | Ferramentas e Tarefas       | Abre o gerenciador de servidores Model Context Protocol (MCP)                                                    |
+| `/skills`                         | —                | Ferramentas e Tarefas       | Lista skills locais/globais; execute `/skills reload` para recarregar skills do disco a quente                   |
+| `/plugins`                        | —                | Ferramentas e Tarefas       | Abre o Plugins Manager ou executa inline `install`, `uninstall`, `enable`, `disable`, `list`                     |
+| `/learn`                          | —                | Ferramentas e Memória       | Captura correções da sessão como regras ou skills persistentes via proposta revisável                            |
+| `` `/agy-customizations [req]` `` | —                | Ferramentas e Tarefas       | Carrega o guia de customização para construir, corrigir ou auditar regras, skills, plugins, hooks e MCP          |
+| `` `/add-dir <path>` ``           | —                | Workspace                   | Anexa um caminho de diretório adicional ao workspace ativo                                                       |
+| `` `/codesearch <query>` ``       | `/cs`, `/search` | Workspace                   | Abre painel interativo de Code Search em streaming por todo o workspace                                          |
+| `/diff`                           | —                | Workspace / Revisão         | Abre visualizador interativo Diff/Review para inspecionar turnos, diffs e commits linha a linha                  |
+| `` `/open <path>` ``              | —                | Workspace                   | Abre o arquivo ou diretório alvo no editor padrão do sistema operacional                                         |
+| `/context`                        | —                | Workspace / Contexto        | Visualiza a alocação de tokens e saturação da janela de contexto em tempo real                                   |
+| `` `/model [model]` ``            | —                | Configuração                | Alterna o modelo padrão persistente ou executa one-shot `` `/model <model> <prompt>` ``                          |
+| `/config`                         | `/settings`      | Configuração                | Abre o overlay interativo do Settings Editor                                                                     |
+| `/keybindings`                    | —                | Configuração                | Abre o editor interativo de atalhos de teclado                                                                   |
+| `/statusline`                     | —                | Configuração                | Abre o overlay de customização do layout da barra de status                                                      |
+| `/usage`                          | —                | Conta                       | Exibe o uso atual de cota por modelo                                                                             |
+| `/credits`                        | —                | Conta                       | Visualiza créditos de IA restantes e links de recarga                                                            |
+| `/logout`                         | —                | Conta                       | Desconecta a conta e limpa tokens de autenticação do keyring seguro                                              |
+| `/remote`                         | —                | Utilitários                 | Alterna capacidades de Remote Control / sessão de agente remoto                                                  |
+| `/voice`                          | —                | Utilitários                 | Fala ao vivo (`/voice live`) ou dita prompts (`/voice dictate`)                                                  |
+| `` `/antigravity-guide [q]` ``    | —                | Utilitários                 | Consulta a documentação integrada e o sitemap para ajuda de configuração do Antigravity                          |
+| `/changelog`                      | —                | Utilitários                 | Abre o visualizador de notas de lançamento (ou imprime mudanças da CLI em modo headless)                         |
+| `/feedback`                       | —                | Utilitários                 | Abre o painel de envio de feedback do produto                                                                    |
+| `/help`                           | —                | Utilitários                 | Exibe o painel de ajuda com comandos e atalhos de teclado                                                        |
+| `/exit`                           | `/quit`          | Utilitários                 | Encerra a sessão da TUI do `agy` de forma limpa (equivalente a `Ctrl+D Ctrl+D`)                                  |
 
 ---
 
@@ -86,13 +86,13 @@ Estes sete comandos controlam **como** o Antigravity pensa, esclarece requisitos
 
 ### Escolhendo Entre /plan, /goal, /boost, /swarm e /teamwork
 
-| Comando | Melhor Escopo | Pontos de Checagem Humanos | Topologia Multiagente | Consumo de Cota |
-|---|---|---|---|---|
-| **`/plan`** | Funcionalidade única, correção de bug ou migração escopada | Revisão e aprovação antes das edições | Planejador único → executor rápido | Baixo–Médio |
-| **`/goal`** | Loops bem testados de build/correção com critérios objetivos de CI | Apenas gate final de conclusão | Loop autônomo único | Médio |
-| **`/boost`** | Análise profunda de causa raiz em bugs difíceis ou algoritmos | Relatório interativo de achados | Loop multiagente de raciocínio profundo | Alto |
-| **`/swarm`** | Mudanças paralelas entre arquivos/pacotes independentes | Plano do coordenador + diff do `@verifier` | Coordenador + *N* workers + `@verifier` | Médio–Alto |
-| **`/teamwork`** | Construções greenfield de múltiplos dias ou migrações cross-repo | Revisões por marco | Time dinâmico de agentes autocrítico | Alto (Pro/Ultra) |
+| Comando         | Melhor Escopo                                                      | Pontos de Checagem Humanos                 | Topologia Multiagente                   | Consumo de Cota  |
+| --------------- | ------------------------------------------------------------------ | ------------------------------------------ | --------------------------------------- | ---------------- |
+| **`/plan`**     | Funcionalidade única, correção de bug ou migração escopada         | Revisão e aprovação antes das edições      | Planejador único → executor rápido      | Baixo–Médio      |
+| **`/goal`**     | Loops bem testados de build/correção com critérios objetivos de CI | Apenas gate final de conclusão             | Loop autônomo único                     | Médio            |
+| **`/boost`**    | Análise profunda de causa raiz em bugs difíceis ou algoritmos      | Relatório interativo de achados            | Loop multiagente de raciocínio profundo | Alto             |
+| **`/swarm`**    | Mudanças paralelas entre arquivos/pacotes independentes            | Plano do coordenador + diff do `@verifier` | Coordenador + *N* workers + `@verifier` | Médio–Alto       |
+| **`/teamwork`** | Construções greenfield de múltiplos dias ou migrações cross-repo   | Revisões por marco                         | Time dinâmico de agentes autocrítico    | Alto (Pro/Ultra) |
 
 ---
 
@@ -114,7 +114,7 @@ Degradação de contexto e threads poluídas descarrilam sessões longas silenci
 
 ## Categoria 3: Ferramentas, Automação, Governança e Segurança
 
-Doze comandos slash conectam capacidades externas, execução em background e controles determinísticos de segurança ao Antigravity:
+Doze comandos conectam capacidades externas, execução em background e controles determinísticos de segurança ao Antigravity:
 
 - **`/agents`** — Abre o overlay Agent Manager para inspecionar subagentes em execução, IDs de conversa e definições de agentes customizados.
 - **`/tasks`** — Monitora execuções de shell em background iniciadas de forma assíncrona (servidores dev, runners de teste, builds) e transmite seus logs ao vivo.
@@ -192,7 +192,7 @@ Comandos individuais são práticos; encadeá-los em loops repetíveis é onde a
 /schedule "0 9 * * 1" Run bun run audit:content and report any broken links
 ```
 
-### Cinco Erros Comuns com Comandos Slash para Evitar
+### Cinco Erros Comuns com Comandos para Evitar
 
 1. **Chamar `/goal` sem testes automatizados de verificação:** Loops autônomos otimizam para o que conseguem medir. Sem asserções que falhem, checagens de TypeScript ou testes de smoke SSR, `/goal` pode declarar silenciosamente uma saída quebrada como concluída.
 2. **Esperar `/context` atingir 85%+ antes de rodar `/compact`:** A recordação do modelo enfraquece muito antes do limite rígido da janela. Cheque `/context` após o término da exploração e rode `/compact` de forma limpa logo antes de escrever código.
@@ -202,16 +202,16 @@ Comandos individuais são práticos; encadeá-los em loops repetíveis é onde a
 
 ---
 
-## Criando Comandos Slash Customizados via .agents/skills/
+## Criando Comandos Customizados via .agents/skills/
 
 Workflows legados (`.agents/workflows/*.md` e `_agents/workflows/*.md`) estão obsoletos. No Antigravity moderno, toda **Skill** customizada dentro de `.agents/skills/<name>/SKILL.md` (escopo de workspace, versionada) ou `~/.gemini/config/skills/<name>/SKILL.md` (escopo global de máquina) torna-se automaticamente **ambos**:
 
-1. Um **comando slash explícito** (digitando `/<name>` diretamente na barra de prompt ou no menu `/`), e
+1. Um **comando explícito** (digitando `/<name>` diretamente na barra de prompt ou no menu `/`), e
 2. Uma **capacidade semanticamente descobrível** carregada sob demanda via divulgação progressiva (de modo que apenas `name` e `description` consomem tokens na inicialização).
 
 Se você tiver arquivos de workflow legados em um repositório mais antigo, invoque o fluxo de migração integrado do Antigravity uma vez para convertê-los de forma idempotente em skills (preservando backups `.md.bak`).
 
-Aqui está um template mínimo e pronto para produção criando um comando slash customizado `/release-check` dentro de qualquer repositório:
+Aqui está um template mínimo e pronto para produção criando um comando customizado `/release-check` dentro de qualquer repositório:
 
 ```markdown
 ---

@@ -3,7 +3,7 @@
     "slug": "mastering-gemini-models-in-antigravity-agy",
     "title": "Mastering Gemini Models in Antigravity (agy): Architecture, Memory, Security & Honest Limits",
     "description": "Field-tested engineering guide to running Gemini 4 tiers (Hydrogen, Neon, Argon, Carbon) inside Google Antigravity (agy) — covering dual-phase orchestration, /plan + /grill-me workflows, MemOn (<20KB) memory, hooks, sandbox security, known pitfalls, and when to use agy vs. local Ollama + OpenCode.",
-    "excerpt": "A 1-million-token context window does not automatically produce deterministic engineering. After shipping the eight products inside the Aldeon ecosystem (aldeon.app) and maintaining celiovieira.com with Google Antigravity (agy CLI and Antigravity 2.0), th…",
+    "excerpt": "A 1-million-token context window does not automatically produce deterministic engineering. After shipping the products inside the Aldeon ecosystem (aldeon.app) and maintaining celiovieira.com with Google Antigravity (agy CLI and Antigravity 2.0), the bigg…",
     "date": "2026-11-26",
     "tags": [
       "AI",
@@ -15,7 +15,7 @@
       "Developer Tooling"
     ],
     "readTimeMinutes": 13,
-    "wordCount": 2461,
+    "wordCount": 2482,
     "headings": [
       {
         "id": "why-frontier-models-still-drift-without-harness-engineering",
@@ -209,8 +209,8 @@
   },
   {
     "slug": "antigravity-agy-slash-commands-complete-guide",
-    "title": "The Complete Antigravity (agy) Slash Command Field Manual: Every / Command Explained",
-    "description": "Comprehensive breakdown of all 47 official Google Antigravity (agy) slash commands — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom / commands via .agents/skills/.",
+    "title": "The Complete Antigravity (agy) Command Field Manual: Every / Command Explained",
+    "description": "Comprehensive breakdown of all 47 official Google Antigravity (agy) commands — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom / commands via .agents/skills/.",
     "excerpt": "Typing natural language into a terminal prompt gets you autocomplete; typing / inside Google Antigravity (agy) opens the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.",
     "date": "2026-11-26",
     "tags": [
@@ -223,16 +223,16 @@
       "Architecture"
     ],
     "readTimeMinutes": 15,
-    "wordCount": 2860,
+    "wordCount": 2873,
     "headings": [
       {
-        "id": "why-slash-commands-are-the-control-plane-of-antigravity-agy",
-        "text": "Why Slash Commands Are the Control Plane of Antigravity (agy)",
+        "id": "why-commands-are-the-control-plane-of-antigravity-agy",
+        "text": "Why Commands Are the Control Plane of Antigravity (agy)",
         "level": 2
       },
       {
-        "id": "complete-antigravity-agy-slash-command-quick-reference-matrix",
-        "text": "Complete Antigravity (agy) Slash Command Quick-Reference Matrix",
+        "id": "complete-antigravity-agy-command-quick-reference-matrix",
+        "text": "Complete Antigravity (agy) Command Quick-Reference Matrix",
         "level": 2
       },
       {
@@ -276,8 +276,8 @@
         "level": 3
       },
       {
-        "id": "authoring-custom-slash-commands-via-agentsskills",
-        "text": "Authoring Custom Slash Commands via .agents/skills/",
+        "id": "authoring-custom-commands-via-agentsskills",
+        "text": "Authoring Custom Commands via .agents/skills/",
         "level": 2
       },
       {
@@ -295,18 +295,18 @@
     ],
     "translations": {
       "pt-BR": {
-        "title": "O Manual de Campo Completo dos Comandos Slash do Antigravity (agy): Cada Comando / Explicado",
-        "description": "Detalhamento completo de todos os 47 comandos slash oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/.",
+        "title": "O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado",
+        "description": "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/.",
         "excerpt": "Digitar linguagem natural em um prompt de terminal entrega autocompletar; digitar / dentro do Google Antigravity (agy) abre o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.",
         "headings": [
           {
-            "id": "por-que-comandos-slash-sao-o-plano-de-controle-do-antigravity-agy",
-            "text": "Por Que Comandos Slash São o Plano de Controle do Antigravity (agy)",
+            "id": "por-que-comandos-sao-o-plano-de-controle-do-antigravity-agy",
+            "text": "Por Que Comandos São o Plano de Controle do Antigravity (agy)",
             "level": 2
           },
           {
-            "id": "matriz-completa-de-referencia-rapida-dos-comandos-slash-do-antigravity-agy",
-            "text": "Matriz Completa de Referência Rápida dos Comandos Slash do Antigravity (agy)",
+            "id": "matriz-completa-de-referencia-rapida-dos-comandos-do-antigravity-agy",
+            "text": "Matriz Completa de Referência Rápida dos Comandos do Antigravity (agy)",
             "level": 2
           },
           {
@@ -345,13 +345,13 @@
             "level": 2
           },
           {
-            "id": "cinco-erros-comuns-com-comandos-slash-para-evitar",
-            "text": "Cinco Erros Comuns com Comandos Slash para Evitar",
+            "id": "cinco-erros-comuns-com-comandos-para-evitar",
+            "text": "Cinco Erros Comuns com Comandos para Evitar",
             "level": 3
           },
           {
-            "id": "criando-comandos-slash-customizados-via-agentsskills",
-            "text": "Criando Comandos Slash Customizados via .agents/skills/",
+            "id": "criando-comandos-customizados-via-agentsskills",
+            "text": "Criando Comandos Customizados via .agents/skills/",
             "level": 2
           },
           {
@@ -360,7 +360,7 @@
             "level": 2
           }
         ],
-        "wordCount": 3324,
+        "wordCount": 3336,
         "readTimeMinutes": 17
       }
     }
