@@ -7,22 +7,25 @@
 - **Primary Focus:** Applied AI & Data/Lakehouses, backed by Distributed Architecture and Full-Stack Product Engineering.
 - **Umbrella Venture:** **Aldeon** (`aldeon.app`), an autonomous venture studio and multi-product technology ecosystem.
 - **Ventures & Products:**
-  - **SwanGo:** B3-first financial control & market intelligence on [aldeon.app/swango](https://aldeon.app/swango).
-  - **OnMemory:** AI engineering memory governance protocol on [aldeon.app/on-memory](https://aldeon.app/on-memory).
-  - **HandSpeak:** 3D Libras translation & accessibility platform on [aldeon.app/handspeak](https://aldeon.app/handspeak).
-  - **Be Your Stories (BYS):** Cross-platform reading and storytelling platform with live apps on [Web](https://aldeon.app/bys), [Apple App Store](https://apps.apple.com/app/be-your-stories/id6812739940), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.bys).
-  - **Pack:** Autonomous condo mailroom automation and delivery notification system.
-  - **TATU Design (T3O2):** AI-powered custom tattoo studio and generative artwork engine.
-  - **PostHub:** Multi-platform programmatic social content distribution pipeline.
+  - **SwanGo:** B3-first financial control & market intelligence (`49/49` dbt tests, risk & stress engines) on [aldeon.app/swango](https://aldeon.app/swango).
+  - **RagOn:** 100% free air-gapped zero-leak RAG studio (`<2ms` BM25 + 3-gram X-Ray, corpus auditor, 7-file CLI) on [aldeon.app/rag-on](https://aldeon.app/rag-on).
+  - **MemOn (formerly OnMemory):** AI engineering memory governance protocol (`<20KB`, `init-mem-on.mjs`) on [aldeon.app/mem-on](https://aldeon.app/mem-on).
+  - **HandSpeak:** 3D Libras translation, A–Z & 0–10 WebGL tutor, Gemini 3.8 Flash & P2P video on [aldeon.app/handspeak](https://aldeon.app/handspeak).
+  - **Be Your Stories (BYS):** Cross-platform reading, translation, audiobooks & PIX Pro on [Web](https://aldeon.app/bys), [Apple App Store](https://apps.apple.com/app/bys-be-your-stories/id6812739940), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.bys).
+  - **Pack:** Autonomous condo mailroom automation (`Gemini 3.8 Flash` OCR) on [Web](https://aldeon.app/pack), [Apple App Store](https://apps.apple.com/app/pack/id6797659977), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.pack).
+  - **TATU Design (T3O2):** AI stencil studio (`Gemini 3.8 Flash`) & 60 FPS AR on [Web](https://aldeon.app/tatu), [Apple App Store](https://apps.apple.com/app/tatu-design/id6812737660), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.tatu).
+  - **PostHub:** Autonomous 5-platform publishing engine on [Web](https://aldeon.app/postshub), [Apple App Store](https://apps.apple.com/us/app/postshub/id6813979346), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.posthub).
   - **NodeJS App Builder:** Production-ready microservices CLI generator on npm.
   - **AWS CDK Factory:** Modular Infrastructure-as-Code construct library on npm.
 - **Contact & Channels:**
   - Email: `contact@celiovieira.com`
   - Substack: https://substack.com/@celio1878
+  - Medium: https://medium.com/@celio.vieira1878
   - X (Twitter): https://x.com/celio1878
   - LinkedIn: https://www.linkedin.com/in/celio-vieira
   - GitHub: https://github.com/Celio1878
   - YouTube: https://www.youtube.com/@celio_vieira
+  - Twitch: https://www.twitch.tv/celio1878
 
 ### About the Architecture & Codebase
 - **Aesthetic:** Terminal & Vector Minimalist (carbon `#090b10`, titanium gray `#212836`, emerald `#10b981`, amber `#f59e0b`).
@@ -261,3 +264,55 @@
 - [x] Vitest (20 tests), `smoke-ssr.ts` (10 assertions), GitHub Actions CI; Prettier config + format gate; dead code/keys/deps removed; Bun Dockerfile.
 - [x] P2 quick wins: RSS, outbound analytics events, Shiki highlighting, Web Share + LinkedIn share.
 - [x] All gates green: `lint`, `typecheck`, `format:check`, `test`, `audit:content`, `build`, `smoke`.
+
+---
+
+### Session 20 (Current) — Twitch & Medium Channels, YouTube Academy Hub, and Local AI Coding Blueprint
+
+#### 1. Twitch & Medium Social Integration
+- [x] Added `TwitchIcon` (`https://www.twitch.tv/celio1878`) and `MediumIcon` (`https://medium.com/@celio.vieira1878`) to `app/components/brand-icons.tsx`.
+- [x] Wired both channels into Footer, Contact (`4×2` grid), About (`4×2` grid), Home JSON-LD `sameAs`, and `/blog` (Medium CTA + author box).
+
+#### 2. Academy Feature (`/academy` & `/academy/:slug`)
+- [x] Built strongly-typed bilingual catalog in `app/lib/academy.ts` (4 tracks, 8 lessons, `upcoming` & `published` states, verified `relatedBlogSlugs`).
+- [x] Built privacy-first `YouTubePlayer` (`youtube-nocookie.com` click-to-play facade + Terminal Upcoming stage), `/academy` filterable hub, `/academy/:slug` detail view (real 404 + `VideoObject`/`LearningResource` JSON-LD), and Home `<AcademyPreview />`.
+- [x] Registered routes in `app/routes.ts`, added Nav/Mobile Drawer/Footer links, and included Academy URLs in `/sitemap.xml`.
+
+#### 3. Local AI Blueprint (Ollama, OpenCode, Qwen 3.5 & Qwen3-Coder)
+- [x] Authored `app/content/blog/local-ai-coding-stack-ollama-opencode-qwen3.md` anchored on the real **RTX 3070 8 GB + Ryzen 7 3700X + 32 GB DDR4-3600 + NVMe/HDD** workstation (dual-model routing, Ollama KV/Flash Attention/Modelfile tuning, `opencode.json`, OnMemory synergy, FinOps savings, limitations, and 4-stage hardware progression).
+- [x] Protected the new slug in `scripts/sync-substack.ts` (11 protected native blueprints / 79 total articles).
+- [x] Added `tests/academy.test.ts` and extended `scripts/smoke-ssr.ts`.
+
+---
+
+### Session 21 — `/aldeon` 8-Product Ecosystem Sync (`RagOn`, `MemOn` Rebrand & Mobile Store Launches)
+
+- [x] Upgraded `app/components/sections/ventures.tsx` to a symmetrical `4×2` grid covering all **8 active Aldeon products**: `(SwanGo + RagOn)`, `(MemOn + HandSpeak)`, `(Be Your Stories + Pack)`, and `(TATU Design + PostHub)`.
+- [x] Integrated **RagOn** (`aldeon.app/rag-on`) and **MemOn** (`aldeon.app/mem-on`, formerly OnMemory) across Ventures, Capabilities, About (`4×2`), and Academy (`app/lib/academy.ts`).
+- [x] Updated all 4 mobile apps with live Apple App Store URLs (`bys`, `pack`, `tatu`, `postshub`), canonical `/postshub` URL, `Gemini 3.8 Flash` upgrades, SwanGo `49/49` dbt tests & risk/stress engines, and Aldeon `TypeScript 7` + `Biome`.
+- [x] Authored `app/content/blog/ragon-air-gapped-zero-leak-rag-studio.md` (`PROTECTED_SLUGS` → 12 protected blueprints / 80 articles) and updated 5 existing blueprints (`aldeon`, `on-memory/mem-on`, `pack`, `posthub`, `local-ai`).
+- [x] Extended `scripts/smoke-ssr.ts` and updated governance docs.
+
+---
+
+### Session 22 — Antigravity (agy) & Gemini 4 Engineering Blueprint
+
+- [x] Authored protected native Engineering Blueprint `app/content/blog/mastering-gemini-models-in-antigravity-agy.md` (`PROTECTED_SLUGS` → 13 protected blueprints / 81 articles) covering Gemini 4 tiers (`Hydrogen`, `Neon`, `Argon`, `Carbon`), Orchestrator Mode & `/swarm`, `/plan` + `/grill-me`, `24 KB` / `20k`-token rule caps + MemOn (`<20KB`) memory architecture, OS sandbox & `.agents/hooks.json` security guardrails, honest friction points/limits, and a hybrid cloud-vs-local matrix.
+- [x] Added reciprocal Part 2 link on `local-ai-coding-stack-ollama-opencode-qwen3.md` and attached the blueprint to Academy Track 1 Lesson 2 (`private-rag-onmemory-agent-governance`) in `app/lib/academy.ts`.
+- [x] Extended `scripts/smoke-ssr.ts` to 16 SSR checks and synchronized governance docs.
+
+---
+
+### Session 23 — Antigravity (agy) Slash Command Field Manual (Part 3)
+
+- [x] Authored protected native Engineering Blueprint `app/content/blog/antigravity-agy-slash-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 protected blueprints / 82 articles) breaking down all 47 official `agy` `/` slash commands across 5 categories, 5 command-chaining playbooks, common pitfalls, and custom `/` command authoring via `.agents/skills/<name>/SKILL.md`.
+- [x] Synchronized reciprocal Part 1–3 series links across `local-ai-coding-stack-ollama-opencode-qwen3.md` and `mastering-gemini-models-in-antigravity-agy.md`, and attached the blueprint to Academy Track 1 Lesson 2 (`private-rag-onmemory-agent-governance`) in `app/lib/academy.ts`.
+- [x] Extended `scripts/smoke-ssr.ts` to **17 SSR checks** and synchronized governance docs.
+
+---
+
+### Session 24 (Current) — Full Bilingual (`en` / `pt-BR`) Coverage Across App, Tags, Head Meta & 14 Native Blueprints
+
+- [x] Upgraded build-time blog pipeline (`scripts/lib/markdown.ts`, `scripts/build-blog.ts`, `scripts/audit-content.ts`) and runtime accessor (`app/lib/blog.ts`) to compile, validate, and lazily serve `app/content/blog/pt-BR/*.md` alongside canonical English articles (`82` total / `14` bilingual EN+pt-BR native blueprints).
+- [x] Translated all **14 native Engineering Blueprints** completely into Brazilian Portuguese (`app/content/blog/pt-BR/*.md`).
+- [x] Created `app/lib/tags.ts` (localized Blog & Academy tags) and `app/hooks/use-localized-meta.ts` (live `<title>` & `<meta name="description">` sync), eliminated remaining hardcoded English UI chips/badges across Hero, Ventures (`4×2`), Contact, Footer, and route headers, added localized EN-original fallback notice on Substack dispatches, and verified **29/29** Vitest tests, `audit:content`, and **17/17** SSR smoke checks.

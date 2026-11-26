@@ -165,6 +165,37 @@
 - [x] Updated governance docs (`CONTEXT.md`, `MEMORY.md`, `RULES.md`, `TASKS.md`, `SUMMARY.md`, `README.md`, `AGENTS.md`).
 - [x] Passed all gates: `lint`, `typecheck`, `format:check`, `test`, `audit:content`, `build`, `smoke`.
 
+### Phase 15: Twitch & Medium Integration, Academy Video Hub, and Local AI Blueprint
+- [x] Added canonical `TwitchIcon` & `MediumIcon` SVGs in `app/components/brand-icons.tsx`.
+- [x] Integrated **Twitch** (`https://www.twitch.tv/celio1878`) and **Medium** (`https://medium.com/@celio.vieira1878`) across Footer, Contact (`4×2` grid), About (`4×2` grid), Home `Person` JSON-LD `sameAs`, and `/blog` banner & author bio (Medium).
+- [x] Launched **Academy** (`/academy` and `/academy/:slug`) with 4 engineering tracks, 8 bilingual lessons (`upcoming` + `published` YouTube support), privacy-first click-to-play `youtube-nocookie.com` facade (`app/components/youtube-player.tsx`), `VideoObject`/`LearningResource` JSON-LD, Nav/Footer/Sitemap links, and Home `<AcademyPreview />`.
+- [x] Authored protected native Engineering Blueprint [`app/content/blog/local-ai-coding-stack-ollama-opencode-qwen3.md`](app/content/blog/local-ai-coding-stack-ollama-opencode-qwen3.md) covering Ollama, OpenCode, Qwen 3.5, Qwen3-Coder, problem solving + OnMemory synergy, FinOps savings, limitations, and hardware sizing anchored on the RTX 3070 8GB + Ryzen 7 3700X + 32GB DDR4-3600 + NVMe/HDD workstation.
+- [x] Added `tests/academy.test.ts` (Academy catalog & 1:1 EN/PT-BR dictionary parity) and extended `scripts/smoke-ssr.ts`.
+
+### Phase 16: Full `/aldeon` 8-Product Ecosystem Sync (`RagOn`, `MemOn` Rebrand & Mobile Store Launches)
+- [x] Redesigned `app/components/sections/ventures.tsx` into a symmetrical `4×2` 8-product grid: `(SwanGo + RagOn)`, `(MemOn + HandSpeak)`, `(Be Your Stories + Pack)`, and `(TATU Design + PostHub)`.
+- [x] Integrated **RagOn** (`https://aldeon.app/rag-on`) and rebranded **OnMemory → MemOn** (`https://aldeon.app/mem-on`, `init-mem-on.mjs`) across Ventures, Capabilities, About (`4×2`), and Academy (`app/lib/academy.ts`).
+- [x] Updated all 4 mobile apps with live Apple App Store links (`bys-be-your-stories/id6812739940`, Pack `id6797659977`, TATU `id6812737660`, PostHub `id6813979346`), canonical `/postshub` URL, `Gemini 3.8 Flash` upgrades, SwanGo `49/49` dbt tests & risk/stress engines, and Aldeon `TypeScript 7` + `Biome`.
+- [x] Authored protected native blueprint `app/content/blog/ragon-air-gapped-zero-leak-rag-studio.md` (`PROTECTED_SLUGS` → 12 total / 80 articles) and synchronized 5 existing blueprints (`aldeon`, `on-memory/mem-on`, `pack`, `posthub`, `local-ai`).
+- [x] Extended `scripts/smoke-ssr.ts` and updated governance docs (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
+
+### Phase 17: Antigravity (agy) & Gemini 4 Engineering Blueprint
+- [x] Authored protected native blueprint `app/content/blog/mastering-gemini-models-in-antigravity-agy.md` (`PROTECTED_SLUGS` → 13 total / 81 articles) covering Gemini 4 tiers (`Hydrogen`, `Neon`, `Argon`, `Carbon`), dual-phase Orchestrator Mode & `/swarm`, `/plan` + `/grill-me`, `24 KB` / `20k`-token rule caps + MemOn (`<20KB`) memory layering, OS sandbox & `.agents/hooks.json` security, real failure modes, capability bounds, and cloud-vs-local hybrid workflow.
+- [x] Added bidirectional cross-link in `app/content/blog/local-ai-coding-stack-ollama-opencode-qwen3.md` and attached the blueprint as a companion read on Academy Track 1 Lesson 2 (`app/lib/academy.ts`).
+- [x] Extended `scripts/smoke-ssr.ts` to **16 checks** covering the new article route and `/sitemap.xml` entry, and updated governance documentation (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
+
+### Phase 18: Antigravity (agy) Slash Command Field Manual (Part 3)
+- [x] Authored protected native blueprint `app/content/blog/antigravity-agy-slash-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 total / 82 articles) breaking down all 47 official built-in `agy` TUI `/` slash commands across 5 operational categories, 5 command-chaining playbooks, common mistakes, and custom `/` skill authoring via `.agents/skills/<name>/SKILL.md`.
+- [x] Synchronized reciprocal Part 1–3 links across `local-ai-coding-stack-ollama-opencode-qwen3.md` and `mastering-gemini-models-in-antigravity-agy.md`, and attached the blueprint to Academy Track 1 Lesson 2 (`app/lib/academy.ts`).
+- [x] Extended `scripts/smoke-ssr.ts` to **17 checks** and updated governance documentation (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
+
+### Phase 19: Full Bilingual (`en` / `pt-BR`) Coverage Across App, Tags, Meta & All 14 Native Blueprints
+- [x] Upgraded `scripts/lib/markdown.ts` (`NFD` diacritic-safe heading slugs), `scripts/build-blog.ts` (`availableLocales`, `translations["pt-BR"]`, lazy `generated/pt-BR/<slug>.json` chunks), `scripts/audit-content.ts` (100% native PT-BR coverage audit), and `app/lib/blog.ts` (`resolvePostForLocale`, localized lazy loader).
+- [x] Translated all **14 native Engineering Blueprints** (`~20.9k` words) cleanly into natural Brazilian Portuguese (`app/content/blog/pt-BR/*.md`), keeping canonical product/CLI/tech terminology and 100% passing `audit:content`.
+- [x] Added shared topic tag localization (`app/lib/tags.ts`), dynamic SSR-safe client head metadata sync (`app/hooks/use-localized-meta.ts`), full 1:1 EN/`pt-BR` dictionaries for remaining hero chips, all 8 product cards, card sub-badges, npm labels, ARIA labels, and English-original Substack dispatch notice (`app/lib/profile-translations.ts`).
+- [x] Wired `resolvePostForLocale`, translated tags, bilingual search, dynamic `document.title`/`<meta>`, and lazy `pt-BR` article hydration cleanly across `home`, `about`, `blog`, `blog-post`, `academy`, `academy-lesson`, `latest-insights`, `academy-preview`, `youtube-player`, `hero`, `ventures`, `contact-section`, `footer`, and `error-boundary-page`.
+- [x] Expanded Vitest coverage to **29 tests** (`tests/content-pipeline.test.ts` 21, `tests/academy.test.ts` 8), passed all quality gates, and updated governance documentation.
+
 ---
 
 ## Future Roadmap & Backlog

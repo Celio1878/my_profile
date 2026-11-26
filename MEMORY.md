@@ -65,6 +65,7 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 - Primary email: `contact@celiovieira.com`.
 - Added **Substack** (`https://substack.com/@celio1878`) with dedicated callout banner on `/blog`.
 - Added **X (Twitter)** (`https://x.com/celio1878`).
+- Added **Twitch** (`https://www.twitch.tv/celio1878`) and **Medium** (`https://medium.com/@celio.vieira1878`) across Footer, Contact (`4×2` grid), About (`4×2` grid), Home JSON-LD `sameAs`, and `/blog` (Medium CTA).
 - Maintained LinkedIn, GitHub (personal & BYS), and YouTube.
 
 ---
@@ -101,20 +102,20 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
 
 ---
 
-## 8. Aldeon Venture Ecosystem, SwanGo, OnMemory & HandSpeak Integration
+## 8. Aldeon Venture Ecosystem, SwanGo, MemOn, RagOn & HandSpeak Integration
 
-### 7-Product Showcase Pattern
-- **Grid Architecture:** Child ventures showcase features all **7 active products** under `aldeon.app`: **SwanGo** (`md:col-span-2` full-width highlight showcasing `$0/mo` `dbt-core` + BigQuery Medallion warehouse, 5 quantitative engines, 6-Stage Simulator, and 4-track Financial Academy), followed by 3 balanced two-column rows: `(Be Your Stories + Pack)`, `(TATU Design + PostHub)`, and `(HandSpeak + OnMemory)`.
-- **Developer Tooling Grid:** Open-source npm packages (`NodeJS App Builder` and `AWS CDK Factory`) remain in the 2-column grid below the 7 active ventures.
+### 8-Product Symmetrical 4×2 Showcase Pattern
+- **Grid Architecture:** Child ventures showcase features all **8 active products** under `aldeon.app` in a symmetrical 4×2 grid: Row 1 `(SwanGo + RagOn)`, Row 2 `(MemOn + HandSpeak)`, Row 3 `(Be Your Stories + Pack)`, and Row 4 `(TATU Design + PostHub)`.
+- **Developer Tooling Grid:** Open-source npm packages (`NodeJS App Builder` and `AWS CDK Factory`) remain in the 2-column grid below the 8 active ventures.
 
 ### Link Hierarchy & Store Verification
-- **Web Portals:** Standardized on `https://aldeon.app/<product>` plus direct secondary deep-links for **SwanGo** (`/swango/simulator`, `/swango/learn`) and **HandSpeak** (`/handspeak/learn`).
-- **App Store Production Links:** Live production apps on Apple App Store (Be Your Stories `id6812739940`, TATU Design `id6812737660`).
+- **Web Portals:** Standardized on `https://aldeon.app/<product>` (`swango`, `rag-on`, `mem-on`, `handspeak`, `bys`, `pack`, `tatu`, canonical `postshub`) plus direct secondary deep-links for **SwanGo** (`/swango/simulator`, `/swango/learn`) and **HandSpeak** (`/handspeak/learn`).
+- **App Store Production Links:** Live production apps on Apple App Store for all 4 mobile apps: Be Your Stories (`bys-be-your-stories/id6812739940`), Pack (`id6797659977`), TATU Design (`id6812737660`), and PostHub (`id6813979346`).
 - **Google Play Closed Beta Links:** Linked to `https://play.google.com/apps/testing/com.aldeon.*` accompanied by an emerald "(Beta)" badge.
 - **Technical Deep-Dive Routing:** Each venture card links directly to its native architectural analysis post in `/blog/:slug`.
 
-### Protected Native Deep-Dive Articles (10 Total)
-- `scripts/sync-substack.ts` protects **10** native long-form articles in `protectedSlugs`:
+### Protected Native Deep-Dive Articles (14 Total — Bilingual EN & `pt-BR`)
+- `scripts/sync-substack.ts` protects **14** native long-form articles in `protectedSlugs` (and never touches `app/content/blog/pt-BR/`), all compiled in both EN and `pt-BR` (`app/content/generated/pt-BR/<slug>.json`) and enforced 100% by `scripts/audit-content.ts`:
   - `building-be-your-stories`
   - `enterprise-rag-with-local-llms`
   - `scaling-lakehouses-spark-iceberg`
@@ -125,6 +126,15 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
   - `autonomous-publishing-posthub-step-functions`
   - `architecting-swango-dbt-bigquery-medallion-b3-finance`
   - `on-memory-deterministic-ai-engineering-governance`
+  - `local-ai-coding-stack-ollama-opencode-qwen3`
+  - `ragon-air-gapped-zero-leak-rag-studio`
+  - `mastering-gemini-models-in-antigravity-agy`
+  - `antigravity-agy-slash-commands-complete-guide`
+
+### Academy Privacy-First YouTube Facade (`app/lib/academy.ts` + `app/components/youtube-player.tsx`)
+- `/academy` and `/academy/:slug` are driven by a strongly-typed bilingual catalog (`ACADEMY_TRACKS`, `ACADEMY_LESSONS`).
+- Lessons support `status: "upcoming"` (Terminal production stage with YouTube Subscribe CTA) and `status: "published"` (click-to-play `youtube-nocookie.com` facade loading zero third-party iframe JS until click).
+- Publishing a new video requires updating only `status`, `youtubeId`, and `publishedAt` in `app/lib/academy.ts`.
 
 ---
 
