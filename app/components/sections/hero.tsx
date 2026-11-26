@@ -39,16 +39,17 @@ export function Hero() {
         {/* Technical highlight chips */}
         <div className="animate-fade-in-up delay-400 mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
           <HighlightChip>
-            <Brain size={12} className="text-emerald-500" aria-hidden="true" /> Applied AI & RAG
+            <Brain size={12} className="text-emerald-500" aria-hidden="true" /> {dict.hero.chips[0]}
           </HighlightChip>
           <HighlightChip>
-            <Cloud size={12} className="text-emerald-500" aria-hidden="true" /> Lakehouses & Spark
+            <Cloud size={12} className="text-emerald-500" aria-hidden="true" /> {dict.hero.chips[1]}
           </HighlightChip>
           <HighlightChip>
-            <Cpu size={12} className="text-emerald-500" aria-hidden="true" /> System Architecture
+            <Cpu size={12} className="text-emerald-500" aria-hidden="true" /> {dict.hero.chips[2]}
           </HighlightChip>
           <HighlightChip>
-            <Layers size={12} className="text-emerald-500" aria-hidden="true" /> FullStack Systems
+            <Layers size={12} className="text-emerald-500" aria-hidden="true" />{" "}
+            {dict.hero.chips[3]}
           </HighlightChip>
         </div>
 

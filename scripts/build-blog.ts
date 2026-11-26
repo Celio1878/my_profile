@@ -1,14 +1,13 @@
 /**
  * Build-time blog content compiler.
  *
- * Reads app/content/blog/*.md → emits:
- *   - app/content/generated/index.json      (metadata only — small, eager)
- *   - app/content/generated/<slug>.json     (sanitized rendered HTML — lazy)
+ * Reads app/content/blog/*.md and companion app/content/blog/pt-BR/*.md → emits:
+ *   - app/content/generated/index.json          (metadata + translations — small, eager)
+ *   - app/content/generated/<slug>.json         (sanitized EN HTML — lazy)
+ *   - app/content/generated/pt-BR/<slug>.json   (sanitized pt-BR HTML — lazy)
  *
- * This keeps the full article corpus out of the shared client bundle: pages
+ * Keeps the full article corpus out of the shared client bundle: pages
  * load metadata eagerly and each article's HTML on demand via dynamic import.
- *
- * Run automatically before `dev` and `build` (see package.json scripts).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -21,6 +20,15 @@ import {
   renderMarkdown,
   type ParsedHeading,
 } from "./lib/markdown";
+
+export interface PostLocaleMeta {
+  title: string;
+  description: string;
+  excerpt: string;
+  headings: ParsedHeading[];
+  wordCount: number;
+  readTimeMinutes: number;
+}
 
 export interface PostMeta {
   slug: string;
@@ -37,10 +45,16 @@ export interface PostMeta {
   lang: string;
   author: string;
   canonicalUrl?: string;
+  availableLocales: Array<"en" | "pt-BR">;
+  translations?: {
+    "pt-BR"?: PostLocaleMeta;
+  };
 }
 
 const CONTENT_DIR = path.resolve(process.cwd(), "app/content/blog");
+const PT_CONTENT_DIR = path.resolve(CONTENT_DIR, "pt-BR");
 const OUTPUT_DIR = path.resolve(process.cwd(), "app/content/generated");
+const PT_OUTPUT_DIR = path.resolve(OUTPUT_DIR, "pt-BR");
 
 const LANGS = [
   "typescript",
@@ -73,10 +87,13 @@ async function main() {
   });
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  fs.mkdirSync(PT_OUTPUT_DIR, { recursive: true });
 
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md"));
   const posts: PostMeta[] = [];
+  const postsBySlug = new Map<string, PostMeta>();
   const htmlBySlug = new Map<string, string>();
+  const ptHtmlBySlug = new Map<string, string>();
   const seenSlugs = new Set<string>();
 
   for (const file of files) {
@@ -112,7 +129,7 @@ async function main() {
     const html = renderMarkdown(content, highlighter);
     htmlBySlug.set(slug, html);
 
-    posts.push({
+    const meta: PostMeta = {
       slug,
       title,
       description,
@@ -128,7 +145,58 @@ async function main() {
       lang: typeof data.lang === "string" && data.lang ? data.lang : "en",
       author: typeof data.author === "string" && data.author ? data.author : "Célio Vieira",
       canonicalUrl,
-    });
+      availableLocales: ["en"],
+    };
+
+    posts.push(meta);
+    postsBySlug.set(slug, meta);
+  }
+
+  // Compile companion pt-BR translations (if present).
+  if (fs.existsSync(PT_CONTENT_DIR)) {
+    const ptFiles = fs.readdirSync(PT_CONTENT_DIR).filter((f) => f.endsWith(".md"));
+    for (const file of ptFiles) {
+      const raw = fs.readFileSync(path.join(PT_CONTENT_DIR, file), "utf-8");
+      const { data, content } = parseFrontmatter(raw);
+      const fallbackSlug = file.replace(/\.md$/, "");
+      const slug = typeof data.slug === "string" && data.slug ? data.slug : fallbackSlug;
+      const target = postsBySlug.get(slug);
+      if (!target) {
+        console.warn(`⚠ PT-BR translation "${file}" has no matching EN slug "${slug}" — skipping.`);
+        continue;
+      }
+
+      const ptWordCount =
+        typeof data.wordCount === "number" && data.wordCount > 0
+          ? data.wordCount
+          : countWords(content);
+      const ptReadTimeMinutes = Math.max(1, Math.ceil(ptWordCount / 200));
+      const ptHeadings = extractHeadings(content);
+      const ptDescription =
+        typeof data.description === "string" && data.description
+          ? data.description
+          : target.description;
+      const ptExcerpt =
+        typeof data.excerpt === "string" && data.excerpt
+          ? data.excerpt
+          : extractExcerpt(content, ptDescription);
+      const ptTitle = typeof data.title === "string" && data.title ? data.title : target.title;
+
+      const ptHtml = renderMarkdown(content, highlighter);
+      ptHtmlBySlug.set(slug, ptHtml);
+
+      target.availableLocales = ["en", "pt-BR"];
+      target.translations = {
+        "pt-BR": {
+          title: ptTitle,
+          description: ptDescription,
+          excerpt: ptExcerpt,
+          headings: ptHeadings,
+          wordCount: ptWordCount,
+          readTimeMinutes: ptReadTimeMinutes,
+        },
+      };
+    }
   }
 
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -140,6 +208,12 @@ async function main() {
       fs.rmSync(path.join(OUTPUT_DIR, existing));
     }
   }
+  const expectedPt = new Set(Array.from(ptHtmlBySlug.keys()).map((s) => `${s}.json`));
+  for (const existing of fs.readdirSync(PT_OUTPUT_DIR)) {
+    if (existing.endsWith(".json") && !expectedPt.has(existing)) {
+      fs.rmSync(path.join(PT_OUTPUT_DIR, existing));
+    }
+  }
 
   fs.writeFileSync(path.join(OUTPUT_DIR, "index.json"), JSON.stringify(posts, null, 2) + "\n");
   for (const post of posts) {
@@ -147,12 +221,19 @@ async function main() {
       path.join(OUTPUT_DIR, `${post.slug}.json`),
       JSON.stringify({ slug: post.slug, html: htmlBySlug.get(post.slug) }) + "\n",
     );
+    const ptHtml = ptHtmlBySlug.get(post.slug);
+    if (ptHtml) {
+      fs.writeFileSync(
+        path.join(PT_OUTPUT_DIR, `${post.slug}.json`),
+        JSON.stringify({ slug: post.slug, lang: "pt-BR", html: ptHtml }) + "\n",
+      );
+    }
   }
 
   highlighter.dispose();
   const native = posts.filter((p) => p.source === "native").length;
   console.log(
-    `✓ Compiled ${posts.length} articles (${native} native / ${posts.length - native} Substack) → app/content/generated/`,
+    `✓ Compiled ${posts.length} articles (${native} native / ${posts.length - native} Substack; ${ptHtmlBySlug.size} pt-BR translations) → app/content/generated/`,
   );
 }
 

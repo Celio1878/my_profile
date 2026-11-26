@@ -3,6 +3,7 @@ import { isRouteErrorResponse, Link } from "react-router";
 import { Nav } from "~/components/nav";
 import { Footer } from "~/components/sections/footer";
 import { useI18n } from "~/i18n";
+import { useLocalizedMeta } from "~/hooks/use-localized-meta";
 import type { Route } from "./+types/root";
 
 interface ErrorBoundaryPageProps {
@@ -13,6 +14,7 @@ export function ErrorBoundaryPage({ props: { error } }: ErrorBoundaryPageProps) 
   const { dict } = useI18n();
 
   const isNotFound = isRouteErrorResponse(error) && error.status === 404;
+  useLocalizedMeta(isNotFound ? dict.meta.notFoundTitle : dict.meta.errorTitle);
   const title = isNotFound
     ? dict.errors.notFoundTitle
     : error instanceof Error

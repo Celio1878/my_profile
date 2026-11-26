@@ -3,7 +3,9 @@ import type { FC } from "react";
 import {
   GitHubIcon,
   LinkedInIcon,
+  MediumIcon,
   SubstackIcon,
+  TwitchIcon,
   XIcon,
   YouTubeIcon,
   type BrandIconProps,
@@ -13,6 +15,7 @@ import { Reveal } from "~/components/reveal";
 import { Footer } from "~/components/sections/footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { useI18n } from "~/i18n";
+import { useLocalizedMeta } from "~/hooks/use-localized-meta";
 import { trackOutbound } from "~/lib/analytics";
 import type { Route } from "./+types/about";
 
@@ -59,6 +62,7 @@ interface SocialChannel {
 
 export default function AboutRoute() {
   const { dict } = useI18n();
+  useLocalizedMeta(dict.meta.aboutTitle, dict.meta.aboutDescription);
 
   const socials: SocialChannel[] = [
     {
@@ -105,6 +109,24 @@ export default function AboutRoute() {
       iconClass: "text-red-500",
       hoverClass: "hover:border-red-500 hover:text-red-500",
       trackTarget: "youtube_channel",
+    },
+    {
+      key: "twitch",
+      href: "https://www.twitch.tv/celio1878",
+      label: dict.contact.twitch,
+      icon: TwitchIcon,
+      iconClass: "text-purple-500",
+      hoverClass: "hover:border-purple-500 hover:text-purple-500",
+      trackTarget: "twitch_profile",
+    },
+    {
+      key: "medium",
+      href: "https://medium.com/@celio.vieira1878",
+      label: dict.contact.medium,
+      icon: MediumIcon,
+      iconClass: "text-slate-800 dark:text-slate-200 group-hover:text-primary",
+      hoverClass: "hover:border-primary hover:text-primary",
+      trackTarget: "medium_profile",
     },
   ];
 
@@ -224,7 +246,7 @@ export default function AboutRoute() {
                 </p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <a
                   href={`mailto:${dict.contact.emailAddress}`}
                   className={`${socialCardClass} hover:border-primary hover:text-primary`}

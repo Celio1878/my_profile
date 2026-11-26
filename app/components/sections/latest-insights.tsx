@@ -1,6 +1,7 @@
 import { useI18n } from "~/i18n";
 import { Link } from "react-router";
-import { getAllPosts, type BlogPost } from "~/lib/blog";
+import { getAllPosts, resolvePostForLocale, type ResolvedBlogPost } from "~/lib/blog";
+import { translateTag } from "~/lib/tags";
 import { Reveal } from "~/components/reveal";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
@@ -10,7 +11,13 @@ import { formatDate } from "~/utils/dates";
 
 export function LatestInsights() {
   const { dict, locale } = useI18n();
-  const recentPosts = useMemo(() => getAllPosts().slice(0, 3), []);
+  const recentPosts = useMemo(
+    () =>
+      getAllPosts()
+        .slice(0, 3)
+        .map((p) => resolvePostForLocale(p, locale)),
+    [locale],
+  );
 
   return (
     <section id="latest-insights" className="py-16 container mx-auto px-4 max-w-5xl scroll-mt-20">
@@ -44,7 +51,7 @@ export function LatestInsights() {
       </Reveal>
 
       <div className="grid md:grid-cols-3 gap-6">
-        {recentPosts.map((post: BlogPost, idx: number) => (
+        {recentPosts.map((post: ResolvedBlogPost, idx: number) => (
           <Reveal key={post.slug} delay={idx * 80 + 100}>
             <Link
               to={`/blog/${post.slug}`}
@@ -90,7 +97,7 @@ export function LatestInsights() {
                         variant="outline"
                         className="text-[11px] font-normal py-0 px-2 bg-slate-100/50 dark:bg-slate-800/50"
                       >
-                        {tag}
+                        {translateTag(tag, locale)}
                       </Badge>
                     ))}
                   </div>

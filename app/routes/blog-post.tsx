@@ -8,23 +8,26 @@ import {
   Compass,
   Copy,
   FileText,
+  Info,
   Share2,
   Sparkles,
   SquareArrowOutUpRight,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, data, useLoaderData } from "react-router";
-import { LinkedInIcon, SubstackIcon, XIcon } from "~/components/brand-icons";
+import { LinkedInIcon, MediumIcon, SubstackIcon, XIcon } from "~/components/brand-icons";
 import { MarkdownRenderer } from "~/components/markdown-renderer";
 import { Nav } from "~/components/nav";
 import { Reveal } from "~/components/reveal";
 import { Footer } from "~/components/sections/footer";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { useI18n } from "~/i18n";
+import { useI18n, type SupportedLocale } from "~/i18n";
+import { useLocalizedMeta } from "~/hooks/use-localized-meta";
 import { trackOutbound } from "~/lib/analytics";
-import { getAllPosts, getPostBySlug, loadPostHtml } from "~/lib/blog";
+import { getAllPosts, getPostBySlug, loadPostHtml, resolvePostForLocale } from "~/lib/blog";
 import { copyText } from "~/lib/clipboard";
+import { translateTag } from "~/lib/tags";
 import { formatDate, formatNumber } from "~/utils/dates";
 import type { Route } from "./+types/blog-post";
 
@@ -74,6 +77,33 @@ export default function BlogPostRoute() {
   const { post, html } = useLoaderData<typeof loader>();
   const { dict, locale } = useI18n();
   const allPosts = useMemo(() => getAllPosts(), []);
+  const resolved = useMemo(() => resolvePostForLocale(post, locale), [post, locale]);
+
+  useLocalizedMeta(`${resolved.title} — Célio Vieira`, resolved.description);
+
+  const [localizedHtml, setLocalizedHtml] = useState<{
+    slug: string;
+    locale: SupportedLocale;
+    html: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (locale !== "pt-BR" || !post.availableLocales?.includes("pt-BR")) return;
+    let active = true;
+    void loadPostHtml(post.slug, "pt-BR").then((nextHtml) => {
+      if (active && nextHtml) {
+        setLocalizedHtml({ slug: post.slug, locale: "pt-BR", html: nextHtml });
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [post.slug, post.availableLocales, locale]);
+
+  const activeHtml =
+    locale === "pt-BR" && localizedHtml?.slug === post.slug && localizedHtml.locale === "pt-BR"
+      ? localizedHtml.html
+      : html;
 
   // Related posts scored by overlapping tags (must share at least one tag).
   const relatedPosts = useMemo(() => {
@@ -87,8 +117,8 @@ export default function BlogPostRoute() {
       .filter((item) => item.sharedCount > 0)
       .sort((a, b) => b.sharedCount - a.sharedCount)
       .slice(0, 2)
-      .map((item) => item.post);
-  }, [allPosts, post]);
+      .map((item) => resolvePostForLocale(item.post, locale));
+  }, [allPosts, post, locale]);
 
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -97,7 +127,7 @@ export default function BlogPostRoute() {
   const copyTimer = useRef<number | null>(null);
 
   const shareUrl = `${SITE_URL}/blog/${post.slug}`;
-  const shareTitle = post.title;
+  const shareTitle = resolved.title;
 
   // rAF-throttled reading progress (also correct on load/resize).
   useEffect(() => {
@@ -120,7 +150,7 @@ export default function BlogPostRoute() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [html]);
+  }, [activeHtml]);
 
   // TOC scroll spy — highlights the section currently in view.
   useEffect(() => {
@@ -143,7 +173,7 @@ export default function BlogPostRoute() {
     );
     headings.forEach((heading) => observer.observe(heading));
     return () => observer.disconnect();
-  }, [html]);
+  }, [activeHtml]);
 
   // Native Web Share availability is client-only (avoids hydration mismatch).
   useEffect(() => {
@@ -179,10 +209,10 @@ export default function BlogPostRoute() {
   const articleJsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
+    headline: resolved.title,
+    description: resolved.description,
     datePublished: post.date,
-    inLanguage: post.lang,
+    inLanguage: resolved.resolvedLocale,
     author: {
       "@type": "Person",
       name: post.author,
@@ -306,17 +336,17 @@ export default function BlogPostRoute() {
                   variant="outline"
                   className="text-xs bg-primary/5 text-primary border-primary/20"
                 >
-                  {tag}
+                  {translateTag(tag, locale)}
                 </Badge>
               ))}
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-gray-900 dark:text-white leading-tight text-balance">
-              {post.title}
+              {resolved.title}
             </h1>
 
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-pretty">
-              {post.description}
+              {resolved.description}
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 font-mono">
@@ -331,13 +361,13 @@ export default function BlogPostRoute() {
               </span>
               <span aria-hidden="true">•</span>
               <span className="text-gray-400 dark:text-gray-500">
-                {formatNumber(post.wordCount, locale)} {dict.blog.words}
+                {formatNumber(resolved.wordCount, locale)} {dict.blog.words}
               </span>
               <span aria-hidden="true">•</span>
               <span className="flex items-center gap-1.5 text-primary font-medium">
                 <Clock size={15} aria-hidden="true" />
                 <span>
-                  {post.readTimeMinutes} {dict.blog.readTime}
+                  {resolved.readTimeMinutes} {dict.blog.readTime}
                 </span>
               </span>
             </div>
@@ -366,7 +396,7 @@ export default function BlogPostRoute() {
         </Reveal>
 
         {/* Interactive Table of Contents with scroll spy */}
-        {post.headings.length > 1 && (
+        {resolved.headings.length > 1 && (
           <Reveal delay={80}>
             <div className="mb-10 p-5 sm:p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md shadow-xs">
               <div className="flex items-center gap-2 mb-3 text-xs font-mono uppercase tracking-wider font-bold text-muted-foreground">
@@ -375,7 +405,7 @@ export default function BlogPostRoute() {
               </div>
               <nav aria-label={dict.blog.tableOfContents}>
                 <ul className="space-y-1.5 text-xs sm:text-sm font-medium">
-                  {post.headings.map((heading) => (
+                  {resolved.headings.map((heading) => (
                     <li key={heading.id} className={heading.level === 3 ? "pl-4" : "pl-0"}>
                       <a
                         href={`#${heading.id}`}
@@ -407,13 +437,30 @@ export default function BlogPostRoute() {
           </Reveal>
         )}
 
+        {/* English-only fallback notice on Substack dispatches when browsing in pt-BR */}
+        {locale === "pt-BR" && resolved.isFallback && (
+          <Reveal delay={90}>
+            <div className="mb-8 p-4 rounded-xl border border-sky-500/25 bg-sky-500/5 dark:bg-sky-500/10 flex items-start gap-3">
+              <Info size={16} className="text-sky-500 shrink-0 mt-0.5" aria-hidden="true" />
+              <div className="space-y-1 text-xs">
+                <p className="font-mono font-bold text-sky-600 dark:text-sky-400">
+                  {dict.blog.englishOnlyNoticeTitle}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-pretty">
+                  {dict.blog.englishOnlyNoticeText}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        )}
+
         {/* Cover Image */}
         {post.coverImage && (
           <Reveal delay={100}>
             <div className="mb-10 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md">
               <img
                 src={post.coverImage}
-                alt={post.title}
+                alt={resolved.title}
                 className="w-full max-h-96 object-cover"
               />
             </div>
@@ -423,7 +470,7 @@ export default function BlogPostRoute() {
         {/* Article Content (pre-rendered & sanitized at build time) */}
         <Reveal delay={120}>
           <article id="article-content" className="prose prose-slate dark:prose-invert max-w-none">
-            <MarkdownRenderer html={html} />
+            <MarkdownRenderer html={activeHtml} />
           </article>
         </Reveal>
 
@@ -446,7 +493,7 @@ export default function BlogPostRoute() {
                 {dict.blog.authorBio}
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
               <a
                 href="https://substack.com/@celio1878"
                 target="_blank"
@@ -455,6 +502,16 @@ export default function BlogPostRoute() {
                 className="px-3.5 py-2 rounded-xl bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors shadow-xs"
               >
                 Substack
+              </a>
+              <a
+                href="https://medium.com/@celio.vieira1878"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackOutbound("medium_profile", "blog_post_author")}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-gray-200 dark:border-gray-800 text-xs font-semibold hover:border-primary hover:text-primary transition-colors"
+              >
+                <MediumIcon size={12} />
+                <span>{dict.blog.mediumLabel}</span>
               </a>
               <Link
                 to="/about"
@@ -507,7 +564,7 @@ export default function BlogPostRoute() {
                       <div className="flex gap-1">
                         {related.tags.slice(0, 2).map((tag) => (
                           <Badge key={tag} variant="outline" className="text-[10px] py-0 px-1.5">
-                            {tag}
+                            {translateTag(tag, locale)}
                           </Badge>
                         ))}
                       </div>

@@ -1,10 +1,13 @@
 import { Nav } from "~/components/nav";
+import { AcademyPreview } from "~/components/sections/academy-preview";
 import { Capabilities } from "~/components/sections/capabilities";
 import { ContactSection } from "~/components/sections/contact-section";
 import { Footer } from "~/components/sections/footer";
 import { Hero } from "~/components/sections/hero";
 import { LatestInsights } from "~/components/sections/latest-insights";
 import { Ventures } from "~/components/sections/ventures";
+import { useI18n } from "~/i18n";
+import { useLocalizedMeta } from "~/hooks/use-localized-meta";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -51,6 +54,9 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export default function Home() {
+  const { dict } = useI18n();
+  useLocalizedMeta(dict.meta.homeTitle, dict.meta.homeDescription);
+
   return (
     <div className="min-h-screen flex flex-col">
       <script
@@ -66,9 +72,11 @@ export default function Home() {
             sameAs: [
               "https://x.com/celio1878",
               "https://substack.com/@celio1878",
+              "https://medium.com/@celio.vieira1878",
               "https://www.linkedin.com/in/celio-vieira",
               "https://github.com/Celio1878",
               "https://www.youtube.com/@celio_vieira",
+              "https://www.twitch.tv/celio1878",
             ],
             description:
               "Célio Vieira is a Founder, AI & Data Engineer architecting intelligent AI systems, lakehouses, and the Aldeon venture ecosystem.",
@@ -76,11 +84,12 @@ export default function Home() {
         }}
       />
       <Nav />
-      <main id="main" role="main" aria-label="Main content" className="flex-1">
+      <main id="main" role="main" aria-label={dict.ui.mainContent} className="flex-1">
         <Hero />
         <Ventures />
         <Capabilities />
         <LatestInsights />
+        <AcademyPreview />
         <ContactSection />
       </main>
       <Footer />

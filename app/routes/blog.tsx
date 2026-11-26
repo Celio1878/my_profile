@@ -11,15 +11,17 @@ import {
 } from "lucide-react";
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router";
-import { SubstackIcon } from "~/components/brand-icons";
+import { MediumIcon, SubstackIcon } from "~/components/brand-icons";
 import { Nav } from "~/components/nav";
 import { Reveal } from "~/components/reveal";
 import { Footer } from "~/components/sections/footer";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { useI18n } from "~/i18n";
+import { useLocalizedMeta } from "~/hooks/use-localized-meta";
 import { trackOutbound } from "~/lib/analytics";
-import { getAllPosts, getAllTags, type BlogPost } from "~/lib/blog";
+import { getAllPosts, getAllTags, resolvePostForLocale, type ResolvedBlogPost } from "~/lib/blog";
+import { translateTag } from "~/lib/tags";
 import { formatDate } from "~/utils/dates";
 import type { Route } from "./+types/blog";
 
@@ -59,6 +61,7 @@ const SOURCE_FILTERS: SourceFilter[] = ["all", "native", "substack"];
 
 export default function BlogRoute() {
   const { dict, locale } = useI18n();
+  useLocalizedMeta(dict.meta.blogTitle, dict.meta.blogDescription);
   const allPosts = useMemo(() => getAllPosts(), []);
   const allTags = useMemo(() => getAllTags(), []);
 
@@ -98,19 +101,30 @@ export default function BlogRoute() {
 
   const filteredPosts = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return allPosts.filter((post) => {
+    const results: ResolvedBlogPost[] = [];
+    for (const rawPost of allPosts) {
+      const post = resolvePostForLocale(rawPost, locale);
       const matchesSource = sourceFilter === "all" || post.source === sourceFilter;
       const matchesSearch =
         query === "" ||
         post.title.toLowerCase().includes(query) ||
         post.description.toLowerCase().includes(query) ||
         post.excerpt.toLowerCase().includes(query) ||
-        post.tags.some((t) => t.toLowerCase().includes(query)) ||
+        rawPost.title.toLowerCase().includes(query) ||
+        rawPost.description.toLowerCase().includes(query) ||
+        post.tags.some(
+          (t) =>
+            t.toLowerCase().includes(query) ||
+            translateTag(t, locale).toLowerCase().includes(query),
+        ) ||
         post.headings.some((h) => h.text.toLowerCase().includes(query));
       const matchesTag = !selectedTag || post.tags.includes(selectedTag);
-      return matchesSource && matchesSearch && matchesTag;
-    });
-  }, [allPosts, sourceFilter, search, selectedTag]);
+      if (matchesSource && matchesSearch && matchesTag) {
+        results.push(post);
+      }
+    }
+    return results;
+  }, [allPosts, locale, sourceFilter, search, selectedTag]);
 
   const sourceButtonClass = (active: boolean, activeColor: string) =>
     `flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
@@ -154,20 +168,32 @@ export default function BlogRoute() {
                   {dict.blog.substackText}
                 </p>
               </div>
-              <a
-                href="https://substack.com/@celio1878"
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackOutbound("substack_subscribe", "blog_banner")}
-                className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm group"
-              >
-                <span>{dict.blog.substackCta}</span>
-                <ArrowRight
-                  size={14}
-                  className="group-hover:translate-x-0.5 transition-transform"
-                  aria-hidden="true"
-                />
-              </a>
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <a
+                  href="https://substack.com/@celio1878"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackOutbound("substack_subscribe", "blog_banner")}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm group"
+                >
+                  <span>{dict.blog.substackCta}</span>
+                  <ArrowRight
+                    size={14}
+                    className="group-hover:translate-x-0.5 transition-transform"
+                    aria-hidden="true"
+                  />
+                </a>
+                <a
+                  href="https://medium.com/@celio.vieira1878"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackOutbound("medium_profile", "blog_banner")}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-slate-900/80 text-gray-800 dark:text-gray-200 text-xs sm:text-sm font-semibold hover:border-primary hover:text-primary transition-all shadow-xs"
+                >
+                  <MediumIcon size={14} />
+                  <span>{dict.blog.mediumCta}</span>
+                </a>
+              </div>
             </div>
           </div>
         </Reveal>
@@ -283,7 +309,7 @@ export default function BlogRoute() {
                   }`}
                 >
                   <Tag size={10} aria-hidden="true" />
-                  <span>{tag}</span>
+                  <span>{translateTag(tag, locale)}</span>
                   <span className="font-mono opacity-75 text-[10px]">({tagCounts[tag] || 0})</span>
                 </button>
               ))}
@@ -309,7 +335,7 @@ export default function BlogRoute() {
           </Reveal>
         ) : (
           <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post: BlogPost, idx: number) => (
+            {filteredPosts.map((post: ResolvedBlogPost, idx: number) => (
               <Reveal as="li" key={post.slug} delay={Math.min(idx * 30, 300)}>
                 <Card className="card-hover h-full flex flex-col border border-gray-200/80 dark:border-gray-800/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg relative group">
                   {post.coverImage && (
@@ -329,16 +355,23 @@ export default function BlogRoute() {
                         <time dateTime={post.date}>{formatDate(post.date, locale)}</time>
                       </span>
 
-                      <div className="flex items-center gap-2 shrink-0">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         {post.source === "native" ? (
                           <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-1.5 py-0.5 rounded">
                             <Sparkles size={10} aria-hidden="true" />
                             {dict.blog.sourceBlueprint}
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/25 px-1.5 py-0.5 rounded">
-                            {dict.blog.sourceSubstack}
-                          </span>
+                          <>
+                            <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/25 px-1.5 py-0.5 rounded">
+                              {dict.blog.sourceSubstack}
+                            </span>
+                            {locale === "pt-BR" && post.isFallback && (
+                              <span className="inline-flex items-center text-[10px] font-mono font-semibold text-sky-600 dark:text-sky-400 bg-sky-500/10 border border-sky-500/25 px-1.5 py-0.5 rounded">
+                                {dict.blog.englishOnlyBadge}
+                              </span>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
@@ -384,7 +417,7 @@ export default function BlogRoute() {
                           variant="outline"
                           className="text-[10px] font-normal py-0 px-2 bg-slate-100/50 dark:bg-slate-800/50"
                         >
-                          {tag}
+                          {translateTag(tag, locale)}
                         </Badge>
                       ))}
                     </div>

@@ -163,6 +163,8 @@ export function cleanInlineText(text: string): string {
 
 export function slugifyHeading(text: string): string {
   return cleanInlineText(text)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-");
