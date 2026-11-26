@@ -15,6 +15,7 @@ export const Nav: FC = () => {
   const pathname = location.pathname;
   const isHome = pathname === "/";
   const isBlog = pathname.startsWith("/blog");
+  const isAcademy = pathname.startsWith("/academy");
   const isAbout = pathname === "/about";
 
   // rAF-throttled scrolled shadow state.
@@ -149,6 +150,10 @@ export const Nav: FC = () => {
               {dict.nav.blog}
             </Link>
 
+            <Link to="/academy" className={navLinkClass(isAcademy)}>
+              {dict.nav.academy}
+            </Link>
+
             <Link to="/about" className={navLinkClass(isAbout)}>
               {dict.nav.about}
             </Link>
@@ -231,6 +236,17 @@ export const Nav: FC = () => {
                 }`}
               >
                 {dict.nav.blog}
+              </Link>
+              <Link
+                to="/academy"
+                onClick={() => setMenuOpen(false)}
+                className={`px-3 py-2 rounded-xl transition-colors ${
+                  isAcademy
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#161e2b]"
+                }`}
+              >
+                {dict.nav.academy}
               </Link>
               <Link
                 to="/about"

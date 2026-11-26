@@ -1,3 +1,4 @@
+import { getAllLessons } from "~/lib/academy";
 import { getAllPosts } from "~/lib/blog";
 import type { Route } from "./+types/sitemap";
 
@@ -14,9 +15,11 @@ function escapeXml(value: string): string {
 
 export function loader({}: Route.LoaderArgs) {
   const posts = getAllPosts();
+  const lessons = getAllLessons();
   const staticUrls = [
     { loc: `${SITE_URL}/`, priority: "1.0" },
     { loc: `${SITE_URL}/blog`, priority: "0.9" },
+    { loc: `${SITE_URL}/academy`, priority: "0.9" },
     { loc: `${SITE_URL}/about`, priority: "0.7" },
   ];
 
@@ -24,6 +27,10 @@ export function loader({}: Route.LoaderArgs) {
     ...staticUrls.map(
       (entry) =>
         `  <url>\n    <loc>${escapeXml(entry.loc)}</loc>\n    <priority>${entry.priority}</priority>\n  </url>`,
+    ),
+    ...lessons.map(
+      (lesson) =>
+        `  <url>\n    <loc>${escapeXml(`${SITE_URL}/academy/${lesson.slug}`)}</loc>\n    <priority>0.7</priority>\n  </url>`,
     ),
     ...posts.map(
       (post) =>
