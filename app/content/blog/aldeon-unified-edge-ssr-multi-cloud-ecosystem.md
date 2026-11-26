@@ -1,7 +1,7 @@
 ---
-title: "The Aldeon Architecture: Orchestrating an Autonomous 7-Product Multi-Cloud Ecosystem"
+title: "The Aldeon Architecture: Orchestrating an Autonomous 8-Product Multi-Cloud Ecosystem"
 slug: "aldeon-unified-edge-ssr-multi-cloud-ecosystem"
-description: "Architectural blueprint of the Aldeon platform: Consolidating 7 autonomous applications under domain-sliced React Router 7 Edge SSR, zero-backend portal isolation, AST-verified i18n, and multi-cloud infrastructure."
+description: "Architectural blueprint of the Aldeon platform: Consolidating 8 autonomous applications under domain-sliced React Router 7 Edge SSR (TypeScript 7 + Biome), zero-backend portal isolation, AST-verified i18n, and multi-cloud infrastructure."
 date: "2026-10-16"
 tags: ["Architecture", "Vercel SSR", "Multi-Cloud", "DevOps", "Terraform", "FinOps"]
 lang: "en"
@@ -10,9 +10,9 @@ author: "Célio Vieira"
 
 ## The Venture Studio Challenge: Multi-Product Synergy Without Monolithic Bloat
 
-As an engineering founder operating multiple consumer, fintech, developer, and B2B products—**SwanGo**, **OnMemory**, **HandSpeak**, **Be Your Stories**, **Pack**, **TATU Design**, and **PostHub**—traditional architecture choices present a false dichotomy:
+As an engineering founder operating multiple consumer, fintech, developer, and B2B products—**SwanGo**, **RagOn**, **MemOn**, **HandSpeak**, **Be Your Stories**, **Pack**, **TATU Design**, and **PostHub**—traditional architecture choices present a false dichotomy:
 
-1. **Independent Disjointed Websites**: Building 7 distinct landing pages, domains, and legal compliance routes leads to operational chaos, divergent design languages, and fragmented branding.
+1. **Independent Disjointed Websites**: Building 8 distinct landing pages, domains, and legal compliance routes leads to operational chaos, divergent design languages, and fragmented branding.
 2. **Monolithic Backend Integration**: Unifying databases, backend APIs, and authentication into a single central server introduces tight coupling, catastrophic blast radiuses, and massive compliance headaches across Apple, Google, financial data workflows, and privacy regulators (GDPR/LGPD).
 
 To overcome this dilemma, we designed the **Aldeon Ecosystem Architecture** (`aldeon.app`). Aldeon acts as the central unified web platform and orchestration layer, while child applications maintain **absolute autonomy and data isolation** across their respective mobile clients and cloud backends.
@@ -27,7 +27,7 @@ To overcome this dilemma, we designed the **Aldeon Ecosystem Architecture** (`al
                              │                          │
         ┌────────────────────┴──────────┐               │
         ▼                               ▼               ▼
-[/swango & /learn]            [/on-memory Hub]     [/handspeak & /learn]
+[/swango & /learn]            [/mem-on & /rag-on]  [/handspeak & /learn]
 [/bys Web Suite]              [/pack Showcase]     [/tatu & /postshub]
         │                               │               │
 ════════╪═══════════════════════════════╪═══════════════╪════ [Zero Cross-Talk Boundary]
@@ -48,7 +48,7 @@ To overcome this dilemma, we designed the **Aldeon Ecosystem Architecture** (`al
 A foundational architectural invariant enforced across `aldeon/app` is the **Zero-Backend Footprint Rule**:
 - The web platform hosted on Vercel contains **zero** persistent databases (no Postgres or DynamoDB instances), **zero** ORMs (no Prisma or Drizzle), and **zero** stateful Redis connections.
 - It operates strictly as a presentation, edge routing, marketing showcase, interactive simulator, and legal compliance surface.
-- Internally, the portal follows a **domain-sliced module architecture** (`src/shared/` for UI primitives, i18n, and Stripe/Resend server helpers + `src/features/<product>/` for isolated product domains), with thin route entrypoints in `src/routes/` covering `/swango`, `/on-memory`, `/bys`, `/pack`, `/tatu`, `/postshub`, `/handspeak`, and `/support` via `@vercel/react-router/vite`.
+- Internally, the portal follows a **domain-sliced module architecture** (`src/shared/` for UI primitives, unified `radix-ui`, i18n, and Stripe/Resend server helpers + `src/features/<product>/` for isolated product domains), with thin route entrypoints in `src/routes/` covering `/swango`, `/rag-on`, `/mem-on`, `/bys`, `/pack`, `/tatu`, `/postshub`, `/handspeak`, and `/support` via `@vercel/react-router/vite`.
 
 When the portal needs to interact with services (such as dispatching support tickets, running SwanGo Edge API proxies, or verifying deletion requests), it executes lightweight, isolated serverless actions communicating via secure REST APIs or transactional email via **Resend** (`noreply@aldeon.app`, `support@aldeon.app`).
 
@@ -74,13 +74,13 @@ This ensures instantaneous worldwide edge CDN delivery while respecting language
 
 ## 3. Core Web Vitals, AST i18n Parity & SSR Safety Gates
 
-Achieving Lighthouse 95+ performance scores and zero-regression SSR reliability across 7 distinct product surfaces requires strict automated verification:
+Achieving Lighthouse 95+ performance scores and zero-regression SSR reliability across 8 distinct product surfaces requires strict automated verification:
 
 1. **Self-Hosted Variable Fonts**: All typography uses self-hosted `@fontsource-variable` packages, completely eliminating render-blocking third-party Google Fonts DNS handshakes.
 2. **Pure CSS Hero Entrance (`.anim-rise`)**: Initial hero content avoids `motion.div` with `initial={{ opacity: 0 }}`. Statically rendered HTML includes full text opacity, allowing pure CSS animations to handle the visual lift and ensuring sub-second Largest Contentful Paint (LCP).
 3. **LazyMotion & Scoped Language Dictionaries**: Framework-heavy Framer Motion imports are consolidated into `LazyMotion` (`domAnimation`), while root `LanguageContext` remains state-only (`createProductLanguageHook()` scopes locale payloads per product route, holding `HomePage` under `200 KB gz`).
-4. **AST Zero-Hardcode Bilingual i18n Parity (`oxc-parser`)**: Automated test suites (`199/199` tests) parse TSX component ASTs to forbid hardcoded copy or unlocalized validation schemas across both `EN` and `PT-BR`.
-5. **SSR Bundle Safety & Strict Route Budgets (`verify:ssr` & `perf:budget:strict`)**: Every production build runs `ssr-bundle-safety.test.ts` and `bun run verify:ssr` across **164 route renders**—verifying lazy SSR-safe client initialization and failing CI if any route exceeds gzip JS/CSS thresholds.
+4. **TypeScript 7, Biome & AST Zero-Hardcode Bilingual i18n Parity (`oxc-parser`)**: Automated `bun:test` suites (`0` explicit `any`, Biome lint, `oxc-parser` AST scans) forbid hardcoded copy or unlocalized validation schemas across both `EN` and `PT-BR`.
+5. **SSR Bundle Safety & Strict Route Budgets (`verify:ssr` & `perf:budget:strict`)**: Every production build runs `ssr-bundle-safety.test.ts` and `bun run verify:ssr` across all product routes—verifying lazy SSR-safe client initialization and failing CI if any route exceeds gzip JS/CSS thresholds.
 
 ---
 
@@ -88,7 +88,8 @@ Achieving Lighthouse 95+ performance scores and zero-regression SSR reliability 
 
 Each child application operates within its own dedicated cloud project:
 - **SwanGo**: Dedicated Supabase PostgreSQL (RLS in `sa-east-1`), BigQuery `swango_market` (`dbt-core` 20-table Medallion warehouse), and Python 3.12 FastAPI microservices on GCP Cloud Run (`southamerica-east1`).
-- **OnMemory**: Air-gapped compile-time datasets (`onMemoryData.ts`) powering the client-side `<20KB` memory linter and interactive stack composer, verified by zero-leak CI regex tests (`on-memory-security.test.ts`).
+- **MemOn (`mem-on`, formerly OnMemory)**: Air-gapped compile-time datasets (`onMemoryData.ts`) powering the client-side `<20KB` memory linter and interactive stack composer, verified by zero-leak CI regex tests (`on-memory-security.test.ts`).
+- **RagOn (`rag-on`)**: Free air-gapped RAG studio powering the live 6-stage BM25 + 3-gram X-Ray playground, client-side corpus auditor, and 7-file starter kit, protected by FNV-1a hashed client guardrails and `rag-on-security.test.ts`.
 - **BYS**: Relational persistence and Auth in Supabase, full-text book indexing in Railway Meilisearch, and Python Lambda narrators on AWS S3.
 - **Pack**: Dual-cloud architecture with Cloud Firestore for real-time mobile feeds and Amazon DynamoDB for audit trails, orchestrated via AWS EventBridge.
 - **TATU Design**: Google Cloud and Firebase infrastructure (`southamerica-east1`) with Firebase AI Logic and secure Cloud Storage.
@@ -117,6 +118,6 @@ To eliminate build bottlenecks while capping cloud spending under $5.00/month, w
 
 ## Conclusion
 
-By enforcing a strict Zero-Backend web perimeter, regional edge proximity in `gru1`, AST-verified i18n and SSR CI gates, and absolute multi-cloud tenant isolation, the Aldeon platform demonstrates how an agile venture studio can operate **7 sophisticated commercial products** with minimal overhead and rock-solid architectural rigor.
+By enforcing a strict Zero-Backend web perimeter, regional edge proximity in `gru1`, AST-verified i18n and SSR CI gates, and absolute multi-cloud tenant isolation, the Aldeon platform demonstrates how an agile venture studio can operate **8 sophisticated commercial products** with minimal overhead and rock-solid architectural rigor.
 
 *Explore the ecosystem live at [aldeon.app](https://aldeon.app).*

@@ -1,7 +1,7 @@
 ---
-title: "OnMemory: Deterministic AI Engineering Memory & Zero-Leak Governance"
+title: "MemOn (formerly OnMemory): Deterministic AI Engineering Memory & Zero-Leak Governance"
 slug: "on-memory-deterministic-ai-engineering-governance"
-description: "Inside OnMemory (on-memory): A 3-phase AI agent context protocol, 5-field anti-pattern registry, client-side <20KB memory linter (-83.6% token savings), and portable zero-dependency CLI bootstrapper."
+description: "Inside MemOn (aldeon.app/mem-on): A 3-phase AI agent context protocol, 5-field anti-pattern registry, client-side <20KB memory linter (-83.6% token savings), and portable zero-dependency CLI bootstrapper."
 date: "2026-11-18"
 tags: ["AI", "Agents", "Architecture", "DevOps", "Developer Tooling", "Security"]
 lang: "en"
@@ -15,7 +15,7 @@ When operating an autonomous venture ecosystem spanning multiple web surfaces, E
 1. **Architectural Drift Across Sessions**: Without a compact, canonical record of locked stack decisions, an agent on day 30 may re-introduce a deprecated library, break SSR bundle rules, or wire cross-tenant credentials between isolated applications.
 2. **Unbounded Context Bloat**: Appending every debugging note into massive `MEMORY.md` or `CLAUDE.md` files degrades retrieval accuracy, triggers mid-session context truncation, and wastes over **80% of prompt token budgets** on stale history.
 
-To standardize how autonomous agents bootstrap, debug, and maintain all **7 Aldeon products**—and make that workflow portable to external repositories—we built **OnMemory (`on-memory`)** at [`aldeon.app/on-memory`](https://aldeon.app/on-memory).
+To standardize how autonomous agents bootstrap, debug, and maintain all **8 Aldeon products**—and make that workflow portable to external repositories—we built **MemOn (`mem-on`, formerly OnMemory)** at [`aldeon.app/mem-on`](https://aldeon.app/mem-on) (with permanent `308` redirects preserved from `/on-memory`).
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────┐
@@ -64,19 +64,19 @@ Because memory files are routinely ingested into LLM context windows and version
 
 ---
 
-## 3. Portable Zero-Dependency CLI (`init-on-memory.mjs`)
+## 3. Portable Zero-Dependency CLI (`init-mem-on.mjs`)
 
-To remove onboarding friction for new projects, `on-memory` includes a single-file, zero-dependency Node/Bun CLI scaffolder and auditor:
+To remove onboarding friction for new projects, `mem-on` includes a single-file, zero-dependency Node/Bun CLI scaffolder and auditor:
 
 ```bash
 # Bootstrap a new project with locked architecture & 5-field anti-patterns
-node .agents/skills/on-memory/scripts/init-on-memory.mjs \
+node .agents/skills/mem-on/scripts/init-mem-on.mjs \
   --target ./my-new-product \
   --name "MyProduct" \
   --preset mobile-cloud
 
 # Audit an existing MEMORY.md for <20KB budget & Zero-Leak compliance
-node .agents/skills/on-memory/scripts/init-on-memory.mjs \
+node .agents/skills/mem-on/scripts/init-mem-on.mjs \
   --audit ./MEMORY.md
 ```
 
@@ -88,9 +88,9 @@ Four battle-tested architecture presets encode lessons from across the Aldeon ec
 
 ---
 
-## 4. Interactive Stack Composer & Client-Side Linter (`aldeon.app/on-memory`)
+## 4. Interactive Stack Composer & Client-Side Linter (`aldeon.app/mem-on`)
 
-Beyond the CLI, **OnMemory** ships as a live developer governance surface on the Aldeon web portal (`aldeon.app/on-memory`):
+Beyond the CLI, **MemOn** ships as a live developer governance surface on the Aldeon web portal (`aldeon.app/mem-on`):
 
 - **Interactive Stack Composer**: Generates tailored `AGENTS.md`, `MEMORY.md`, `SKILL.md`, and CI security test scaffolds directly in the browser for selected stack combinations.
 - **100% Client-Side `<20KB` Memory Linter**: Engineers can paste any `MEMORY.md` or `CLAUDE.md` file directly into the browser tool to audit byte footprint against the 20KB cap, validate 5-field anti-pattern structure, and scan for leaked keys or tokens **without ever sending file contents over the network**.
@@ -102,6 +102,6 @@ Beyond the CLI, **OnMemory** ships as a live developer governance surface on the
 
 - **-83.6% Context Token Overhead**: Replaces sprawling multi-thousand-line history logs with compact `<20KB` high-signal architectural state.
 - **0% Secret Leakage Gate**: Enforced automatically by CI regex suites and the client-side zero-network linter.
-- **Cross-Ecosystem Consistency**: Governs all 7 Aldeon products (`SwanGo`, `HandSpeak`, `Be Your Stories`, `Pack`, `TATU Design`, `PostHub`, `OnMemory`) and external repositories from a single deterministic protocol.
+- **Cross-Ecosystem Consistency**: Governs all 8 Aldeon products (`SwanGo`, `RagOn`, `MemOn`, `HandSpeak`, `Be Your Stories`, `Pack`, `TATU Design`, `PostHub`) and external repositories from a single deterministic protocol.
 
-*Try the Interactive Stack Composer and Client-Side Linter live at [aldeon.app/on-memory](https://aldeon.app/on-memory).*
+*Try the Interactive Stack Composer and Client-Side Linter live at [aldeon.app/mem-on](https://aldeon.app/mem-on).*

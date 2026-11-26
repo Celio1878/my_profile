@@ -16,7 +16,7 @@ Maintaining a coherent multi-platform technical presence across LinkedIn, X (Twi
 - **Human-in-the-Loop Control**: Purely autonomous AI posting creates high risk of hallucinations or off-brand messaging. A robust publishing system must enforce a **1-click human approval gate** before broadcasting to thousands of followers.
 - **State Tracking & Auditability**: When publishing across 5 platforms simultaneously, partial failures (e.g., LinkedIn succeeded, but X failed due to temporary rate limiting) require granular per-platform retry logic rather than monolithic failure.
 
-**PostHub** (`aldeon.app/posthub`) was engineered as Aldeon's centralized social automation and content distribution engine. Built with a serverless event-driven architecture on AWS, PostHub turns long-form technical research into targeted, platform-optimized posts with human approval checkpoints.
+**PostHub** (`aldeon.app/postshub`) was engineered as Aldeon's centralized social automation and content distribution engine. Built with a serverless event-driven architecture on AWS, PostHub turns long-form technical research into targeted, platform-optimized posts with 8-topic curation, 3x daily automated waves, 1-click Publish Now & retry controls, live credential expiration health badges, and human approval checkpoints.
 
 ---
 
@@ -211,4 +211,4 @@ PostHub's serverless orchestration architecture provides:
 - **Resilient Multi-Platform Fault Isolation**: If an individual social network experiences an outage or temporary HTTP 500 error, Step Functions automatically retries that branch without re-publishing duplicate posts to other networks.
 - **Deterministic Peace of Mind**: The 1-click cryptographic task token ensures zero unauthorized posts can ever go live without explicit human review.
 
-Through PostHub, technical content authored across the Aldeon platform reaches its global audience systematically and reliably.
+Through PostHub (live on [Web](https://aldeon.app/postshub), [Apple App Store](https://apps.apple.com/us/app/postshub/id6813979346), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.posthub)), technical content authored across the Aldeon platform reaches its global audience systematically and reliably—including ProseMirror AST formatting and OTP step-up verification for Substack publishing.

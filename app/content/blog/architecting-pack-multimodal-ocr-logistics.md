@@ -1,7 +1,7 @@
 ---
 title: "Architecting Pack: Sub-1.2s Multimodal AI OCR, Local-First Reactivity, and Zero-Error Parcel Lockers"
 slug: "architecting-pack-multimodal-ocr-logistics"
-description: "Deep dive into Pack's logistics platform: Sub-1.2s Gemini 2.5 Flash OCR extracting carrier tracking and consignees, Legend-State v3 local-first state, dual-cloud persistence (Firestore + DynamoDB), and dynamic QR + PIN verification."
+description: "Deep dive into Pack's logistics platform: Sub-1.2s Gemini 3.8 Flash OCR extracting carrier tracking and consignees, Legend-State v3 local-first state, dual-cloud persistence (Firestore + DynamoDB), and dynamic QR + PIN verification."
 date: "2026-10-15"
 tags: ["Logistics", "Computer Vision", "Multimodal AI", "Local-First", "Legend-State", "DynamoDB", "EventBridge"]
 lang: "en"
@@ -46,7 +46,7 @@ Pack bridges native mobile devices (iOS/Android built with React Native and Expo
 │                               │     │                                  │
 │ [Cloud Run Multimodal Worker] │     │ [API Gateway HTTP v2]            │
 │               │               │     │                 │                │
-│ [Gemini 2.5 Flash OCR Engine] │     │ [Rust / Node.js Micro-Lambdas]   │
+│ [Gemini 3.8 Flash OCR Engine] │     │ [Rust / Node.js Micro-Lambdas]   │
 │ (Sub-1.2s Extraction)         │     │                 │                │
 │               │               │     │ [DynamoDB Single-Table Storage]  │
 │ [Firestore Real-Time DB]      │     │ (Audit Log & Enterprise History) │
@@ -58,15 +58,15 @@ Pack bridges native mobile devices (iOS/Android built with React Native and Expo
 
 ---
 
-## Sub-1.2s Multimodal AI OCR with Gemini 2.5 Flash
+## Sub-1.2s Multimodal AI OCR with Gemini 3.8 Flash
 
-Rather than relying on legacy optical character recognition pipelines (e.g., Tesseract or rule-based regex pipelines over raw OCR strings), Pack leverages Google's **Gemini 2.5 Flash** multimodal model with strict schema enforcement via JSON Schema Structured Outputs.
+Rather than relying on legacy optical character recognition pipelines (e.g., Tesseract or rule-based regex pipelines over raw OCR strings), Pack leverages Google's **Gemini 3.8 Flash** multimodal model with strict schema enforcement via JSON Schema Structured Outputs.
 
 ### Why Multimodal LLMs Outperform Classical OCR
 
 Standard OCR models fail when labels have multiple conflicting tracking numbers (e.g., vendor order number, shipping label barcode, marketplace internal ID). A human receptionist instantly understands context: *"This label says Mercado Livre, and the tracking starts with MLB"*. 
 
-Gemini 2.5 Flash demonstrates this semantic awareness natively. When fed an image of a shipping box, the model analyzes:
+Gemini 3.8 Flash demonstrates this semantic awareness natively. When fed an image of a shipping box, the model analyzes:
 - The carrier visual identity (logos, layout, typography).
 - Spatial proximity between labels like *"Destinatário"* and recipient names.
 - Brazilian tracking code patterns (e.g., Correios standard `AA123456789BR`, Jadlog numeric sequences, Loggi hashes).
@@ -115,7 +115,7 @@ const ParcelExtractionSchema = {
 
 export async function processShippingLabel(imageBuffer: Buffer, mimeType: string) {
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.8-flash",
     contents: [
       {
         inlineData: {
@@ -143,7 +143,7 @@ Normalize recipient names into Title Case. Extract only verified information wit
 ### Performance & Latency Metrics
 - **Image Pre-processing**: Mobile client scales raw camera shots to 1200px max dimension, converts to WebP with 85% compression quality (`~180 KB` average payload size).
 - **Network Upload**: ~140ms over 4G/5G.
-- **Inference Latency**: **780ms - 920ms** median response time on Gemini 2.5 Flash.
+- **Inference Latency**: **780ms - 920ms** median response time on Gemini 3.8 Flash.
 - **End-to-End Reception Time**: **1.14s** from camera shutter click to pre-filled receptionist intake modal.
 - **Field Extraction Accuracy**: **99.4%** across >15,000 real-world parcel tests.
 
@@ -329,7 +329,7 @@ export function generateDynamicHandoverToken(parcelId: string, secretKey: Uint8A
 
 ## Production Impact & Summary
 
-By deploying **Pack** as a native multimodal AI application within the Aldeon platform, we achieved:
+By deploying **Pack** as a native multimodal AI application within the Aldeon platform (live on [Web](https://aldeon.app/pack), [Apple App Store](https://apps.apple.com/app/pack/id6797659977), and [Google Play Closed Beta](https://play.google.com/apps/testing/com.aldeon.pack)), we achieved:
 - **73% reduction in parcel processing time** (from 4.5 minutes per delivery batch to under 70 seconds).
 - **Zero misplaced packages** across participating trial condominiums over 6 months of continuous operation.
 - **Sub-1.2 second multimodal OCR response times**, allowing delivery personnel to scan batches seamlessly without manual keyboard input.

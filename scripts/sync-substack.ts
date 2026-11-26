@@ -274,6 +274,10 @@ const PROTECTED_SLUGS = new Set([
   "autonomous-publishing-posthub-step-functions",
   "architecting-swango-dbt-bigquery-medallion-b3-finance",
   "on-memory-deterministic-ai-engineering-governance",
+  "local-ai-coding-stack-ollama-opencode-qwen3",
+  "ragon-air-gapped-zero-leak-rag-studio",
+  "mastering-gemini-models-in-antigravity-agy",
+  "antigravity-agy-slash-commands-complete-guide",
 ]);
 
 async function fetchAllSubstackPosts(): Promise<SubstackPost[]> {

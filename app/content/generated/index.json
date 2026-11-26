@@ -1,5 +1,736 @@
 [
   {
+    "slug": "mastering-gemini-models-in-antigravity-agy",
+    "title": "Mastering Gemini Models in Antigravity (agy): Architecture, Memory, Security & Honest Limits",
+    "description": "Field-tested engineering guide to running Gemini 4 tiers (Hydrogen, Neon, Argon, Carbon) inside Google Antigravity (agy) — covering dual-phase orchestration, /plan + /grill-me workflows, MemOn (<20KB) memory, hooks, sandbox security, known pitfalls, and when to use agy vs. local Ollama + OpenCode.",
+    "excerpt": "A 1-million-token context window does not automatically produce deterministic engineering. After shipping the eight products inside the Aldeon ecosystem (aldeon.app) and maintaining celiovieira.com with Google Antigravity (agy CLI and Antigravity 2.0), th…",
+    "date": "2026-11-26",
+    "tags": [
+      "AI",
+      "Agents",
+      "Gemini",
+      "Antigravity",
+      "Security",
+      "Architecture",
+      "Developer Tooling"
+    ],
+    "readTimeMinutes": 13,
+    "wordCount": 2461,
+    "headings": [
+      {
+        "id": "why-frontier-models-still-drift-without-harness-engineering",
+        "text": "Why Frontier Models Still Drift Without Harness Engineering",
+        "level": 2
+      },
+      {
+        "id": "gemini-4-model-tiers-orchestration-in-antigravity",
+        "text": "Gemini 4 Model Tiers & Orchestration in Antigravity",
+        "level": 2
+      },
+      {
+        "id": "dual-phase-orchestrator-mode-swarm-parallelism",
+        "text": "Dual-Phase Orchestrator Mode & /swarm Parallelism",
+        "level": 3
+      },
+      {
+        "id": "improving-usability-daily-engineering-best-practices",
+        "text": "Improving Usability & Daily Engineering Best Practices",
+        "level": 2
+      },
+      {
+        "id": "1-spec-first-alignment-with-plan-and-grill-me",
+        "text": "1. Spec-First Alignment with /plan and /grill-me",
+        "level": 3
+      },
+      {
+        "id": "2-progressive-disclosure-over-monolithic-prompts",
+        "text": "2. Progressive Disclosure Over Monolithic Prompts",
+        "level": 3
+      },
+      {
+        "id": "3-prefix-matchable-commands-clean-chain-splitting",
+        "text": "3. Prefix-Matchable Commands & Clean Chain Splitting",
+        "level": 3
+      },
+      {
+        "id": "4-parallel-tool-batching-compact-discipline-verification-gates",
+        "text": "4. Parallel Tool Batching, /compact Discipline & Verification Gates",
+        "level": 3
+      },
+      {
+        "id": "memory-architecture-stopping-gemini-from-repeating-the-same-mistakes",
+        "text": "Memory Architecture: Stopping Gemini From Repeating the Same Mistakes",
+        "level": 2
+      },
+      {
+        "id": "real-bugs-permanently-eliminated-in-aldeon-celiovieiracom",
+        "text": "Real Bugs Permanently Eliminated in Aldeon & celiovieira.com",
+        "level": 3
+      },
+      {
+        "id": "security-sandbox-isolation-lifecycle-hooks",
+        "text": "Security, Sandbox Isolation & Lifecycle Hooks",
+        "level": 2
+      },
+      {
+        "id": "permission-engine-os-terminal-sandbox",
+        "text": "Permission Engine & OS Terminal Sandbox",
+        "level": 3
+      },
+      {
+        "id": "deterministic-guardrails-with-agentshooksjson",
+        "text": "Deterministic Guardrails with .agents/hooks.json",
+        "level": 3
+      },
+      {
+        "id": "real-issues-friction-points-failure-modes",
+        "text": "Real Issues, Friction Points & Failure Modes",
+        "level": 2
+      },
+      {
+        "id": "what-it-works-for-vs-what-it-does-not-work-for",
+        "text": "What It Works For vs. What It Does NOT Work For",
+        "level": 2
+      },
+      {
+        "id": "decision-matrix-antigravity-gemini-vs-local-ai-ollama-opencode",
+        "text": "Decision Matrix: Antigravity (Gemini) vs. Local AI (Ollama + OpenCode)",
+        "level": 2
+      },
+      {
+        "id": "continue-the-engineering-series",
+        "text": "Continue the Engineering Series",
+        "level": 3
+      }
+    ],
+    "source": "native",
+    "lang": "en",
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Dominando Modelos Gemini no Antigravity (agy): Arquitetura, Memória, Segurança e Limites Reais",
+        "description": "Guia de engenharia validado em campo para rodar os tiers do Gemini 4 (Hydrogen, Neon, Argon, Carbon) no Google Antigravity (agy) — cobrindo orquestração em duas fases, fluxos /plan + /grill-me, memória MemOn (<20KB), hooks, segurança de sandbox, armadilhas conhecidas e quando usar agy vs. Ollama + OpenCode local.",
+        "excerpt": "Uma janela de contexto de 1 milhão de tokens não produz engenharia determinística automaticamente. Depois de colocar em produção os oito produtos do ecossistema Aldeon (aldeon.app) e manter o celiovieira.com com o Google Antigravity (agy CLI e Antigravity…",
+        "headings": [
+          {
+            "id": "por-que-modelos-de-fronteira-ainda-sofrem-drift-sem-engenharia-de-harness",
+            "text": "Por Que Modelos de Fronteira Ainda Sofrem Drift Sem Engenharia de Harness",
+            "level": 2
+          },
+          {
+            "id": "tiers-dos-modelos-gemini-4-e-orquestracao-no-antigravity",
+            "text": "Tiers dos Modelos Gemini 4 e Orquestração no Antigravity",
+            "level": 2
+          },
+          {
+            "id": "orchestrator-mode-em-duas-fases-e-paralelismo-com-swarm",
+            "text": "Orchestrator Mode em Duas Fases e Paralelismo com /swarm",
+            "level": 3
+          },
+          {
+            "id": "melhorando-a-usabilidade-e-boas-praticas-diarias-de-engenharia",
+            "text": "Melhorando a Usabilidade e Boas Práticas Diárias de Engenharia",
+            "level": 2
+          },
+          {
+            "id": "1-alinhamento-spec-first-com-plan-e-grill-me",
+            "text": "1. Alinhamento Spec-First com /plan e /grill-me",
+            "level": 3
+          },
+          {
+            "id": "2-divulgacao-progressiva-em-vez-de-prompts-monoliticos",
+            "text": "2. Divulgação Progressiva em Vez de Prompts Monolíticos",
+            "level": 3
+          },
+          {
+            "id": "3-comandos-compativeis-com-prefix-matching-e-divisao-limpa-de-cadeias",
+            "text": "3. Comandos Compatíveis com Prefix Matching e Divisão Limpa de Cadeias",
+            "level": 3
+          },
+          {
+            "id": "4-agrupamento-paralelo-de-ferramentas-disciplina-de-compact-e-gates-de-verificacao",
+            "text": "4. Agrupamento Paralelo de Ferramentas, Disciplina de /compact e Gates de Verificação",
+            "level": 3
+          },
+          {
+            "id": "arquitetura-de-memoria-impedindo-o-gemini-de-repetir-os-mesmos-erros",
+            "text": "Arquitetura de Memória: Impedindo o Gemini de Repetir os Mesmos Erros",
+            "level": 2
+          },
+          {
+            "id": "bugs-reais-eliminados-permanentemente-na-aldeon-e-em-celiovieiracom",
+            "text": "Bugs Reais Eliminados Permanentemente na Aldeon e em celiovieira.com",
+            "level": 3
+          },
+          {
+            "id": "seguranca-isolamento-de-sandbox-e-lifecycle-hooks",
+            "text": "Segurança, Isolamento de Sandbox e Lifecycle Hooks",
+            "level": 2
+          },
+          {
+            "id": "motor-de-permissoes-e-sandbox-de-terminal-do-so",
+            "text": "Motor de Permissões e Sandbox de Terminal do SO",
+            "level": 3
+          },
+          {
+            "id": "guardrails-deterministicos-com-agentshooksjson",
+            "text": "Guardrails Determinísticos com .agents/hooks.json",
+            "level": 3
+          },
+          {
+            "id": "problemas-reais-pontos-de-atrito-e-modos-de-falha",
+            "text": "Problemas Reais, Pontos de Atrito e Modos de Falha",
+            "level": 2
+          },
+          {
+            "id": "para-que-funciona-vs-para-que-nao-funciona",
+            "text": "Para Que Funciona vs. Para Que NÃO Funciona",
+            "level": 2
+          },
+          {
+            "id": "matriz-de-decisao-antigravity-gemini-vs-ia-local-ollama-opencode",
+            "text": "Matriz de Decisão: Antigravity (Gemini) vs. IA Local (Ollama + OpenCode)",
+            "level": 2
+          },
+          {
+            "id": "continue-a-serie-de-engenharia",
+            "text": "Continue a Série de Engenharia",
+            "level": 3
+          }
+        ],
+        "wordCount": 3111,
+        "readTimeMinutes": 16
+      }
+    }
+  },
+  {
+    "slug": "antigravity-agy-slash-commands-complete-guide",
+    "title": "The Complete Antigravity (agy) Slash Command Field Manual: Every / Command Explained",
+    "description": "Comprehensive breakdown of all 47 official Google Antigravity (agy) slash commands — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom / commands via .agents/skills/.",
+    "excerpt": "Typing natural language into a terminal prompt gets you autocomplete; typing / inside Google Antigravity (agy) opens the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.",
+    "date": "2026-11-26",
+    "tags": [
+      "AI",
+      "Agents",
+      "Antigravity",
+      "Gemini",
+      "Developer Tooling",
+      "CLI",
+      "Architecture"
+    ],
+    "readTimeMinutes": 15,
+    "wordCount": 2860,
+    "headings": [
+      {
+        "id": "why-slash-commands-are-the-control-plane-of-antigravity-agy",
+        "text": "Why Slash Commands Are the Control Plane of Antigravity (agy)",
+        "level": 2
+      },
+      {
+        "id": "complete-antigravity-agy-slash-command-quick-reference-matrix",
+        "text": "Complete Antigravity (agy) Slash Command Quick-Reference Matrix",
+        "level": 2
+      },
+      {
+        "id": "category-1-planning-reasoning-multi-agent-orchestration",
+        "text": "Category 1: Planning, Reasoning & Multi-Agent Orchestration",
+        "level": 2
+      },
+      {
+        "id": "choosing-between-plan-goal-boost-swarm-and-teamwork",
+        "text": "Choosing Between /plan, /goal, /boost, /swarm, and /teamwork",
+        "level": 3
+      },
+      {
+        "id": "category-2-conversation-context-lifecycle",
+        "text": "Category 2: Conversation & Context Lifecycle",
+        "level": 2
+      },
+      {
+        "id": "category-3-tools-automation-governance-security",
+        "text": "Category 3: Tools, Automation, Governance & Security",
+        "level": 2
+      },
+      {
+        "id": "category-4-workspace-navigation-code-search-review",
+        "text": "Category 4: Workspace Navigation, Code Search & Review",
+        "level": 2
+      },
+      {
+        "id": "category-5-model-control-configuration-account-utilities",
+        "text": "Category 5: Model Control, Configuration, Account & Utilities",
+        "level": 2
+      },
+      {
+        "id": "proven-command-chaining-playbooks-common-mistakes",
+        "text": "Proven Command-Chaining Playbooks & Common Mistakes",
+        "level": 2
+      },
+      {
+        "id": "five-common-slash-command-mistakes-to-avoid",
+        "text": "Five Common Slash-Command Mistakes to Avoid",
+        "level": 3
+      },
+      {
+        "id": "authoring-custom-slash-commands-via-agentsskills",
+        "text": "Authoring Custom Slash Commands via .agents/skills/",
+        "level": 2
+      },
+      {
+        "id": "continue-the-ai-engineering-harness-series",
+        "text": "Continue the AI Engineering Harness Series",
+        "level": 2
+      }
+    ],
+    "source": "native",
+    "lang": "en",
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "O Manual de Campo Completo dos Comandos Slash do Antigravity (agy): Cada Comando / Explicado",
+        "description": "Detalhamento completo de todos os 47 comandos slash oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/.",
+        "excerpt": "Digitar linguagem natural em um prompt de terminal entrega autocompletar; digitar / dentro do Google Antigravity (agy) abre o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.",
+        "headings": [
+          {
+            "id": "por-que-comandos-slash-sao-o-plano-de-controle-do-antigravity-agy",
+            "text": "Por Que Comandos Slash São o Plano de Controle do Antigravity (agy)",
+            "level": 2
+          },
+          {
+            "id": "matriz-completa-de-referencia-rapida-dos-comandos-slash-do-antigravity-agy",
+            "text": "Matriz Completa de Referência Rápida dos Comandos Slash do Antigravity (agy)",
+            "level": 2
+          },
+          {
+            "id": "categoria-1-planejamento-raciocinio-e-orquestracao-multiagente",
+            "text": "Categoria 1: Planejamento, Raciocínio e Orquestração Multiagente",
+            "level": 2
+          },
+          {
+            "id": "escolhendo-entre-plan-goal-boost-swarm-e-teamwork",
+            "text": "Escolhendo Entre /plan, /goal, /boost, /swarm e /teamwork",
+            "level": 3
+          },
+          {
+            "id": "categoria-2-ciclo-de-vida-da-conversa-e-do-contexto",
+            "text": "Categoria 2: Ciclo de Vida da Conversa e do Contexto",
+            "level": 2
+          },
+          {
+            "id": "categoria-3-ferramentas-automacao-governanca-e-seguranca",
+            "text": "Categoria 3: Ferramentas, Automação, Governança e Segurança",
+            "level": 2
+          },
+          {
+            "id": "categoria-4-navegacao-no-workspace-busca-de-codigo-e-revisao",
+            "text": "Categoria 4: Navegação no Workspace, Busca de Código e Revisão",
+            "level": 2
+          },
+          {
+            "id": "categoria-5-controle-de-modelos-configuracao-conta-e-utilitarios",
+            "text": "Categoria 5: Controle de Modelos, Configuração, Conta e Utilitários",
+            "level": 2
+          },
+          {
+            "id": "playbooks-comprovados-de-encadeamento-de-comandos-e-erros-comuns",
+            "text": "Playbooks Comprovados de Encadeamento de Comandos e Erros Comuns",
+            "level": 2
+          },
+          {
+            "id": "cinco-erros-comuns-com-comandos-slash-para-evitar",
+            "text": "Cinco Erros Comuns com Comandos Slash para Evitar",
+            "level": 3
+          },
+          {
+            "id": "criando-comandos-slash-customizados-via-agentsskills",
+            "text": "Criando Comandos Slash Customizados via .agents/skills/",
+            "level": 2
+          },
+          {
+            "id": "continue-a-serie-sobre-harness-de-engenharia-de-ia",
+            "text": "Continue a Série sobre Harness de Engenharia de IA",
+            "level": 2
+          }
+        ],
+        "wordCount": 3324,
+        "readTimeMinutes": 17
+      }
+    }
+  },
+  {
+    "slug": "ragon-air-gapped-zero-leak-rag-studio",
+    "title": "RagOn: Air-Gapped Zero-Leak RAG Studio, 6-Stage BM25+3-Gram X-Ray & 7-File Cross-Stack Kit",
+    "description": "Inside RagOn (aldeon.app/rag-on): Aldeon's 8th free open developer product delivering sub-2ms deterministic BM25 + 3-gram retrieval at $0 LLM cost, FNV-1a hashed client guardrails, client-side corpus auditing, and a 7-file cross-stack starter kit.",
+    "excerpt": "Most production documentation assistants and product Q&A widgets suffer from four compounding failures:",
+    "date": "2026-11-26",
+    "tags": [
+      "AI",
+      "RAG",
+      "Security",
+      "Architecture",
+      "Developer Tooling",
+      "TypeScript"
+    ],
+    "readTimeMinutes": 6,
+    "wordCount": 1103,
+    "headings": [
+      {
+        "id": "why-we-built-ragon-0-air-gapped-rag-without-hallucinations-or-leaks",
+        "text": "Why We Built RagOn: $0 Air-Gapped RAG Without Hallucinations or Leaks",
+        "level": 2
+      },
+      {
+        "id": "the-6-phase-retrieval-grounding-architecture",
+        "text": "The 6-Phase Retrieval & Grounding Architecture",
+        "level": 2
+      },
+      {
+        "id": "phase-1-air-gapped-typed-bilingual-corpus",
+        "text": "Phase 1: Air-Gapped Typed Bilingual Corpus",
+        "level": 3
+      },
+      {
+        "id": "phase-2-nfd-normalization-pre-retrieval-guardrail-sub-01ms",
+        "text": "Phase 2: NFD Normalization & Pre-Retrieval Guardrail (sub-0.1ms)",
+        "level": 3
+      },
+      {
+        "id": "phase-3-bilingual-pten-scoring-domain-synonym-expansion-sub-02ms",
+        "text": "Phase 3: Bilingual PT/EN Scoring & Domain Synonym Expansion (sub-0.2ms)",
+        "level": 3
+      },
+      {
+        "id": "phase-4-field-weighted-bm25-character-3-gram-cosine-sub-12ms",
+        "text": "Phase 4: Field-Weighted BM25 + Character 3-Gram Cosine (sub-1.2ms)",
+        "level": 3
+      },
+      {
+        "id": "phase-5-strict-evidence-grounding-gate",
+        "text": "Phase 5: Strict Evidence Grounding Gate",
+        "level": 3
+      },
+      {
+        "id": "phase-6-0-extractive-synthesis-or-xml-hardened-hybrid-llm",
+        "text": "Phase 6: $0 Extractive Synthesis or XML-Hardened Hybrid LLM",
+        "level": 3
+      },
+      {
+        "id": "zero-leak-fnv-1a-hashed-guardrails-client-side-corpus-auditor",
+        "text": "Zero-Leak FNV-1a Hashed Guardrails & Client-Side Corpus Auditor",
+        "level": 2
+      },
+      {
+        "id": "7-file-cross-stack-starter-kit-init-rag-onmjs",
+        "text": "7-File Cross-Stack Starter Kit (init-rag-on.mjs)",
+        "level": 2
+      },
+      {
+        "id": "production-anti-patterns-registry-ap-rag-01-to-ap-rag-08",
+        "text": "Production Anti-Patterns Registry (AP-RAG-01 to AP-RAG-08)",
+        "level": 2
+      },
+      {
+        "id": "production-outcomes-ecosystem-links",
+        "text": "Production Outcomes & Ecosystem Links",
+        "level": 2
+      }
+    ],
+    "source": "native",
+    "lang": "en",
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "RagOn: Estúdio RAG Air-Gapped Zero-Leak, Raio-X de 6 Estágios BM25+3-Gram e Kit Cross-Stack de 7 Arquivos",
+        "description": "Por dentro do RagOn (aldeon.app/rag-on): o 8º produto aberto e gratuito da Aldeon, entregando recuperação determinística BM25 + 3-gram abaixo de 2ms a custo $0 de LLM, guardrails no cliente com hash FNV-1a, auditoria de corpus client-side e um kit inicial cross-stack de 7 arquivos.",
+        "excerpt": "A maioria dos assistentes de documentação em produção e widgets de perguntas e respostas de produtos sofre de quatro falhas cumulativas:",
+        "headings": [
+          {
+            "id": "por-que-construimos-o-ragon-rag-air-gapped-a-0-sem-alucinacoes-ou-vazamentos",
+            "text": "Por Que Construímos o RagOn: RAG Air-Gapped a $0 Sem Alucinações ou Vazamentos",
+            "level": 2
+          },
+          {
+            "id": "a-arquitetura-de-6-fases-de-recuperacao-e-fundamentacao",
+            "text": "A Arquitetura de 6 Fases de Recuperação e Fundamentação",
+            "level": 2
+          },
+          {
+            "id": "fase-1-corpus-bilingue-tipado-e-air-gapped",
+            "text": "Fase 1: Corpus Bilíngue Tipado e Air-Gapped",
+            "level": 3
+          },
+          {
+            "id": "fase-2-normalizacao-nfd-e-guardrail-pre-recuperacao-abaixo-de-01ms",
+            "text": "Fase 2: Normalização NFD e Guardrail Pré-Recuperação (abaixo de 0,1ms)",
+            "level": 3
+          },
+          {
+            "id": "fase-3-pontuacao-bilingue-pten-e-expansao-de-sinonimos-de-dominio-abaixo-de-02ms",
+            "text": "Fase 3: Pontuação Bilíngue PT/EN e Expansão de Sinônimos de Domínio (abaixo de 0,2ms)",
+            "level": 3
+          },
+          {
+            "id": "fase-4-bm25-ponderado-por-campo-cosseno-de-3-gramas-de-caracteres-abaixo-de-12ms",
+            "text": "Fase 4: BM25 Ponderado por Campo + Cosseno de 3-Gramas de Caracteres (abaixo de 1,2ms)",
+            "level": 3
+          },
+          {
+            "id": "fase-5-gate-estrito-de-fundamentacao-por-evidencia",
+            "text": "Fase 5: Gate Estrito de Fundamentação por Evidência",
+            "level": 3
+          },
+          {
+            "id": "fase-6-sintese-extrativa-a-0-ou-llm-hibrido-protegido-por-xml",
+            "text": "Fase 6: Síntese Extrativa a $0 ou LLM Híbrido Protegido por XML",
+            "level": 3
+          },
+          {
+            "id": "guardrails-zero-leak-com-hash-fnv-1a-e-auditor-de-corpus-client-side",
+            "text": "Guardrails Zero-Leak com Hash FNV-1a e Auditor de Corpus Client-Side",
+            "level": 2
+          },
+          {
+            "id": "kit-inicial-cross-stack-de-7-arquivos-init-rag-onmjs",
+            "text": "Kit Inicial Cross-Stack de 7 Arquivos (init-rag-on.mjs)",
+            "level": 2
+          },
+          {
+            "id": "registro-de-antipadroes-de-producao-ap-rag-01-a-ap-rag-08",
+            "text": "Registro de Antipadrões de Produção (AP-RAG-01 a AP-RAG-08)",
+            "level": 2
+          },
+          {
+            "id": "resultados-em-producao-e-links-do-ecossistema",
+            "text": "Resultados em Produção e Links do Ecossistema",
+            "level": 2
+          }
+        ],
+        "wordCount": 1367,
+        "readTimeMinutes": 7
+      }
+    }
+  },
+  {
+    "slug": "local-ai-coding-stack-ollama-opencode-qwen3",
+    "title": "Building a Local AI Coding Stack with Ollama, OpenCode, Qwen 3.5 & Qwen3-Coder",
+    "description": "Production blueprint for running private, zero-token-cost agentic coding locally using Ollama, OpenCode, Qwen 3.5, and Qwen3-Coder — built directly from a real RTX 3070 8GB + Ryzen 7 3700X + 32GB DDR4-3600 + NVMe/HDD workstation.",
+    "excerpt": "Most engineers assume local agentic coding requires buying a $2,000+ GPU or a maxed-out unified-memory workstation before writing a single line of code. In reality, you can run a productive, zero-marginal-token-cost agentic coding loop right on a mid-rang…",
+    "date": "2026-11-26",
+    "tags": [
+      "AI",
+      "LLMs",
+      "Ollama",
+      "Agents",
+      "Local AI",
+      "OpenCode",
+      "Architecture"
+    ],
+    "readTimeMinutes": 11,
+    "wordCount": 2186,
+    "headings": [
+      {
+        "id": "why-build-a-local-agentic-coding-stack-on-existing-hardware",
+        "text": "Why Build a Local Agentic Coding Stack on Existing Hardware",
+        "level": 2
+      },
+      {
+        "id": "reference-workstation-the-real-world-baseline",
+        "text": "Reference Workstation: The Real-World Baseline",
+        "level": 2
+      },
+      {
+        "id": "how-it-works-ollama-opencode-qwen-35-qwen3-coder",
+        "text": "How It Works: Ollama, OpenCode, Qwen 3.5 & Qwen3-Coder",
+        "level": 2
+      },
+      {
+        "id": "model-division-of-labor-qwen-35-qwen35-fast9b-qwen3-coder",
+        "text": "Model Division of Labor: Qwen 3.5, qwen3.5-fast:9b & Qwen3-Coder",
+        "level": 3
+      },
+      {
+        "id": "tuning-ollama-via-systemd-for-8-gb-vram-session-warmth",
+        "text": "Tuning Ollama via Systemd for 8 GB VRAM & Session Warmth",
+        "level": 3
+      },
+      {
+        "id": "the-zero-extra-disk-qwen35-fast9b-modelfile",
+        "text": "The Zero-Extra-Disk qwen3.5-fast:9b Modelfile",
+        "level": 3
+      },
+      {
+        "id": "wiring-the-4-agent-opencode-harness-opencodejson",
+        "text": "Wiring the 4-Agent OpenCode Harness (opencode.json)",
+        "level": 3
+      },
+      {
+        "id": "real-world-problem-solving-memon-synergy",
+        "text": "Real-World Problem Solving & MemOn Synergy",
+        "level": 2
+      },
+      {
+        "id": "why-memon-sub-20kb-multiplies-local-gpu-efficiency",
+        "text": "Why MemOn (sub-20KB) Multiplies Local GPU Efficiency",
+        "level": 3
+      },
+      {
+        "id": "money-saving-zero-capex-economics",
+        "text": "Money Saving & Zero-CapEx Economics",
+        "level": 2
+      },
+      {
+        "id": "honest-limitations-failure-modes",
+        "text": "Honest Limitations & Failure Modes",
+        "level": 2
+      },
+      {
+        "id": "hardware-points-reference-rig-dissected-4-stage-upgrade-matrix",
+        "text": "Hardware Points: Reference Rig Dissected & 4-Stage Upgrade Matrix",
+        "level": 2
+      },
+      {
+        "id": "1-memory-bandwidth-dominates-token-generation",
+        "text": "1. Memory Bandwidth Dominates Token Generation",
+        "level": 3
+      },
+      {
+        "id": "2-why-32-gb-ddr4-3600-matters-for-qwen3-coder30b",
+        "text": "2. Why 32 GB DDR4-3600 Matters for qwen3-coder:30b",
+        "level": 3
+      },
+      {
+        "id": "3-nvme-osrepos-vs-sata-hdd-ollama_models-choosing-the-trade-off",
+        "text": "3. NVMe (OS/Repos) vs. SATA HDD (OLLAMA_MODELS): Choosing the Trade-Off",
+        "level": 3
+      },
+      {
+        "id": "4-4-stage-hardware-progression-matrix",
+        "text": "4. 4-Stage Hardware Progression Matrix",
+        "level": 3
+      },
+      {
+        "id": "production-quickstart-companion-academy-track",
+        "text": "Production Quickstart & Companion Academy Track",
+        "level": 2
+      }
+    ],
+    "source": "native",
+    "lang": "en",
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Construindo um Stack Local de Coding com IA usando Ollama, OpenCode, Qwen 3.5 e Qwen3-Coder",
+        "description": "Blueprint de produção para rodar coding agêntico privado e com custo zero de tokens localmente usando Ollama, OpenCode, Qwen 3.5 e Qwen3-Coder — construído diretamente a partir de uma workstation real com RTX 3070 8GB + Ryzen 7 3700X + 32GB DDR4-3600 + NVMe/HDD.",
+        "excerpt": "A maioria dos engenheiros presume que rodar coding agêntico local exige comprar uma GPU de mais de US$ 2.000 ou uma workstation com memória unificada no máximo antes mesmo de escrever uma única linha de código. Na prática, você pode executar um ciclo prod…",
+        "headings": [
+          {
+            "id": "por-que-construir-um-stack-local-de-coding-agentico-em-hardware-existente",
+            "text": "Por que Construir um Stack Local de Coding Agêntico em Hardware Existente",
+            "level": 2
+          },
+          {
+            "id": "workstation-de-referencia-a-base-no-mundo-real",
+            "text": "Workstation de Referência: A Base no Mundo Real",
+            "level": 2
+          },
+          {
+            "id": "como-funciona-ollama-opencode-qwen-35-e-qwen3-coder",
+            "text": "Como Funciona: Ollama, OpenCode, Qwen 3.5 e Qwen3-Coder",
+            "level": 2
+          },
+          {
+            "id": "divisao-de-trabalho-dos-modelos-qwen-35-qwen35-fast9b-e-qwen3-coder",
+            "text": "Divisão de Trabalho dos Modelos: Qwen 3.5, qwen3.5-fast:9b e Qwen3-Coder",
+            "level": 3
+          },
+          {
+            "id": "ajustando-o-ollama-via-systemd-para-8-gb-de-vram-e-aquecimento-de-sessao",
+            "text": "Ajustando o Ollama via Systemd para 8 GB de VRAM e Aquecimento de Sessão",
+            "level": 3
+          },
+          {
+            "id": "o-modelfile-qwen35-fast9b-com-zero-disco-extra",
+            "text": "O Modelfile qwen3.5-fast:9b com Zero Disco Extra",
+            "level": 3
+          },
+          {
+            "id": "conectando-o-harness-de-4-agentes-do-opencode-opencodejson",
+            "text": "Conectando o Harness de 4 Agentes do OpenCode (opencode.json)",
+            "level": 3
+          },
+          {
+            "id": "resolucao-de-problemas-no-mundo-real-e-sinergia-com-o-memon",
+            "text": "Resolução de Problemas no Mundo Real e Sinergia com o MemOn",
+            "level": 2
+          },
+          {
+            "id": "por-que-o-memon-sub-20kb-multiplica-a-eficiencia-local-da-gpu",
+            "text": "Por que o MemOn (sub-20KB) Multiplica a Eficiência Local da GPU",
+            "level": 3
+          },
+          {
+            "id": "economia-financeira-e-viabilidade-zero-capex",
+            "text": "Economia Financeira e Viabilidade Zero-CapEx",
+            "level": 2
+          },
+          {
+            "id": "limitacoes-honestas-e-modos-de-falha",
+            "text": "Limitações Honestas e Modos de Falha",
+            "level": 2
+          },
+          {
+            "id": "pontos-de-hardware-maquina-de-referencia-dissecada-e-matriz-de-upgrade-em-4-estagios",
+            "text": "Pontos de Hardware: Máquina de Referência Dissecada e Matriz de Upgrade em 4 Estágios",
+            "level": 2
+          },
+          {
+            "id": "1-a-largura-de-banda-de-memoria-domina-a-geracao-de-tokens",
+            "text": "1. A Largura de Banda de Memória Domina a Geração de Tokens",
+            "level": 3
+          },
+          {
+            "id": "2-por-que-32-gb-ddr4-3600-importam-para-o-qwen3-coder30b",
+            "text": "2. Por que 32 GB DDR4-3600 Importam para o qwen3-coder:30b",
+            "level": 3
+          },
+          {
+            "id": "3-nvme-sorepositorios-vs-sata-hdd-ollama_models-escolhendo-o-trade-off",
+            "text": "3. NVMe (SO/Repositórios) vs. SATA HDD (OLLAMA_MODELS): Escolhendo o Trade-Off",
+            "level": 3
+          },
+          {
+            "id": "4-matriz-de-progressao-de-hardware-em-4-estagios",
+            "text": "4. Matriz de Progressão de Hardware em 4 Estágios",
+            "level": 3
+          },
+          {
+            "id": "quickstart-de-producao-e-trilha-complementar-da-academy",
+            "text": "Quickstart de Produção e Trilha Complementar da Academy",
+            "level": 2
+          }
+        ],
+        "wordCount": 2638,
+        "readTimeMinutes": 14
+      }
+    }
+  },
+  {
     "slug": "architecting-swango-dbt-bigquery-medallion-b3-finance",
     "title": "Architecting SwanGo: $0/mo dbt-core & BigQuery Medallion Warehouse for B3 Finance",
     "description": "Technical blueprint of SwanGo: A 20-table dbt-core and Google BigQuery Medallion warehouse indexing 1,076+ B3, CVM, BCB, Crypto, and SEC EDGAR assets with deterministic quantitative engines and SHA-256 verifiable shared workspaces.",
@@ -65,12 +796,72 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Arquitetando o SwanGo: Data Warehouse Medallion em dbt-core e BigQuery a $0/mês para Finanças da B3",
+        "description": "Blueprint técnico do SwanGo: um data warehouse Medallion de 20 tabelas em dbt-core e Google BigQuery indexando mais de 1.076 ativos da B3, CVM, BCB, Cripto e SEC EDGAR com motores quantitativos determinísticos e workspaces compartilhados verificáveis por SHA-256.",
+        "excerpt": "A maioria dos rastreadores de investimentos para consumidores e plataformas de finanças pessoais falha ao longo de dois eixos estruturais:",
+        "headings": [
+          {
+            "id": "a-restricao-de-engenharia-fintech-zero-dados-simulados-a-000mes",
+            "text": "A Restrição de Engenharia FinTech: Zero Dados Simulados a $0,00/mês",
+            "level": 2
+          },
+          {
+            "id": "1-o-data-warehouse-medallion-de-20-tabelas-em-dbt-core-e-bigquery",
+            "text": "1. O Data Warehouse Medallion de 20 Tabelas em dbt-core e BigQuery",
+            "level": 2
+          },
+          {
+            "id": "camada-bronze-9-tabelas-brutas-de-ingestao",
+            "text": "Camada Bronze (9 Tabelas Brutas de Ingestão)",
+            "level": 3
+          },
+          {
+            "id": "resolvendo-peculiaridades-de-producao-no-bigquery-e-na-cvm",
+            "text": "Resolvendo Peculiaridades de Produção no BigQuery e na CVM",
+            "level": 3
+          },
+          {
+            "id": "camada-gold-5-marts-analiticos-e-sincronizacao-com-supabase-protegida-por-gate-de-publicacao",
+            "text": "Camada Gold (5 Marts Analíticos) e Sincronização com Supabase Protegida por Gate de Publicação",
+            "level": 3
+          },
+          {
+            "id": "2-motores-quantitativos-deterministicos-e-posso-comprar",
+            "text": "2. Motores Quantitativos Determinísticos e \"Posso Comprar?\"",
+            "level": 2
+          },
+          {
+            "id": "3-workspaces-colaborativos-e-snapshots-verificaveis-por-sha-256",
+            "text": "3. Workspaces Colaborativos e Snapshots Verificáveis por SHA-256",
+            "level": 2
+          },
+          {
+            "id": "4-o-simulador-interativo-de-6-estagios-e-a-academia-financeira-de-4-trilhas",
+            "text": "4. O Simulador Interativo de 6 Estágios e a Academia Financeira de 4 Trilhas",
+            "level": 2
+          },
+          {
+            "id": "resultados-em-producao",
+            "text": "Resultados em Produção",
+            "level": 2
+          }
+        ],
+        "wordCount": 1315,
+        "readTimeMinutes": 7
+      }
+    }
   },
   {
     "slug": "on-memory-deterministic-ai-engineering-governance",
-    "title": "OnMemory: Deterministic AI Engineering Memory & Zero-Leak Governance",
-    "description": "Inside OnMemory (on-memory): A 3-phase AI agent context protocol, 5-field anti-pattern registry, client-side <20KB memory linter (-83.6% token savings), and portable zero-dependency CLI bootstrapper.",
+    "title": "MemOn (formerly OnMemory): Deterministic AI Engineering Memory & Zero-Leak Governance",
+    "description": "Inside MemOn (aldeon.app/mem-on): A 3-phase AI agent context protocol, 5-field anti-pattern registry, client-side <20KB memory linter (-83.6% token savings), and portable zero-dependency CLI bootstrapper.",
     "excerpt": "When operating an autonomous venture ecosystem spanning multiple web surfaces, Expo React Native clients, Terraform stacks, and AWS/GCP serverless backends, autonomous coding agents encounter two compounding failure modes:",
     "date": "2026-11-18",
     "tags": [
@@ -82,7 +873,7 @@
       "Security"
     ],
     "readTimeMinutes": 4,
-    "wordCount": 688,
+    "wordCount": 698,
     "headings": [
       {
         "id": "the-multi-repo-ai-engineering-bottleneck-context-bloat-drift",
@@ -100,13 +891,13 @@
         "level": 2
       },
       {
-        "id": "3-portable-zero-dependency-cli-init-on-memorymjs",
-        "text": "3. Portable Zero-Dependency CLI (init-on-memory.mjs)",
+        "id": "3-portable-zero-dependency-cli-init-mem-onmjs",
+        "text": "3. Portable Zero-Dependency CLI (init-mem-on.mjs)",
         "level": 2
       },
       {
-        "id": "4-interactive-stack-composer-client-side-linter-aldeonappon-memory",
-        "text": "4. Interactive Stack Composer & Client-Side Linter (aldeon.app/on-memory)",
+        "id": "4-interactive-stack-composer-client-side-linter-aldeonappmem-on",
+        "text": "4. Interactive Stack Composer & Client-Side Linter (aldeon.app/mem-on)",
         "level": 2
       },
       {
@@ -117,7 +908,52 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "MemOn (antigo OnMemory): Memória Determinística para Engenharia de IA e Governança Zero-Leak",
+        "description": "Por dentro do MemOn (aldeon.app/mem-on): um protocolo de contexto de agentes de IA em 3 fases, registro de antipadrões em 5 campos, linter de memória client-side <20KB (economia de -83,6% em tokens) e bootstrapper CLI portátil sem dependências.",
+        "excerpt": "Ao operar um ecossistema autônomo de ventures que abrange múltiplas superfícies web, clientes Expo React Native, stacks Terraform e backends serverless na AWS/GCP, agentes autônomos de código enfrentam dois modos de falha cumulativos:",
+        "headings": [
+          {
+            "id": "o-gargalo-da-engenharia-de-ia-multi-repositorio-inchaco-e-deriva-de-contexto",
+            "text": "O Gargalo da Engenharia de IA Multi-Repositório: Inchaço e Deriva de Contexto",
+            "level": 2
+          },
+          {
+            "id": "1-o-schema-padrao-de-4-secoes-e-o-teto-estrito-abaixo-de-20kb",
+            "text": "1. O Schema Padrão de 4 Seções e o Teto Estrito Abaixo de 20KB",
+            "level": 2
+          },
+          {
+            "id": "2-lei-de-seguranca-zero-leak-seguranca-e-a-lei",
+            "text": "2. Lei de Segurança Zero-Leak (\"Segurança é a Lei\")",
+            "level": 2
+          },
+          {
+            "id": "3-cli-portatil-sem-dependencias-init-mem-onmjs",
+            "text": "3. CLI Portátil Sem Dependências (init-mem-on.mjs)",
+            "level": 2
+          },
+          {
+            "id": "4-compositor-interativo-de-stack-e-linter-client-side-aldeonappmem-on",
+            "text": "4. Compositor Interativo de Stack e Linter Client-Side (aldeon.app/mem-on)",
+            "level": 2
+          },
+          {
+            "id": "resultados-em-producao",
+            "text": "Resultados em Produção",
+            "level": 2
+          }
+        ],
+        "wordCount": 856,
+        "readTimeMinutes": 5
+      }
+    }
   },
   {
     "slug": "engineering-handspeak-3d-libras-ai",
@@ -185,13 +1021,73 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Engenharia do HandSpeak: Tradução 3D de Libras em Tempo Real a 60 FPS e Vídeo P2P Acessível",
+        "description": "Blueprint arquitetural do HandSpeak: rastreamento de mãos 3D com MediaPipe a 60 FPS com anti-jitter EMA, desambiguação fonética por Levenshtein, tutor anatômico WebGL em Three.js e videochamadas WebRTC criptografadas via PeerJS.",
+        "excerpt": "Para pessoas surdas e com deficiência auditiva, navegar por conversas cotidianas em ambientes ouvintes frequentemente introduz atrito cognitivo. Embora a Língua Brasileira de Sinais (Libras) seja rica, espacial e expressiva, ferramentas de tradução existe…",
+        "headings": [
+          {
+            "id": "a-visao-quebrando-barreiras-de-comunicacao-com-ia-3d",
+            "text": "A Visão: Quebrando Barreiras de Comunicação com IA 3D",
+            "level": 2
+          },
+          {
+            "id": "1-rastreamento-de-maos-3d-a-60-fps-e-arquitetura-anti-jitter",
+            "text": "1. Rastreamento de Mãos 3D a 60 FPS e Arquitetura Anti-Jitter",
+            "level": 2
+          },
+          {
+            "id": "resiliencia-local-em-wasm-e-fallback-de-hardware-em-4-camadas",
+            "text": "Resiliência Local em WASM e Fallback de Hardware em 4 Camadas",
+            "level": 3
+          },
+          {
+            "id": "suavizacao-por-media-movel-exponencial-ema",
+            "text": "Suavização por Média Móvel Exponencial (EMA)",
+            "level": 3
+          },
+          {
+            "id": "2-resolvendo-colisoes-em-libras-com-levenshtein-fonetico",
+            "text": "2. Resolvendo Colisões em Libras com Levenshtein Fonético",
+            "level": 2
+          },
+          {
+            "id": "3-o-tutor-anatomico-3d-webgl-com-57-poses-e-modo-de-pratica",
+            "text": "3. O Tutor Anatômico 3D WebGL com 57+ Poses e Modo de Prática",
+            "level": 2
+          },
+          {
+            "id": "4-video-webrtc-p2p-privacidade-solo-com-custo-zero-e-trust-safety",
+            "text": "4. Vídeo WebRTC P2P, Privacidade Solo com Custo Zero e Trust & Safety",
+            "level": 2
+          },
+          {
+            "id": "5-academia-bilingue-de-libras-e-acessibilidade-em-5-trilhas-handspeaklearn",
+            "text": "5. Academia Bilíngue de Libras e Acessibilidade em 5 Trilhas (/handspeak/learn)",
+            "level": 2
+          },
+          {
+            "id": "resultados-em-producao",
+            "text": "Resultados em Produção",
+            "level": 2
+          }
+        ],
+        "wordCount": 1413,
+        "readTimeMinutes": 8
+      }
+    }
   },
   {
     "slug": "aldeon-unified-edge-ssr-multi-cloud-ecosystem",
-    "title": "The Aldeon Architecture: Orchestrating an Autonomous 7-Product Multi-Cloud Ecosystem",
-    "description": "Architectural blueprint of the Aldeon platform: Consolidating 7 autonomous applications under domain-sliced React Router 7 Edge SSR, zero-backend portal isolation, AST-verified i18n, and multi-cloud infrastructure.",
-    "excerpt": "As an engineering founder operating multiple consumer, fintech, developer, and B2B products—SwanGo, OnMemory, HandSpeak, Be Your Stories, Pack, TATU Design, and PostHub—traditional architecture choices present a false dichotomy:",
+    "title": "The Aldeon Architecture: Orchestrating an Autonomous 8-Product Multi-Cloud Ecosystem",
+    "description": "Architectural blueprint of the Aldeon platform: Consolidating 8 autonomous applications under domain-sliced React Router 7 Edge SSR (TypeScript 7 + Biome), zero-backend portal isolation, AST-verified i18n, and multi-cloud infrastructure.",
+    "excerpt": "As an engineering founder operating multiple consumer, fintech, developer, and B2B products—SwanGo, RagOn, MemOn, HandSpeak, Be Your Stories, Pack, TATU Design, and PostHub—traditional architecture choices present a false dichotomy:",
     "date": "2026-10-16",
     "tags": [
       "Architecture",
@@ -202,7 +1098,7 @@
       "FinOps"
     ],
     "readTimeMinutes": 5,
-    "wordCount": 949,
+    "wordCount": 992,
     "headings": [
       {
         "id": "the-venture-studio-challenge-multi-product-synergy-without-monolithic-bloat",
@@ -215,7 +1111,7 @@
         "level": 2
       },
       {
-        "id": "2-pinned-edge-ssr-in-so-paulo-gru1-caching-invariants",
+        "id": "2-pinned-edge-ssr-in-sao-paulo-gru1-caching-invariants",
         "text": "2. Pinned Edge SSR in São Paulo (gru1) & Caching Invariants",
         "level": 2
       },
@@ -252,12 +1148,72 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "A Arquitetura Aldeon: Orquestrando um Ecossistema Multi-Cloud Autônomo de 8 Produtos",
+        "description": "Blueprint arquitetural da plataforma Aldeon: consolidando 8 aplicações autônomas sob React Router 7 Edge SSR fatiado por domínio (TypeScript 7 + Biome), isolamento de portal zero-backend, i18n verificado por AST e infraestrutura multi-cloud.",
+        "excerpt": "Como fundador e engenheiro operando múltiplos produtos de consumo, fintech, ferramentas para desenvolvedores e B2B — SwanGo, RagOn, MemOn, HandSpeak, Be Your Stories, Pack, TATU Design e PostHub —, escolhas tradicionais de arquitetura apresentam uma falsa…",
+        "headings": [
+          {
+            "id": "o-desafio-de-um-venture-studio-sinergia-multi-produto-sem-inchaco-monolitico",
+            "text": "O Desafio de um Venture Studio: Sinergia Multi-Produto Sem Inchaço Monolítico",
+            "level": 2
+          },
+          {
+            "id": "1-o-invariante-zero-backend-e-o-portal-fatiado-por-dominio",
+            "text": "1. O Invariante Zero-Backend e o Portal Fatiado por Domínio",
+            "level": 2
+          },
+          {
+            "id": "2-edge-ssr-fixado-em-sao-paulo-gru1-e-invariantes-de-cache",
+            "text": "2. Edge SSR Fixado em São Paulo (gru1) e Invariantes de Cache",
+            "level": 2
+          },
+          {
+            "id": "politica-de-cache-na-edge",
+            "text": "Política de Cache na Edge",
+            "level": 3
+          },
+          {
+            "id": "3-core-web-vitals-paridade-de-i18n-por-ast-e-gates-de-seguranca-ssr",
+            "text": "3. Core Web Vitals, Paridade de i18n por AST e Gates de Segurança SSR",
+            "level": 2
+          },
+          {
+            "id": "4-isolamento-multi-cloud-por-tenant-e-registro-de-credenciais",
+            "text": "4. Isolamento Multi-Cloud por Tenant e Registro de Credenciais",
+            "level": 2
+          },
+          {
+            "id": "garantias-de-seguranca",
+            "text": "Garantias de Segurança",
+            "level": 3
+          },
+          {
+            "id": "5-cicd-mobile-com-dual-runner-eas-deployyml",
+            "text": "5. CI/CD Mobile com Dual-Runner (eas-deploy.yml)",
+            "level": 2
+          },
+          {
+            "id": "conclusao",
+            "text": "Conclusão",
+            "level": 2
+          }
+        ],
+        "wordCount": 1194,
+        "readTimeMinutes": 6
+      }
+    }
   },
   {
     "slug": "architecting-pack-multimodal-ocr-logistics",
     "title": "Architecting Pack: Sub-1.2s Multimodal AI OCR, Local-First Reactivity, and Zero-Error Parcel Lockers",
-    "description": "Deep dive into Pack's logistics platform: Sub-1.2s Gemini 2.5 Flash OCR extracting carrier tracking and consignees, Legend-State v3 local-first state, dual-cloud persistence (Firestore + DynamoDB), and dynamic QR + PIN verification.",
+    "description": "Deep dive into Pack's logistics platform: Sub-1.2s Gemini 3.8 Flash OCR extracting carrier tracking and consignees, Legend-State v3 local-first state, dual-cloud persistence (Firestore + DynamoDB), and dynamic QR + PIN verification.",
     "excerpt": "In dense urban condominium complexes and commercial towers, the explosion of e-commerce has turned mailrooms and reception desks into bottlenecks. High-volume couriers—from national postal services (Correios) to regional carriers (Loggi, Jadlog, Mercado L…",
     "date": "2026-10-15",
     "tags": [
@@ -270,7 +1226,7 @@
       "EventBridge"
     ],
     "readTimeMinutes": 6,
-    "wordCount": 1023,
+    "wordCount": 1034,
     "headings": [
       {
         "id": "the-physical-logistics-dilemma-the-last-100-feet",
@@ -283,8 +1239,8 @@
         "level": 2
       },
       {
-        "id": "sub-12s-multimodal-ai-ocr-with-gemini-25-flash",
-        "text": "Sub-1.2s Multimodal AI OCR with Gemini 2.5 Flash",
+        "id": "sub-12s-multimodal-ai-ocr-with-gemini-38-flash",
+        "text": "Sub-1.2s Multimodal AI OCR with Gemini 3.8 Flash",
         "level": 2
       },
       {
@@ -340,7 +1296,87 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Arquitetando o Pack: OCR Multimodal de IA abaixo de 1,2s, Reatividade Local-First e Armários Inteligentes com Zero Erro",
+        "description": "Análise aprofundada da plataforma logística do Pack: OCR com Gemini 3.8 Flash abaixo de 1,2s extraindo rastreamento de transportadoras e destinatários, estado local-first com Legend-State v3, persistência dual-cloud (Firestore + DynamoDB) e verificação dinâmica por QR + PIN.",
+        "excerpt": "Em complexos condominiais urbanos densos e torres comerciais, a explosão do e-commerce transformou portarias e salas de correspondência em gargalos operacionais. Transportadoras de alto volume — dos serviços postais nacionais (Correios) às operadoras regi…",
+        "headings": [
+          {
+            "id": "o-dilema-da-logistica-fisica-os-ultimos-30-metros",
+            "text": "O Dilema da Logística Física: Os Últimos 30 Metros",
+            "level": 2
+          },
+          {
+            "id": "topologia-arquitetural",
+            "text": "Topologia Arquitetural",
+            "level": 2
+          },
+          {
+            "id": "ocr-multimodal-de-ia-abaixo-de-12s-com-gemini-38-flash",
+            "text": "OCR Multimodal de IA abaixo de 1,2s com Gemini 3.8 Flash",
+            "level": 2
+          },
+          {
+            "id": "por-que-llms-multimodais-superam-o-ocr-classico",
+            "text": "Por que LLMs Multimodais Superam o OCR Clássico",
+            "level": 3
+          },
+          {
+            "id": "pipeline-de-inferencia-restrita-por-esquema",
+            "text": "Pipeline de Inferência Restrita por Esquema",
+            "level": 3
+          },
+          {
+            "id": "metricas-de-desempenho-e-latencia",
+            "text": "Métricas de Desempenho e Latência",
+            "level": 3
+          },
+          {
+            "id": "reatividade-local-first-com-legend-state-v3",
+            "text": "Reatividade Local-First com Legend-State v3",
+            "level": 2
+          },
+          {
+            "id": "arquitetura-dual-cloud-firestore-aws-dynamodb",
+            "text": "Arquitetura Dual-Cloud: Firestore + AWS DynamoDB",
+            "level": 2
+          },
+          {
+            "id": "esquema-de-design-single-table",
+            "text": "Esquema de Design Single-Table",
+            "level": 3
+          },
+          {
+            "id": "automacoes-de-tempo-de-permanencia-de-48h-com-eventbridge",
+            "text": "Automações de Tempo de Permanência de 48h com EventBridge",
+            "level": 2
+          },
+          {
+            "id": "definicao-terraform-cdk-do-eventbridge",
+            "text": "Definição Terraform / CDK do EventBridge",
+            "level": 3
+          },
+          {
+            "id": "entrega-zero-trust-qr-dinamico-pin-de-6-digitos",
+            "text": "Entrega Zero-Trust: QR Dinâmico + PIN de 6 Dígitos",
+            "level": 2
+          },
+          {
+            "id": "impacto-em-producao-e-resumo",
+            "text": "Impacto em Produção e Resumo",
+            "level": 2
+          }
+        ],
+        "wordCount": 1269,
+        "readTimeMinutes": 7
+      }
+    }
   },
   {
     "slug": "building-tatu-design-ai-stencil-ar-studio",
@@ -413,7 +1449,72 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Construindo o TATU Design: Decimação de Estêncil na Borda, AR Skin-Lock a 60 FPS e Impressão Térmica",
+        "description": "Análise arquitetural aprofundada do TATU Design: decimação de estêncil de alta fidelidade com Sobel/Bayer, AR Skin-Lock a 60 FPS superando o corte de plano próximo 3D do CALayer via Projeção Cilíndrica Afim 2D e exportação térmica 1080p em 150ms.",
+        "excerpt": "Na tatuagem profissional, o estêncil térmico é a fronteira definitiva entre o conceito artístico e o pigmento permanente na pele. Cada milímetro da trajetória da agulha depende de um decalque em carbono roxo transferido para a pele do cliente antes do pri…",
+        "headings": [
+          {
+            "id": "a-arte-e-a-fisica-dos-estenceis-de-tatuagem",
+            "text": "A Arte e a Física dos Estênceis de Tatuagem",
+            "level": 2
+          },
+          {
+            "id": "o-pipeline-de-decimacao-de-estencil",
+            "text": "O Pipeline de Decimação de Estêncil",
+            "level": 2
+          },
+          {
+            "id": "1-extracao-de-bordas-com-magnitude-vetorial",
+            "text": "1. Extração de Bordas com Magnitude Vetorial",
+            "level": 3
+          },
+          {
+            "id": "2-micro-realismo-com-dithering-ordenado-de-bayer-8x8",
+            "text": "2. Micro-Realismo com Dithering Ordenado de Bayer 8x8",
+            "level": 3
+          },
+          {
+            "id": "ar-skin-lock-a-60-fps-superando-a-barreira-de-corte-3d",
+            "text": "AR Skin-Lock a 60 FPS: Superando a Barreira de Corte 3D",
+            "level": 2
+          },
+          {
+            "id": "o-problema-corte-de-plano-proximo-3d-no-calayer",
+            "text": "O Problema: Corte de Plano Próximo 3D no CALayer",
+            "level": 3
+          },
+          {
+            "id": "a-solucao-projecao-cilindrica-afim-2d",
+            "text": "A Solução: Projeção Cilíndrica Afim 2D",
+            "level": 3
+          },
+          {
+            "id": "beneficios-da-abordagem-de-projecao-analitica",
+            "text": "Benefícios da Abordagem de Projeção Analítica:",
+            "level": 3
+          },
+          {
+            "id": "exportacao-termica-1080p-em-passo-unico-em-150ms",
+            "text": "Exportação Térmica 1080p em Passo Único em 150ms",
+            "level": 2
+          },
+          {
+            "id": "verificacao-e-impacto",
+            "text": "Verificação e Impacto",
+            "level": 2
+          }
+        ],
+        "wordCount": 1021,
+        "readTimeMinutes": 6
+      }
+    }
   },
   {
     "slug": "autonomous-publishing-posthub-step-functions",
@@ -429,8 +1530,8 @@
       "WebSockets",
       "Cloud Architecture"
     ],
-    "readTimeMinutes": 3,
-    "wordCount": 582,
+    "readTimeMinutes": 4,
+    "wordCount": 621,
     "headings": [
       {
         "id": "the-omnichannel-distribution-complexity",
@@ -470,7 +1571,57 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Publicação Social Autônoma com PostHub: AWS Step Functions, Tokens e Orquestração Multiplataforma",
+        "description": "Blueprint arquitetural do PostHub: publicação social autônoma em 5 plataformas (LinkedIn, X, Substack, Facebook, Instagram), tokens de aprovação de 1 clique no AWS Step Functions, cache dinâmico de JWT x509 e sincronização via DynamoDB Streams e WebSockets.",
+        "excerpt": "Manter uma presença técnica multiplataforma coerente no LinkedIn, X (Twitter), Substack, Facebook e Instagram é um fardo operacional significativo. Cada plataforma impõe restrições distintas:",
+        "headings": [
+          {
+            "id": "a-complexidade-da-distribuicao-omnichannel",
+            "text": "A Complexidade da Distribuição Omnichannel",
+            "level": 2
+          },
+          {
+            "id": "a-maquina-de-estados-de-orquestracao",
+            "text": "A Máquina de Estados de Orquestração",
+            "level": 2
+          },
+          {
+            "id": "human-in-the-loop-o-padrao-task-token",
+            "text": "Human-in-the-Loop: O Padrão Task Token",
+            "level": 2
+          },
+          {
+            "id": "verificacao-segura-em-1-clique",
+            "text": "Verificação Segura em 1 Clique",
+            "level": 3
+          },
+          {
+            "id": "seguranca-de-alta-performance-cache-dinamico-de-jwt-x509-no-autorizador",
+            "text": "Segurança de Alta Performance: Cache Dinâmico de JWT x509 no Autorizador",
+            "level": 2
+          },
+          {
+            "id": "sincronizacao-em-tempo-real-via-dynamodb-streams-e-websockets",
+            "text": "Sincronização em Tempo Real via DynamoDB Streams e WebSockets",
+            "level": 2
+          },
+          {
+            "id": "resultados-e-eficiencia-operacional",
+            "text": "Resultados e Eficiência Operacional",
+            "level": 2
+          }
+        ],
+        "wordCount": 777,
+        "readTimeMinutes": 4
+      }
+    }
   },
   {
     "slug": "awss-enduring-revolution-from-ec2s",
@@ -531,7 +1682,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/awss-enduring-revolution-from-ec2s"
+    "canonicalUrl": "https://celio1878.substack.com/p/awss-enduring-revolution-from-ec2s",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-architects-blueprint-how-data",
@@ -598,7 +1752,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-architects-blueprint-how-data"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-architects-blueprint-how-data",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-data-deluge-agility",
@@ -667,7 +1824,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-data-deluge-agility"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-data-deluge-agility",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-new-frontier-of-storytelling",
@@ -758,7 +1918,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-frontier-of-storytelling"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-frontier-of-storytelling",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-renaissance-of-the-technical",
@@ -844,7 +2007,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-renaissance-of-the-technical"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-renaissance-of-the-technical",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-quantum-compass-navigating-breakthroughs",
@@ -943,7 +2109,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-compass-navigating-breakthroughs"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-compass-navigating-breakthroughs",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "openais-dual-frontier-pushing-ai",
@@ -1019,7 +2188,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/openais-dual-frontier-pushing-ai"
+    "canonicalUrl": "https://celio1878.substack.com/p/openais-dual-frontier-pushing-ai",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-hype-unpacking-open-sources",
@@ -1090,7 +2262,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-unpacking-open-sources"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-unpacking-open-sources",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-storytellers-compass-navigating",
@@ -1156,7 +2331,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-storytellers-compass-navigating"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-storytellers-compass-navigating",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-simple-string-the-rise",
@@ -1207,7 +2385,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-simple-string-the-rise"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-simple-string-the-rise",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-ai-engineering-paradigm-shift",
@@ -1262,7 +2443,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-engineering-paradigm-shift"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-engineering-paradigm-shift",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "unpacking-the-latest-algorithmic",
@@ -1353,7 +2537,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/unpacking-the-latest-algorithmic"
+    "canonicalUrl": "https://celio1878.substack.com/p/unpacking-the-latest-algorithmic",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "from-foundational-pillars-to-frontier",
@@ -1445,7 +2632,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/from-foundational-pillars-to-frontier"
+    "canonicalUrl": "https://celio1878.substack.com/p/from-foundational-pillars-to-frontier",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-data-movement-architecting",
@@ -1519,7 +2709,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-data-movement-architecting"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-data-movement-architecting",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-horizon-three-algorithmic",
@@ -1569,7 +2762,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-horizon-three-algorithmic"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-horizon-three-algorithmic",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-hype-the-unseen-depths-f37",
@@ -1634,7 +2830,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-the-unseen-depths-f37"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-the-unseen-depths-f37",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-algorithm-crafting-connection",
@@ -1724,7 +2923,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-crafting-connection"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-crafting-connection",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-shifting-sands-of-computational",
@@ -1814,7 +3016,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-shifting-sands-of-computational"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-shifting-sands-of-computational",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-hype-deconstructing-the",
@@ -1859,7 +3064,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-deconstructing-the"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-deconstructing-the",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-models-the-maturing-landscape",
@@ -1939,7 +3147,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-models-the-maturing-landscape"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-models-the-maturing-landscape",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "aws-unleashes-a-triple-threat-empowering",
@@ -2009,7 +3220,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/aws-unleashes-a-triple-threat-empowering"
+    "canonicalUrl": "https://celio1878.substack.com/p/aws-unleashes-a-triple-threat-empowering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-quantum-leap-for-indie-authors",
@@ -2081,7 +3295,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-leap-for-indie-authors"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-leap-for-indie-authors",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "engineerings-ai-epoch-navigating",
@@ -2137,7 +3354,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/engineerings-ai-epoch-navigating"
+    "canonicalUrl": "https://celio1878.substack.com/p/engineerings-ai-epoch-navigating",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "unraveling-algorithmic-frontiers",
@@ -2216,7 +3436,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/unraveling-algorithmic-frontiers"
+    "canonicalUrl": "https://celio1878.substack.com/p/unraveling-algorithmic-frontiers",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-quantum-leap-unpacking-the-latest",
@@ -2285,7 +3508,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-leap-unpacking-the-latest"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-quantum-leap-unpacking-the-latest",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-strategic-metamorphosis-of-data",
@@ -2351,7 +3577,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-strategic-metamorphosis-of-data"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-strategic-metamorphosis-of-data",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-prompt-steering-llms-with",
@@ -2396,7 +3625,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-prompt-steering-llms-with"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-prompt-steering-llms-with",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-new-imperative-in-ai-engineering",
@@ -2461,7 +3693,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-new-imperative-in-ai-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-new-imperative-in-ai-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "gpt-56-sol-and-the-production-paradox",
@@ -2526,7 +3761,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/gpt-56-sol-and-the-production-paradox"
+    "canonicalUrl": "https://celio1878.substack.com/p/gpt-56-sol-and-the-production-paradox",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "decoding-the-github-pulse-a-deep",
@@ -2617,7 +3855,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/decoding-the-github-pulse-a-deep"
+    "canonicalUrl": "https://celio1878.substack.com/p/decoding-the-github-pulse-a-deep",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-authors-new-frontier-navigating",
@@ -2688,7 +3929,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-authors-new-frontier-navigating"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-authors-new-frontier-navigating",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "unlocking-new-horizons-recent-algorithmic",
@@ -2769,7 +4013,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/unlocking-new-horizons-recent-algorithmic"
+    "canonicalUrl": "https://celio1878.substack.com/p/unlocking-new-horizons-recent-algorithmic",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "quantum-leap-forward-breakthroughs",
@@ -2823,7 +4070,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/quantum-leap-forward-breakthroughs"
+    "canonicalUrl": "https://celio1878.substack.com/p/quantum-leap-forward-breakthroughs",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-strategic-shift-prompt-engineerings",
@@ -2883,7 +4133,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-strategic-shift-prompt-engineerings"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-strategic-shift-prompt-engineerings",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-hype-how-ai-is-radically",
@@ -2943,7 +4196,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-how-ai-is-radically"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-how-ai-is-radically",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-training-architecting-the",
@@ -2994,7 +4250,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-training-architecting-the"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-training-architecting-the",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "aws-unveils-next-gen-compute-and",
@@ -3062,7 +4321,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/aws-unveils-next-gen-compute-and"
+    "canonicalUrl": "https://celio1878.substack.com/p/aws-unveils-next-gen-compute-and",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "open-sources-relentless-drive-unpacking",
@@ -3123,7 +4385,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/open-sources-relentless-drive-unpacking"
+    "canonicalUrl": "https://celio1878.substack.com/p/open-sources-relentless-drive-unpacking",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-ai-agent-uprising-how-open-source",
@@ -3214,7 +4479,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-agent-uprising-how-open-source"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-agent-uprising-how-open-source",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-etl-the-strategic-evolution",
@@ -3283,7 +4551,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-etl-the-strategic-evolution"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-etl-the-strategic-evolution",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-dual-mandate-of-modern-engineering",
@@ -3359,7 +4630,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-dual-mandate-of-modern-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-dual-mandate-of-modern-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-new-frontier-critical",
@@ -3439,7 +4713,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-frontier-critical"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-frontier-critical",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-agentic-revolution-how-open-source",
@@ -3520,7 +4797,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-agentic-revolution-how-open-source"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-agentic-revolution-how-open-source",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "from-prototype-to-production-mastering",
@@ -3565,7 +4845,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/from-prototype-to-production-mastering"
+    "canonicalUrl": "https://celio1878.substack.com/p/from-prototype-to-production-mastering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-great-data-engineering-renaissance",
@@ -3626,7 +4909,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-great-data-engineering-renaissance"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-great-data-engineering-renaissance",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-ai-tsunami-navigating-breakthroughs",
@@ -3722,7 +5008,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-tsunami-navigating-breakthroughs"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-tsunami-navigating-breakthroughs",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-lab-navigating-the-production",
@@ -3782,7 +5071,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-lab-navigating-the-production"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-lab-navigating-the-production",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "open-source-unleashed-the-cutting",
@@ -3833,7 +5125,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/open-source-unleashed-the-cutting"
+    "canonicalUrl": "https://celio1878.substack.com/p/open-source-unleashed-the-cutting",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-new-ai-frontier-cost",
@@ -3874,7 +5169,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-ai-frontier-cost"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-new-ai-frontier-cost",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-github-frontier-smarter-ai-agents",
@@ -3946,7 +5244,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-github-frontier-smarter-ai-agents"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-github-frontier-smarter-ai-agents",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-grand-evolution-of-data-engineering",
@@ -3990,7 +5291,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-grand-evolution-of-data-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-grand-evolution-of-data-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-model-precision-engineering",
@@ -4075,7 +5379,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-model-precision-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-model-precision-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-evolving-engineer-navigating-03a",
@@ -4146,7 +5453,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-evolving-engineer-navigating-03a"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-evolving-engineer-navigating-03a",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-modern-data-stack-building-the",
@@ -4205,7 +5515,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-modern-data-stack-building-the"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-modern-data-stack-building-the",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-evolving-data-landscape",
@@ -4274,7 +5587,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-evolving-data-landscape"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-evolving-data-landscape",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-evolving-engineer-navigating",
@@ -4360,7 +5676,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-evolving-engineer-navigating"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-evolving-engineer-navigating",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "navigating-the-data-deluge-building",
@@ -4439,7 +5758,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-data-deluge-building"
+    "canonicalUrl": "https://celio1878.substack.com/p/navigating-the-data-deluge-building",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-hype-the-unseen-depths",
@@ -4514,7 +5836,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-the-unseen-depths"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-hype-the-unseen-depths",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-next-frontier-in-data-engineering",
@@ -4578,7 +5903,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-next-frontier-in-data-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-next-frontier-in-data-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "from-deep-mastery-to-ai-frontier",
@@ -4629,7 +5957,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/from-deep-mastery-to-ai-frontier"
+    "canonicalUrl": "https://celio1878.substack.com/p/from-deep-mastery-to-ai-frontier",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-stack-leading-engineering",
@@ -4675,7 +6006,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-stack-leading-engineering"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-stack-leading-engineering",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-ai-revolution-accelerates-from",
@@ -4740,7 +6074,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-revolution-accelerates-from"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-ai-revolution-accelerates-from",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "engineering-leadership-in-the-ai",
@@ -4812,7 +6149,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/engineering-leadership-in-the-ai"
+    "canonicalUrl": "https://celio1878.substack.com/p/engineering-leadership-in-the-ai",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-algorithm-how-ai-is-reshaping",
@@ -4888,7 +6228,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-how-ai-is-reshaping"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-how-ai-is-reshaping",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-algorithm-why-human-meta",
@@ -4944,7 +6287,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-why-human-meta"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-algorithm-why-human-meta",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "the-next-frontier-in-data-unifying",
@@ -5005,7 +6351,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/the-next-frontier-in-data-unifying"
+    "canonicalUrl": "https://celio1878.substack.com/p/the-next-frontier-in-data-unifying",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "deep-dive-transforming-ideas-into",
@@ -5039,7 +6388,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/deep-dive-transforming-ideas-into"
+    "canonicalUrl": "https://celio1878.substack.com/p/deep-dive-transforming-ideas-into",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "beyond-the-ide-the-evolving-landscape",
@@ -5135,7 +6487,10 @@
     "source": "substack",
     "lang": "en",
     "author": "Célio Vieira",
-    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-ide-the-evolving-landscape"
+    "canonicalUrl": "https://celio1878.substack.com/p/beyond-the-ide-the-evolving-landscape",
+    "availableLocales": [
+      "en"
+    ]
   },
   {
     "slug": "scaling-lakehouses-spark-iceberg",
@@ -5186,7 +6541,52 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Engenharia de Lakehouses Escaláveis com Apache Spark e Apache Iceberg",
+        "description": "Padrões arquiteturais para lakehouses em escala de petabytes, transações ACID, evolução de partições e armazenamento stream-table com eficiência de custos na AWS.",
+        "excerpt": "Padrões tradicionais de armazenamento em objetos baseados em Hive no Amazon S3 sofriam de limitações estruturais conhecidas:",
+        "headings": [
+          {
+            "id": "a-transicao-de-data-lakes-tradicionais-para-lakehouses",
+            "text": "A Transição de Data Lakes Tradicionais para Lakehouses",
+            "level": 2
+          },
+          {
+            "id": "principais-vantagens-arquiteturais",
+            "text": "Principais Vantagens Arquiteturais",
+            "level": 2
+          },
+          {
+            "id": "1-particionamento-oculto-e-evolucao-de-particoes",
+            "text": "1. Particionamento Oculto e Evolução de Partições",
+            "level": 3
+          },
+          {
+            "id": "2-ingestao-em-streaming-de-alta-vazao-com-spark",
+            "text": "2. Ingestão em Streaming de Alta Vazão com Spark",
+            "level": 3
+          },
+          {
+            "id": "3-compactacao-automatizada-e-limpeza-de-arquivos-orfaos",
+            "text": "3. Compactação Automatizada e Limpeza de Arquivos Órfãos",
+            "level": 3
+          },
+          {
+            "id": "resultados-e-impacto",
+            "text": "Resultados e Impacto",
+            "level": 2
+          }
+        ],
+        "wordCount": 358,
+        "readTimeMinutes": 2
+      }
+    }
   },
   {
     "slug": "enterprise-rag-with-local-llms",
@@ -5201,8 +6601,8 @@
       "Ollama",
       "Python"
     ],
-    "readTimeMinutes": 2,
-    "wordCount": 305,
+    "readTimeMinutes": 3,
+    "wordCount": 441,
     "headings": [
       {
         "id": "why-private-local-ai-matters",
@@ -5237,7 +6637,52 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "RAG Corporativo com LLMs Locais: Infraestrutura de IA Privada de Alta Performance",
+        "description": "Blueprint arquitetural para construir pipelines de Retrieval-Augmented Generation (RAG) com vazamento zero e alta precisão usando Ollama, HuggingFace e busca vetorial híbrida.",
+        "excerpt": "Em ambientes corporativos, privacidade de dados e conformidade regulatória inviabilizam o envio de documentos confidenciais para provedores externos de APIs de terceiros.",
+        "headings": [
+          {
+            "id": "por-que-ia-local-privada-importa",
+            "text": "Por que IA Local Privada Importa",
+            "level": 2
+          },
+          {
+            "id": "arquitetura-do-pipeline",
+            "text": "Arquitetura do Pipeline",
+            "level": 2
+          },
+          {
+            "id": "1-estrategia-de-recuperacao-hibrida",
+            "text": "1. Estratégia de Recuperação Híbrida",
+            "level": 3
+          },
+          {
+            "id": "2-inferencia-local-de-alta-performance-com-ollama",
+            "text": "2. Inferência Local de Alta Performance com Ollama",
+            "level": 3
+          },
+          {
+            "id": "3-re-ranking-o-filtro-critico-de-qualidade",
+            "text": "3. Re-Ranking: O Filtro Crítico de Qualidade",
+            "level": 3
+          },
+          {
+            "id": "licoes-de-producao",
+            "text": "Lições de Produção",
+            "level": 2
+          }
+        ],
+        "wordCount": 537,
+        "readTimeMinutes": 3
+      }
+    }
   },
   {
     "slug": "building-be-your-stories",
@@ -5292,6 +6737,56 @@
     ],
     "source": "native",
     "lang": "en",
-    "author": "Célio Vieira"
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "Construindo o Be Your Stories: Do Conceito à Produção na Web, iOS e Android",
+        "description": "Blueprint arquitetural e lições de produto na construção de uma plataforma multiplataforma de leitura e storytelling offline-first publicada na App Store e no Google Play.",
+        "excerpt": "Na criação de conteúdo digital, escritores e leitores frequentemente enfrentam experiências fragmentadas: plataformas web muitas vezes carecem de refinamento mobile, enquanto aplicativos mobile isolados deixam autores de desktop à margem.",
+        "headings": [
+          {
+            "id": "a-visao-por-tras-do-be-your-stories",
+            "text": "A Visão por Trás do Be Your Stories",
+            "level": 2
+          },
+          {
+            "id": "fundacao-arquitetural",
+            "text": "Fundação Arquitetural",
+            "level": 2
+          },
+          {
+            "id": "1-sincronizacao-offline-first",
+            "text": "1. Sincronização Offline-First",
+            "level": 3
+          },
+          {
+            "id": "2-descoberta-em-alta-velocidade-e-narracao-neural-de-audiobooks",
+            "text": "2. Descoberta em Alta Velocidade e Narração Neural de Audiobooks",
+            "level": 3
+          },
+          {
+            "id": "3-compartilhamento-de-codigo-multiplataforma",
+            "text": "3. Compartilhamento de Código Multiplataforma",
+            "level": 3
+          },
+          {
+            "id": "marcos-de-producao",
+            "text": "Marcos de Produção",
+            "level": 2
+          },
+          {
+            "id": "principais-aprendizados",
+            "text": "Principais Aprendizados",
+            "level": 2
+          }
+        ],
+        "wordCount": 659,
+        "readTimeMinutes": 4
+      }
+    }
   }
 ]
