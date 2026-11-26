@@ -25,13 +25,13 @@ Running **OpenCode** as a terminal agent harness backed by **Ollama** serving **
 
 Every configuration file, model weight size, and tuning flag in this blueprint comes from an active engineering workstation:
 
-| Component | Exact Reference Spec | Architectural Role in Local AI |
-|---|---|---|
-| **GPU** | **NVIDIA RTX 3070 — 8 GB GDDR6 VRAM** (`448 GB/s`) | Primary compute engine + `q8_0` KV cache + 100% residency for `qwen3.5:9b` & `qwen3.5-fast:9b` |
-| **CPU** | **AMD Ryzen 7 3700X — 8 Cores / 16 Threads** (Zen 2, AVX2) | Executes offloaded Mixture-of-Experts (MoE) weights (`qwen3-coder:30b`) & harness tools |
-| **System RAM** | **32 GB DDR4-3600 MHz** (Dual-Channel, `1800 MHz` 1:1 FCLK) | Holds offloaded MoE experts (`~13–15 GB`) while preserving `~14–16 GB` for OS, IDE & Docker |
-| **Primary NVMe** | **Dual ~477 GB NVMe SSDs** | Root OS, active Git repositories, Docker layers, and build caches |
-| **Dedicated LLM Store** | **~300 GB SATA HDD (`OLLAMA_MODELS`, 24 GB GGUF store)** | Frees NVMe space by holding `24 GB` of model blobs, amortized via `30m` keep-alive residency |
+| Component               | Exact Reference Spec                                        | Architectural Role in Local AI                                                                 |
+| ----------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **GPU**                 | **NVIDIA RTX 3070 — 8 GB GDDR6 VRAM** (`448 GB/s`)          | Primary compute engine + `q8_0` KV cache + 100% residency for `qwen3.5:9b` & `qwen3.5-fast:9b` |
+| **CPU**                 | **AMD Ryzen 7 3700X — 8 Cores / 16 Threads** (Zen 2, AVX2)  | Executes offloaded Mixture-of-Experts (MoE) weights (`qwen3-coder:30b`) & harness tools        |
+| **System RAM**          | **32 GB DDR4-3600 MHz** (Dual-Channel, `1800 MHz` 1:1 FCLK) | Holds offloaded MoE experts (`~13–15 GB`) while preserving `~14–16 GB` for OS, IDE & Docker    |
+| **Primary NVMe**        | **Dual ~477 GB NVMe SSDs**                                  | Root OS, active Git repositories, Docker layers, and build caches                              |
+| **Dedicated LLM Store** | **~300 GB SATA HDD (`OLLAMA_MODELS`, 24 GB GGUF store)**    | Frees NVMe space by holding `24 GB` of model blobs, amortized via `30m` keep-alive residency   |
 
 An **8 GB VRAM** card looks tight on paper—and for large *dense* models, it is. What makes this workstation genuinely effective is pairing **32 GB of DDR4-3600**, strict single-slot concurrency (`OLLAMA_NUM_PARALLEL=1`), a **derived zero-extra-disk no-think model (`qwen3.5-fast:9b`)**, and **sparse MoE (`qwen3-coder:30b`)** for wide-context planning.
 
@@ -68,11 +68,11 @@ Instead of running one oversized model for every prompt, OpenCode splits agentic
 
 Here is the exact 3-model inventory stored inside the workstation's **24 GB `OLLAMA_MODELS` blob directory**:
 
-| Model Tag | Architecture & Format | Disk Blob Footprint | Context Cap in OpenCode | Execution Profile on RTX 3070 + 32 GB RAM | OpenCode Agent Role |
-|---|---|---|---|---|---|
-| `qwen3.5:9b` | `qwen35` Dense Hybrid (`Q4_K_M`) + Vision `mmproj.gguf` | `5.3 GiB` model + `880 MiB` projector | `32,768` (`32K`) | **100% RTX 3070 VRAM** (`448 GB/s`) | **`build` (default)**: multi-step edits, test fixes & UI inspection |
-| `qwen3.5-fast:9b` | Custom `FROM qwen3.5:9b` (`Q4_K_M`, No-Think prompt, `temp 0.1`) | **`0 B` extra** (shares `qwen3.5:9b` blobs) | `32,768` (`32K`) | **100% RTX 3070 VRAM** (`448 GB/s`) | **`explore` & `compaction`**: rapid repo scans & zero-preamble pruning |
-| `qwen3-coder:30b` | `qwen3moe` Sparse MoE (`30.5B` total / `3.3B` active, `Q4_K_M`) | `18 GB` (`17.3 GiB` GGUF) | `49,152` (`48K`) | **Hybrid**: Attention + KV on RTX 3070, experts in 32 GB DDR4-3600 | **`plan`**: deep repo architecture & multi-file refactoring plans |
+| Model Tag         | Architecture & Format                                            | Disk Blob Footprint                         | Context Cap in OpenCode | Execution Profile on RTX 3070 + 32 GB RAM                          | OpenCode Agent Role                                                    |
+| ----------------- | ---------------------------------------------------------------- | ------------------------------------------- | ----------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| `qwen3.5:9b`      | `qwen35` Dense Hybrid (`Q4_K_M`) + Vision `mmproj.gguf`          | `5.3 GiB` model + `880 MiB` projector       | `32,768` (`32K`)        | **100% RTX 3070 VRAM** (`448 GB/s`)                                | **`build` (default)**: multi-step edits, test fixes & UI inspection    |
+| `qwen3.5-fast:9b` | Custom `FROM qwen3.5:9b` (`Q4_K_M`, No-Think prompt, `temp 0.1`) | **`0 B` extra** (shares `qwen3.5:9b` blobs) | `32,768` (`32K`)        | **100% RTX 3070 VRAM** (`448 GB/s`)                                | **`explore` & `compaction`**: rapid repo scans & zero-preamble pruning |
+| `qwen3-coder:30b` | `qwen3moe` Sparse MoE (`30.5B` total / `3.3B` active, `Q4_K_M`)  | `18 GB` (`17.3 GiB` GGUF)                   | `49,152` (`48K`)        | **Hybrid**: Attention + KV on RTX 3070, experts in 32 GB DDR4-3600 | **`plan`**: deep repo architecture & multi-file refactoring plans      |
 
 Why does **sparse MoE** work on this rig while a 30B *dense* model fails?
 - A dense 30B model must stream **all ~18 GB of weights** across DDR4 RAM for **every generated token**, choking dual-channel DDR4 (`~45–55 GB/s`) down to `~1–2 tokens/sec`.
@@ -215,11 +215,11 @@ Pairing OpenCode with the deterministic [`MemOn` (`sub-20KB`, formerly OnMemory)
 
 Comparing realistic **monthly developer spend** makes the ROI unmistakable:
 
-| Stack Option | Upfront Hardware CapEx | Monthly Recurring Cost | Privacy & Rate Limits | Practical Engineering Fit |
-|---|---|---|---|---|
-| **Single Cloud Coding Seat** | `$0` | `$20 / month` (`$240/yr`) | Cloud-hosted; strict monthly burst quotas | Good baseline, throttles under heavy agentic loops |
-| **Heavy Agentic Cloud / Max Usage** | `$0` | `$100–$200+ / month` (`$1,200–$2,400+/yr`) | Cloud-hosted; rapid token burn on test retries | Best frontier reasoning for ambiguous greenfield work |
-| **Existing RTX 3070 Rig (This Blueprint)** | **`$0`** (already owned) | **`~$3–$6 / month`** burst electricity | **100% private**, zero token throttling | Handles ~85% of daily coding, TDD, and private debugging |
+| Stack Option                               | Upfront Hardware CapEx   | Monthly Recurring Cost                     | Privacy & Rate Limits                          | Practical Engineering Fit                                |
+| ------------------------------------------ | ------------------------ | ------------------------------------------ | ---------------------------------------------- | -------------------------------------------------------- |
+| **Single Cloud Coding Seat**               | `$0`                     | `$20 / month` (`$240/yr`)                  | Cloud-hosted; strict monthly burst quotas      | Good baseline, throttles under heavy agentic loops       |
+| **Heavy Agentic Cloud / Max Usage**        | `$0`                     | `$100–$200+ / month` (`$1,200–$2,400+/yr`) | Cloud-hosted; rapid token burn on test retries | Best frontier reasoning for ambiguous greenfield work    |
+| **Existing RTX 3070 Rig (This Blueprint)** | **`$0`** (already owned) | **`~$3–$6 / month`** burst electricity     | **100% private**, zero token throttling        | Handles ~85% of daily coding, TDD, and private debugging |
 
 Why is electricity so low? Your RTX 3070 (`~220W` peak) and Ryzen 7 3700X (`~65W` TDP) are **not running at 100% load 24/7**. During an 8-hour workday of bursty agentic coding, active GPU inference typically totals **45–90 minutes** of actual compute (`~0.25–0.45 kWh/day`, or roughly `$3–$6/month` depending on local kWh rates).
 
@@ -258,19 +258,19 @@ On a 16 GB RAM workstation, loading `qwen3-coder:30b` (`18 GB`) immediately trig
 
 Dual storage (NVMe + HDD) forces a practical engineering trade-off between **disk space** and **first-load latency**:
 
-| Storage Tier | Sequential Read | Cold Load: `qwen3.5:9b` (`~6.2 GB` w/ `mmproj`) | Cold Load: `qwen3-coder:30b` (`18 GB`) | Trade-Off & Mitigation |
-|---|---|---|---|---|
-| **SATA HDD (`OLLAMA_MODELS`)** | `~120–180 MB/s` | `~35–50 sec` | `~105–160 sec` | **Saves 24+ GB on NVMe**; pair with `OLLAMA_KEEP_ALIVE=30m` & `MAX_LOADED_MODELS=2` so cold load only happens once per session |
-| **NVMe PCIe SSD** | `~3,000–3,500 MB/s` | `~1.8–2.5 sec` | **`~5–7 sec`** | Ideal for active Git repos, Docker layers & build caches—and the #1 zero-cost quality-of-life upgrade if you free 25–40 GB on NVMe for hot models |
+| Storage Tier                   | Sequential Read     | Cold Load: `qwen3.5:9b` (`~6.2 GB` w/ `mmproj`) | Cold Load: `qwen3-coder:30b` (`18 GB`) | Trade-Off & Mitigation                                                                                                                            |
+| ------------------------------ | ------------------- | ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **SATA HDD (`OLLAMA_MODELS`)** | `~120–180 MB/s`     | `~35–50 sec`                                    | `~105–160 sec`                         | **Saves 24+ GB on NVMe**; pair with `OLLAMA_KEEP_ALIVE=30m` & `MAX_LOADED_MODELS=2` so cold load only happens once per session                    |
+| **NVMe PCIe SSD**              | `~3,000–3,500 MB/s` | `~1.8–2.5 sec`                                  | **`~5–7 sec`**                         | Ideal for active Git repos, Docker layers & build caches—and the #1 zero-cost quality-of-life upgrade if you free 25–40 GB on NVMe for hot models |
 
 ### 4. 4-Stage Hardware Progression Matrix
 
-| Tier | Representative Hardware | VRAM / Unified Memory | Bandwidth | What Unlocks in OpenCode + Ollama |
-|---|---|---|---|---|
-| **Baseline (This Rig)** | **RTX 3070 + Ryzen 7 3700X + 32 GB DDR4-3600 + NVMe/HDD** | `8 GB VRAM` + `32 GB RAM` | `448 GB/s` VRAM / `~50 GB/s` RAM | Full-VRAM `qwen3.5:9b` + `qwen3.5-fast:9b` (`32K`) + hybrid MoE `qwen3-coder:30b` (`48K`) at `$0` CapEx |
-| **Tier 1: Mid-VRAM GPU** | RTX 4060 Ti 16 GB / 4070 Ti Super / 5070 Ti | `16 GB VRAM` | `288–896 GB/s` | Full-VRAM `qwen3.5:9b` at `128K` context + fewer MoE layers spilled to RAM |
-| **Tier 2: Enthusiast GPU** | RTX 3090 / RTX 4090 / RTX 5090 | `24–32 GB VRAM` | `936–1,792 GB/s` | **100% VRAM** `qwen3-coder:30b` & `qwen3.5:35b-a3b` + `qwen3.5:27b` dense at high tok/s |
-| **Tier 3: High-Memory Rig** | Apple Silicon M3/M4 Max/Ultra or Dual 24 GB GPUs | `64–128 GB+` | `400–800+ GB/s` | Simultaneous multi-model VRAM residency, `Q6_K`/`Q8_0` weights & `qwen3.5:122b-a10b` |
+| Tier                        | Representative Hardware                                   | VRAM / Unified Memory     | Bandwidth                        | What Unlocks in OpenCode + Ollama                                                                       |
+| --------------------------- | --------------------------------------------------------- | ------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Baseline (This Rig)**     | **RTX 3070 + Ryzen 7 3700X + 32 GB DDR4-3600 + NVMe/HDD** | `8 GB VRAM` + `32 GB RAM` | `448 GB/s` VRAM / `~50 GB/s` RAM | Full-VRAM `qwen3.5:9b` + `qwen3.5-fast:9b` (`32K`) + hybrid MoE `qwen3-coder:30b` (`48K`) at `$0` CapEx |
+| **Tier 1: Mid-VRAM GPU**    | RTX 4060 Ti 16 GB / 4070 Ti Super / 5070 Ti               | `16 GB VRAM`              | `288–896 GB/s`                   | Full-VRAM `qwen3.5:9b` at `128K` context + fewer MoE layers spilled to RAM                              |
+| **Tier 2: Enthusiast GPU**  | RTX 3090 / RTX 4090 / RTX 5090                            | `24–32 GB VRAM`           | `936–1,792 GB/s`                 | **100% VRAM** `qwen3-coder:30b` & `qwen3.5:35b-a3b` + `qwen3.5:27b` dense at high tok/s                 |
+| **Tier 3: High-Memory Rig** | Apple Silicon M3/M4 Max/Ultra or Dual 24 GB GPUs          | `64–128 GB+`              | `400–800+ GB/s`                  | Simultaneous multi-model VRAM residency, `Q6_K`/`Q8_0` weights & `qwen3.5:122b-a10b`                    |
 
 ---
 
@@ -299,4 +299,4 @@ Want to follow the full hands-on video walkthrough—including live `ollama ps` 
 
 - **Companion Academy Lesson**: [Local AI Coding Stack with Ollama, OpenCode & Qwen 3.5](/academy/local-ai-coding-ollama-opencode-qwen3)
 - **Part 2 (Cloud Frontier Orchestration)**: [Mastering Gemini Models in Antigravity (agy): Architecture, Memory, Security & Honest Limits](/blog/mastering-gemini-models-in-antigravity-agy)
-- **Part 3 (Antigravity `/` Slash Command Manual)**: [The Complete Antigravity (agy) Slash Command Field Manual: Every / Command Explained](/blog/antigravity-agy-slash-commands-complete-guide)
+- **Part 3 (Antigravity `/` Command Manual)**: [The Complete Antigravity (agy) Command Field Manual: Every / Command Explained](/blog/antigravity-agy-slash-commands-complete-guide)

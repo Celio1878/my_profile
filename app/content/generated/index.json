@@ -537,8 +537,8 @@
       "OpenCode",
       "Architecture"
     ],
-    "readTimeMinutes": 11,
-    "wordCount": 2186,
+    "readTimeMinutes": 12,
+    "wordCount": 2232,
     "headings": [
       {
         "id": "why-build-a-local-agentic-coding-stack-on-existing-hardware",
