@@ -299,4 +299,4 @@ Want to follow the full hands-on video walkthrough—including live `ollama ps` 
 
 - **Companion Academy Lesson**: [Local AI Coding Stack with Ollama, OpenCode & Qwen 3.5](/academy/local-ai-coding-ollama-opencode-qwen3)
 - **Part 2 (Cloud Frontier Orchestration)**: [Mastering Gemini Models in Antigravity (agy): Architecture, Memory, Security & Honest Limits](/blog/mastering-gemini-models-in-antigravity-agy)
-- **Part 3 (Antigravity `/` Command Manual)**: [The Complete Antigravity (agy) Command Field Manual: Every / Command Explained](/blog/antigravity-agy-slash-commands-complete-guide)
+- **Part 3 (Antigravity `/` Command Manual)**: [The Complete Antigravity (agy) Command Field Manual: Every / Command Explained](/blog/antigravity-agy-commands-complete-guide)

@@ -299,4 +299,4 @@ Quer acompanhar o passo a passo completo em vídeo — incluindo profiling ao vi
 
 - **Aula Complementar da Academy**: [Stack Local de Coding com IA usando Ollama, OpenCode e Qwen 3.5](/academy/local-ai-coding-ollama-opencode-qwen3)
 - **Parte 2 (Orquestração Cloud de Fronteira)**: [Dominando Modelos Gemini no Antigravity (agy): Arquitetura, Memória, Segurança e Limites Honestos](/blog/mastering-gemini-models-in-antigravity-agy)
-- **Parte 3 (Manual de Comandos `/` Slash do Antigravity)**: [O Manual Completo de Campo dos Comandos / (Slash) do Antigravity (agy): Cada Comando / Explicado](/blog/antigravity-agy-slash-commands-complete-guide)
+- **Parte 3 (Manual de Comandos `/` do Antigravity)**: [O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado](/blog/antigravity-agy-commands-complete-guide)

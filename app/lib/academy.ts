@@ -209,7 +209,7 @@ export const ACADEMY_LESSONS: AcademyLesson[] = [
       "ragon-air-gapped-zero-leak-rag-studio",
       "on-memory-deterministic-ai-engineering-governance",
       "mastering-gemini-models-in-antigravity-agy",
-      "antigravity-agy-slash-commands-complete-guide",
+      "antigravity-agy-commands-complete-guide",
       "enterprise-rag-with-local-llms",
     ],
   },

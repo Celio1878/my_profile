@@ -112,8 +112,8 @@ const checks: Check[] = [
     excludes: ["**Gemini 4 Hydrogen", "**Deny"],
   },
   {
-    name: "Antigravity slash commands blueprint renders Shiki code + JSON-LD + parsed markdown",
-    path: "/blog/antigravity-agy-slash-commands-complete-guide",
+    name: "Antigravity commands blueprint renders Shiki code + JSON-LD + parsed markdown",
+    path: "/blog/antigravity-agy-commands-complete-guide",
     status: 200,
     includes: [
       "shiki",
@@ -162,7 +162,7 @@ const checks: Check[] = [
       "/blog/local-ai-coding-stack-ollama-opencode-qwen3",
       "/blog/ragon-air-gapped-zero-leak-rag-studio",
       "/blog/mastering-gemini-models-in-antigravity-agy",
-      "/blog/antigravity-agy-slash-commands-complete-guide",
+      "/blog/antigravity-agy-commands-complete-guide",
     ],
   },
   {

@@ -15,7 +15,7 @@
       "Developer Tooling"
     ],
     "readTimeMinutes": 13,
-    "wordCount": 2482,
+    "wordCount": 2480,
     "headings": [
       {
         "id": "why-frontier-models-still-drift-without-harness-engineering",
@@ -202,166 +202,8 @@
             "level": 3
           }
         ],
-        "wordCount": 3111,
+        "wordCount": 3109,
         "readTimeMinutes": 16
-      }
-    }
-  },
-  {
-    "slug": "antigravity-agy-slash-commands-complete-guide",
-    "title": "The Complete Antigravity (agy) Command Field Manual: Every / Command Explained",
-    "description": "Comprehensive breakdown of all 47 official Google Antigravity (agy) commands — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom / commands via .agents/skills/.",
-    "excerpt": "Typing natural language into a terminal prompt gets you autocomplete; typing / inside Google Antigravity (agy) opens the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.",
-    "date": "2026-11-26",
-    "tags": [
-      "AI",
-      "Agents",
-      "Antigravity",
-      "Gemini",
-      "Developer Tooling",
-      "CLI",
-      "Architecture"
-    ],
-    "readTimeMinutes": 15,
-    "wordCount": 2873,
-    "headings": [
-      {
-        "id": "why-commands-are-the-control-plane-of-antigravity-agy",
-        "text": "Why Commands Are the Control Plane of Antigravity (agy)",
-        "level": 2
-      },
-      {
-        "id": "complete-antigravity-agy-command-quick-reference-matrix",
-        "text": "Complete Antigravity (agy) Command Quick-Reference Matrix",
-        "level": 2
-      },
-      {
-        "id": "category-1-planning-reasoning-multi-agent-orchestration",
-        "text": "Category 1: Planning, Reasoning & Multi-Agent Orchestration",
-        "level": 2
-      },
-      {
-        "id": "choosing-between-plan-goal-boost-swarm-and-teamwork",
-        "text": "Choosing Between /plan, /goal, /boost, /swarm, and /teamwork",
-        "level": 3
-      },
-      {
-        "id": "category-2-conversation-context-lifecycle",
-        "text": "Category 2: Conversation & Context Lifecycle",
-        "level": 2
-      },
-      {
-        "id": "category-3-tools-automation-governance-security",
-        "text": "Category 3: Tools, Automation, Governance & Security",
-        "level": 2
-      },
-      {
-        "id": "category-4-workspace-navigation-code-search-review",
-        "text": "Category 4: Workspace Navigation, Code Search & Review",
-        "level": 2
-      },
-      {
-        "id": "category-5-model-control-configuration-account-utilities",
-        "text": "Category 5: Model Control, Configuration, Account & Utilities",
-        "level": 2
-      },
-      {
-        "id": "proven-command-chaining-playbooks-common-mistakes",
-        "text": "Proven Command-Chaining Playbooks & Common Mistakes",
-        "level": 2
-      },
-      {
-        "id": "five-common-slash-command-mistakes-to-avoid",
-        "text": "Five Common Slash-Command Mistakes to Avoid",
-        "level": 3
-      },
-      {
-        "id": "authoring-custom-commands-via-agentsskills",
-        "text": "Authoring Custom Commands via .agents/skills/",
-        "level": 2
-      },
-      {
-        "id": "continue-the-ai-engineering-harness-series",
-        "text": "Continue the AI Engineering Harness Series",
-        "level": 2
-      }
-    ],
-    "source": "native",
-    "lang": "en",
-    "author": "Célio Vieira",
-    "availableLocales": [
-      "en",
-      "pt-BR"
-    ],
-    "translations": {
-      "pt-BR": {
-        "title": "O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado",
-        "description": "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/.",
-        "excerpt": "Digitar linguagem natural em um prompt de terminal entrega autocompletar; digitar / dentro do Google Antigravity (agy) abre o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.",
-        "headings": [
-          {
-            "id": "por-que-comandos-sao-o-plano-de-controle-do-antigravity-agy",
-            "text": "Por Que Comandos São o Plano de Controle do Antigravity (agy)",
-            "level": 2
-          },
-          {
-            "id": "matriz-completa-de-referencia-rapida-dos-comandos-do-antigravity-agy",
-            "text": "Matriz Completa de Referência Rápida dos Comandos do Antigravity (agy)",
-            "level": 2
-          },
-          {
-            "id": "categoria-1-planejamento-raciocinio-e-orquestracao-multiagente",
-            "text": "Categoria 1: Planejamento, Raciocínio e Orquestração Multiagente",
-            "level": 2
-          },
-          {
-            "id": "escolhendo-entre-plan-goal-boost-swarm-e-teamwork",
-            "text": "Escolhendo Entre /plan, /goal, /boost, /swarm e /teamwork",
-            "level": 3
-          },
-          {
-            "id": "categoria-2-ciclo-de-vida-da-conversa-e-do-contexto",
-            "text": "Categoria 2: Ciclo de Vida da Conversa e do Contexto",
-            "level": 2
-          },
-          {
-            "id": "categoria-3-ferramentas-automacao-governanca-e-seguranca",
-            "text": "Categoria 3: Ferramentas, Automação, Governança e Segurança",
-            "level": 2
-          },
-          {
-            "id": "categoria-4-navegacao-no-workspace-busca-de-codigo-e-revisao",
-            "text": "Categoria 4: Navegação no Workspace, Busca de Código e Revisão",
-            "level": 2
-          },
-          {
-            "id": "categoria-5-controle-de-modelos-configuracao-conta-e-utilitarios",
-            "text": "Categoria 5: Controle de Modelos, Configuração, Conta e Utilitários",
-            "level": 2
-          },
-          {
-            "id": "playbooks-comprovados-de-encadeamento-de-comandos-e-erros-comuns",
-            "text": "Playbooks Comprovados de Encadeamento de Comandos e Erros Comuns",
-            "level": 2
-          },
-          {
-            "id": "cinco-erros-comuns-com-comandos-para-evitar",
-            "text": "Cinco Erros Comuns com Comandos para Evitar",
-            "level": 3
-          },
-          {
-            "id": "criando-comandos-customizados-via-agentsskills",
-            "text": "Criando Comandos Customizados via .agents/skills/",
-            "level": 2
-          },
-          {
-            "id": "continue-a-serie-sobre-harness-de-engenharia-de-ia",
-            "text": "Continue a Série sobre Harness de Engenharia de IA",
-            "level": 2
-          }
-        ],
-        "wordCount": 3336,
-        "readTimeMinutes": 17
       }
     }
   },
@@ -519,6 +361,164 @@
         ],
         "wordCount": 1367,
         "readTimeMinutes": 7
+      }
+    }
+  },
+  {
+    "slug": "antigravity-agy-commands-complete-guide",
+    "title": "The Complete Antigravity (agy) Command Field Manual: Every / Command Explained",
+    "description": "Comprehensive breakdown of all 47 official Google Antigravity (agy) commands — invoked by typing / in the prompt — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom commands via .agents/skills/.",
+    "excerpt": "To use any command in Google Antigravity (agy), simply type / in the prompt—opening the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.",
+    "date": "2026-11-26",
+    "tags": [
+      "AI",
+      "Agents",
+      "Antigravity",
+      "Gemini",
+      "Developer Tooling",
+      "CLI",
+      "Architecture"
+    ],
+    "readTimeMinutes": 15,
+    "wordCount": 2871,
+    "headings": [
+      {
+        "id": "why-commands-are-the-control-plane-of-antigravity-agy",
+        "text": "Why Commands Are the Control Plane of Antigravity (agy)",
+        "level": 2
+      },
+      {
+        "id": "complete-antigravity-agy-command-quick-reference-matrix",
+        "text": "Complete Antigravity (agy) Command Quick-Reference Matrix",
+        "level": 2
+      },
+      {
+        "id": "category-1-planning-reasoning-multi-agent-orchestration",
+        "text": "Category 1: Planning, Reasoning & Multi-Agent Orchestration",
+        "level": 2
+      },
+      {
+        "id": "choosing-between-plan-goal-boost-swarm-and-teamwork",
+        "text": "Choosing Between /plan, /goal, /boost, /swarm, and /teamwork",
+        "level": 3
+      },
+      {
+        "id": "category-2-conversation-context-lifecycle",
+        "text": "Category 2: Conversation & Context Lifecycle",
+        "level": 2
+      },
+      {
+        "id": "category-3-tools-automation-governance-security",
+        "text": "Category 3: Tools, Automation, Governance & Security",
+        "level": 2
+      },
+      {
+        "id": "category-4-workspace-navigation-code-search-review",
+        "text": "Category 4: Workspace Navigation, Code Search & Review",
+        "level": 2
+      },
+      {
+        "id": "category-5-model-control-configuration-account-utilities",
+        "text": "Category 5: Model Control, Configuration, Account & Utilities",
+        "level": 2
+      },
+      {
+        "id": "proven-command-chaining-playbooks-common-mistakes",
+        "text": "Proven Command-Chaining Playbooks & Common Mistakes",
+        "level": 2
+      },
+      {
+        "id": "five-common-command-mistakes-to-avoid",
+        "text": "Five Common Command Mistakes to Avoid",
+        "level": 3
+      },
+      {
+        "id": "authoring-custom-commands-via-agentsskills",
+        "text": "Authoring Custom Commands via .agents/skills/",
+        "level": 2
+      },
+      {
+        "id": "continue-the-ai-engineering-harness-series",
+        "text": "Continue the AI Engineering Harness Series",
+        "level": 2
+      }
+    ],
+    "source": "native",
+    "lang": "en",
+    "author": "Célio Vieira",
+    "availableLocales": [
+      "en",
+      "pt-BR"
+    ],
+    "translations": {
+      "pt-BR": {
+        "title": "O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado",
+        "description": "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — acionados digitando / no prompt — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos customizados via .agents/skills/.",
+        "excerpt": "Para usar qualquer comando no Google Antigravity (agy), basta digitar / no prompt — abrindo o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.",
+        "headings": [
+          {
+            "id": "por-que-os-comandos-sao-o-plano-de-controle-do-antigravity-agy",
+            "text": "Por Que os Comandos São o Plano de Controle do Antigravity (agy)",
+            "level": 2
+          },
+          {
+            "id": "matriz-completa-de-referencia-rapida-dos-comandos-do-antigravity-agy",
+            "text": "Matriz Completa de Referência Rápida dos Comandos do Antigravity (agy)",
+            "level": 2
+          },
+          {
+            "id": "categoria-1-planejamento-raciocinio-e-orquestracao-multiagente",
+            "text": "Categoria 1: Planejamento, Raciocínio e Orquestração Multiagente",
+            "level": 2
+          },
+          {
+            "id": "escolhendo-entre-plan-goal-boost-swarm-e-teamwork",
+            "text": "Escolhendo Entre /plan, /goal, /boost, /swarm e /teamwork",
+            "level": 3
+          },
+          {
+            "id": "categoria-2-ciclo-de-vida-da-conversa-e-do-contexto",
+            "text": "Categoria 2: Ciclo de Vida da Conversa e do Contexto",
+            "level": 2
+          },
+          {
+            "id": "categoria-3-ferramentas-automacao-governanca-e-seguranca",
+            "text": "Categoria 3: Ferramentas, Automação, Governança e Segurança",
+            "level": 2
+          },
+          {
+            "id": "categoria-4-navegacao-no-workspace-busca-de-codigo-e-revisao",
+            "text": "Categoria 4: Navegação no Workspace, Busca de Código e Revisão",
+            "level": 2
+          },
+          {
+            "id": "categoria-5-controle-de-modelos-configuracao-conta-e-utilitarios",
+            "text": "Categoria 5: Controle de Modelos, Configuração, Conta e Utilitários",
+            "level": 2
+          },
+          {
+            "id": "playbooks-comprovados-de-encadeamento-de-comandos-e-erros-comuns",
+            "text": "Playbooks Comprovados de Encadeamento de Comandos e Erros Comuns",
+            "level": 2
+          },
+          {
+            "id": "cinco-erros-comuns-com-comandos-para-evitar",
+            "text": "Cinco Erros Comuns com Comandos para Evitar",
+            "level": 3
+          },
+          {
+            "id": "criando-comandos-customizados-via-agentsskills",
+            "text": "Criando Comandos Customizados via .agents/skills/",
+            "level": 2
+          },
+          {
+            "id": "continue-a-serie-sobre-harness-de-engenharia-de-ia",
+            "text": "Continue a Série sobre Harness de Engenharia de IA",
+            "level": 2
+          }
+        ],
+        "wordCount": 3335,
+        "readTimeMinutes": 17
       }
     }
   },
@@ -725,7 +725,7 @@
             "level": 2
           }
         ],
-        "wordCount": 2638,
+        "wordCount": 2635,
         "readTimeMinutes": 14
       }
     }

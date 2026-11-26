@@ -277,7 +277,7 @@ const PROTECTED_SLUGS = new Set([
   "local-ai-coding-stack-ollama-opencode-qwen3",
   "ragon-air-gapped-zero-leak-rag-studio",
   "mastering-gemini-models-in-antigravity-agy",
-  "antigravity-agy-slash-commands-complete-guide",
+  "antigravity-agy-commands-complete-guide",
 ]);
 
 async function fetchAllSubstackPosts(): Promise<SubstackPost[]> {

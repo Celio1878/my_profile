@@ -303,9 +303,9 @@
 
 ---
 
-### Session 23 — Antigravity (agy) Slash Command Field Manual (Part 3)
+### Session 23 — Antigravity (agy) Command Field Manual (Part 3)
 
-- [x] Authored protected native Engineering Blueprint `app/content/blog/antigravity-agy-slash-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 protected blueprints / 82 articles) breaking down all 47 official `agy` `/` slash commands across 5 categories, 5 command-chaining playbooks, common pitfalls, and custom `/` command authoring via `.agents/skills/<name>/SKILL.md`.
+- [x] Authored protected native Engineering Blueprint `app/content/blog/antigravity-agy-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 protected blueprints / 82 articles) breaking down all 47 official `agy` `/` commands across 5 categories, 5 command-chaining playbooks, common pitfalls, and custom `/` command authoring via `.agents/skills/<name>/SKILL.md`.
 - [x] Synchronized reciprocal Part 1–3 series links across `local-ai-coding-stack-ollama-opencode-qwen3.md` and `mastering-gemini-models-in-antigravity-agy.md`, and attached the blueprint to Academy Track 1 Lesson 2 (`private-rag-onmemory-agent-governance`) in `app/lib/academy.ts`.
 - [x] Extended `scripts/smoke-ssr.ts` to **17 SSR checks** and synchronized governance docs.
 

@@ -129,7 +129,7 @@ This file logs hard-won debugging insights, breaking changes, and operational pa
   - `local-ai-coding-stack-ollama-opencode-qwen3`
   - `ragon-air-gapped-zero-leak-rag-studio`
   - `mastering-gemini-models-in-antigravity-agy`
-  - `antigravity-agy-slash-commands-complete-guide`
+  - `antigravity-agy-commands-complete-guide`
 
 ### Academy Privacy-First YouTube Facade (`app/lib/academy.ts` + `app/components/youtube-player.tsx`)
 - `/academy` and `/academy/:slug` are driven by a strongly-typed bilingual catalog (`ACADEMY_TRACKS`, `ACADEMY_LESSONS`).

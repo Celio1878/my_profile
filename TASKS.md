@@ -184,8 +184,8 @@
 - [x] Added bidirectional cross-link in `app/content/blog/local-ai-coding-stack-ollama-opencode-qwen3.md` and attached the blueprint as a companion read on Academy Track 1 Lesson 2 (`app/lib/academy.ts`).
 - [x] Extended `scripts/smoke-ssr.ts` to **16 checks** covering the new article route and `/sitemap.xml` entry, and updated governance documentation (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
 
-### Phase 18: Antigravity (agy) Slash Command Field Manual (Part 3)
-- [x] Authored protected native blueprint `app/content/blog/antigravity-agy-slash-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 total / 82 articles) breaking down all 47 official built-in `agy` TUI `/` slash commands across 5 operational categories, 5 command-chaining playbooks, common mistakes, and custom `/` skill authoring via `.agents/skills/<name>/SKILL.md`.
+### Phase 18: Antigravity (agy) Command Field Manual (Part 3)
+- [x] Authored protected native blueprint `app/content/blog/antigravity-agy-commands-complete-guide.md` (`PROTECTED_SLUGS` → 14 total / 82 articles) breaking down all 47 official built-in `agy` TUI `/` commands across 5 operational categories, 5 command-chaining playbooks, common mistakes, and custom `/` skill authoring via `.agents/skills/<name>/SKILL.md`.
 - [x] Synchronized reciprocal Part 1–3 links across `local-ai-coding-stack-ollama-opencode-qwen3.md` and `mastering-gemini-models-in-antigravity-agy.md`, and attached the blueprint to Academy Track 1 Lesson 2 (`app/lib/academy.ts`).
 - [x] Extended `scripts/smoke-ssr.ts` to **17 checks** and updated governance documentation (`CONTEXT.md`, `MEMORY.md`, `TASKS.md`, `SUMMARY.md`).
 

@@ -1,16 +1,16 @@
 ---
 title: "O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado"
-slug: "antigravity-agy-slash-commands-complete-guide"
-description: "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos / customizados via .agents/skills/."
+slug: "antigravity-agy-commands-complete-guide"
+description: "Detalhamento completo de todos os 47 comandos oficiais do Google Antigravity (agy) — acionados digitando / no prompt — cobrindo planejamento (/plan, /grill-me, /goal), orquestração multiagente (/swarm, /teamwork, /boost), higiene de contexto (/compact, /fork, /rollback, /btw), segurança e ferramentas (/permissions, /hooks, /mcp, /learn), playbooks de encadeamento e criação de comandos customizados via .agents/skills/."
 date: "2026-11-26"
 tags: ["AI", "Agents", "Antigravity", "Gemini", "Developer Tooling", "CLI", "Architecture"]
 lang: "pt-BR"
 author: "Célio Vieira"
 ---
 
-## Por Que Comandos São o Plano de Controle do Antigravity (agy)
+## Por Que os Comandos São o Plano de Controle do Antigravity (agy)
 
-Digitar linguagem natural em um prompt de terminal entrega autocompletar; digitar `/` dentro do Google Antigravity (`agy`) abre o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.
+Para usar qualquer comando no Google Antigravity (`agy`), basta digitar `/` no prompt — abrindo o plano de controle com typeahead que transforma um loop de chat aberto em transições explícitas de estado de engenharia.
 
 Na **Parte 1** ([Stack Local de Programação com IA](/blog/local-ai-coding-stack-ollama-opencode-qwen3)) e na **Parte 2** ([Dominando Modelos Gemini no Antigravity](/blog/mastering-gemini-models-in-antigravity-agy)), cobrimos roteamento de hardware/modelo, Orchestrator Mode em duas fases, governança limitada `<20KB` com MemOn e execução em sandbox. Este **Manual de Campo Parte 3** detalha cada um dos **47 comandos oficiais integrados da TUI do `agy`**, agrupa-os por categoria operacional, documenta playbooks comprovados de encadeamento de comandos, destaca armadilhas comuns e mostra como criar seus próprios comandos `/` customizados usando pacotes modernos em `.agents/skills/`.
 
@@ -37,7 +37,7 @@ Digitar `/` abre uma paleta interativa filtrável dentro da UI de terminal do `a
 | `` `/rename <title>` ``           | —                | Conversas                   | Renomeia a thread da conversa ativa                                                                              |
 | `/title`                          | —                | Conversas                   | Alterna ou atualiza o rastreamento do título da janela do terminal                                               |
 | `` `/btw <query>` ``              | —                | Contexto / Utilitários      | Faz uma pergunta paralela em segundo plano sem poluir ou pausar a thread principal                               |
-| `` `/copy [n                      | btw]` ``         | —                           | Utilitários                                                                                                      | Copia a última resposta, a *n*-ésima resposta mais recente ou a resposta mais recente de `/btw` |
+| `` `/copy [n]` / `/copy btw` ``     | —                | Utilitários                 | Copia a última resposta, a *n*-ésima resposta mais recente ou a resposta mais recente de `/btw`                  |
 | `/agents`                         | —                | Ferramentas e Tarefas       | Abre o Agent Manager para alternar agentes customizados e monitorar subagentes em background                     |
 | `/tasks`                          | —                | Ferramentas e Tarefas       | Abre o Task Manager para monitorar processos de shell em background e logs                                       |
 | `` `/schedule <cron> <cmd>` ``    | —                | Ferramentas e Tarefas       | Registra um timer único ou agendamento cron recorrente que desperta o agente                                     |

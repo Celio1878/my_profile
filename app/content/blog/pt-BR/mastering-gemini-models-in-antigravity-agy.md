@@ -260,7 +260,7 @@ Quando ambos os harnesses leem **exatamente o mesmo contrato `<20KB` de `AGENTS.
 ### Continue a Série de Engenharia
 
 - **Parte 1 (Execução Local com Zero Tokens):** [Construindo uma Stack Local de Programação com IA Usando Ollama, OpenCode, Qwen 3.5 e Qwen3-Coder](/blog/local-ai-coding-stack-ollama-opencode-qwen3)
-- **Parte 3 (Manual de Comandos Slash `/` do Antigravity):** [O Manual de Campo Completo dos Comandos Slash do Antigravity (agy): Cada Comando / Explicado](/blog/antigravity-agy-slash-commands-complete-guide)
+- **Parte 3 (Manual de Comandos `/` do Antigravity):** [O Manual de Campo Completo dos Comandos do Antigravity (agy): Cada Comando / Explicado](/blog/antigravity-agy-commands-complete-guide)
 - **Governança Determinística de Memória (`<20KB`):** [MemOn: Governança Determinística de Engenharia de IA Abaixo de 20KB](/blog/on-memory-deterministic-ai-engineering-governance)
 - **Arquitetura de Recuperação Air-Gapped:** [RagOn: Estúdio RAG Air-Gapped com Zero Vazamento](/blog/ragon-air-gapped-zero-leak-rag-studio)
 - **Lição Complementar na Academy:** [RagOn e MemOn: Estúdio RAG Air-Gapped com Zero Vazamento e Governança de Agentes Abaixo de 20KB](/academy/private-rag-onmemory-agent-governance)

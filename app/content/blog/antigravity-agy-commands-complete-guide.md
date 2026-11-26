@@ -1,7 +1,7 @@
 ---
 title: "The Complete Antigravity (agy) Command Field Manual: Every / Command Explained"
-slug: "antigravity-agy-slash-commands-complete-guide"
-description: "Comprehensive breakdown of all 47 official Google Antigravity (agy) commands — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom / commands via .agents/skills/."
+slug: "antigravity-agy-commands-complete-guide"
+description: "Comprehensive breakdown of all 47 official Google Antigravity (agy) commands — invoked by typing / in the prompt — covering planning (/plan, /grill-me, /goal), multi-agent orchestration (/swarm, /teamwork, /boost), context hygiene (/compact, /fork, /rollback, /btw), security & tools (/permissions, /hooks, /mcp, /learn), chaining playbooks, and authoring custom commands via .agents/skills/."
 date: "2026-11-26"
 tags: ["AI", "Agents", "Antigravity", "Gemini", "Developer Tooling", "CLI", "Architecture"]
 lang: "en"
@@ -10,7 +10,7 @@ author: "Célio Vieira"
 
 ## Why Commands Are the Control Plane of Antigravity (agy)
 
-Typing natural language into a terminal prompt gets you autocomplete; typing `/` inside Google Antigravity (`agy`) opens the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.
+To use any command in Google Antigravity (`agy`), simply type `/` in the prompt—opening the typeahead control plane that turns an open-ended chat loop into explicit engineering state transitions.
 
 In **Part 1** ([Local AI Coding Stack](/blog/local-ai-coding-stack-ollama-opencode-qwen3)) and **Part 2** ([Mastering Gemini Models in Antigravity](/blog/mastering-gemini-models-in-antigravity-agy)), we covered hardware/model routing, dual-phase Orchestrator Mode, bounded `<20KB` MemOn governance, and sandboxed execution. This **Part 3 Field Manual** breaks down every single one of the **47 official built-in `agy` TUI commands**, groups them by operational category, documents proven command-chaining playbooks, highlights common pitfalls, and shows how to author your own custom `/` commands using modern `.agents/skills/` packages.
 
@@ -37,7 +37,7 @@ Typing `/` opens an interactive filterable palette inside the `agy` terminal UI 
 | `` `/rename <title>` ``           | —                | Conversations             | Rename the active conversation thread                                                     |
 | `/title`                          | —                | Conversations             | Toggle or update terminal window title tracking                                           |
 | `` `/btw <query>` ``              | —                | Context / Utilities       | Ask a background side question without polluting or pausing the main thread               |
-| `` `/copy [n                      | btw]` ``         | —                         | Utilities                                                                                 | Copy last response, *n*-th most recent response, or latest `/btw` answer |
+| `` `/copy [n]` / `/copy btw` ``     | —                | Utilities                 | Copy last response, *n*-th most recent response, or latest `/btw` answer                  |
 | `/agents`                         | —                | Tools & Tasks             | Open Agent Manager to switch custom agents and monitor background subagents               |
 | `/tasks`                          | —                | Tools & Tasks             | Open Task Manager to monitor background shell processes and logs                          |
 | `` `/schedule <cron> <cmd>` ``    | —                | Tools & Tasks             | Register a one-shot timer or recurring cron schedule waking the agent                     |
@@ -192,7 +192,7 @@ Individual commands are handy; chaining them in repeatable loops is where veloci
 /schedule "0 9 * * 1" Run bun run audit:content and report any broken links
 ```
 
-### Five Common Slash-Command Mistakes to Avoid
+### Five Common Command Mistakes to Avoid
 
 1. **Calling `/goal` without automated verification tests:** Unattended loops optimize for what they can measure. Without failing assertions, TypeScript checks, or SSR smoke tests, `/goal` can silently declare broken output complete.
 2. **Waiting until `/context` hits 85%+ before running `/compact`:** Model recall softens long before the hard window limit. Check `/context` after exploration ends and `/compact` cleanly right before writing code.

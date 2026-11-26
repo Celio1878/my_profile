@@ -260,7 +260,7 @@ When both harnesses read the **exact same `<20KB` `AGENTS.md` and `MEMORY.md` co
 ### Continue the Engineering Series
 
 - **Part 1 (Local Zero-Token Execution):** [Building a Local AI Coding Stack with Ollama, OpenCode, Qwen 3.5 & Qwen3-Coder](/blog/local-ai-coding-stack-ollama-opencode-qwen3)
-- **Part 3 (Antigravity `/` Slash Command Manual):** [The Complete Antigravity (agy) Slash Command Field Manual: Every / Command Explained](/blog/antigravity-agy-slash-commands-complete-guide)
+- **Part 3 (Antigravity `/` Command Manual):** [The Complete Antigravity (agy) Command Field Manual: Every / Command Explained](/blog/antigravity-agy-commands-complete-guide)
 - **Deterministic Memory Governance (`<20KB`):** [MemOn: Deterministic AI Engineering Governance Under 20KB](/blog/on-memory-deterministic-ai-engineering-governance)
 - **Air-Gapped Retrieval Architecture:** [RagOn: Air-Gapped Zero-Leak RAG Studio](/blog/ragon-air-gapped-zero-leak-rag-studio)
 - **Companion Academy Lesson:** [RagOn & MemOn: Air-Gapped Zero-Leak RAG Studio & Sub-20KB Agent Governance](/academy/private-rag-onmemory-agent-governance)
